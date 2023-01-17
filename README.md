@@ -58,30 +58,27 @@ Project -> app target -> General -> Embedded Binaries
 
    1. Nếu dùng sdk thực hiện việc gọi và lấy link video
 
-   ​       1.1 - Lấy data url:  
-            ```swift 
-            self.ssai?.getDataUrl() - return Dictonary["videoUrl": videoUrl, "trackingUrl": trackingUrl] 
-            ```
+   ​       1.1 - Lấy data url:  ```self.ssai?.getDataUrl() - return Dictonary["videoUrl": videoUrl, "trackingUrl": trackingUrl]```
 
-   ​       1.2 - Set player cho sdk:  **self**.ssai?.setPlayer(videoPlayer!) - set sau khi khởi tạo xong player
+   ​       1.2 - Set player cho sdk:  ```self.ssai?.setPlayer(videoPlayer!)``` - set sau khi khởi tạo xong player
 
    2. Nếu app tự thực hiện việc gọi và lấy link video
 
-      2.1 - **self**.ssai?.onStartPlay() - gọi khi player sẵn sàng play
+      2.1 - ```self.ssai?.onStartPlay()``` - gọi khi player sẵn sàng play
 
-      2.2 - self.ssai?.updatePlaybackTime(playbackTime: seconds) - gọi theo sự kiện update time play của player
+      2.2 - ```self.ssai?.updatePlaybackTime(playbackTime: seconds)``` - gọi theo sự kiện update time play của player
 
 5. Các hàm listener
 
-     onSessionFail() - Khi sdk get data session fail
+     ```onSessionFail()``` - Khi sdk get data session fail
 
-     onTracking(_ message: String) - Khi sdk gọi 1 ads tracking request
+     ```onTracking(_ message: String)``` - Khi sdk gọi 1 ads tracking request
 
-     onSessionUpdate(_ videoUrl: String) - Khi sdk cập nhật link video
+     ```onSessionUpdate(_ videoUrl: String)``` - Khi sdk cập nhật link video
 
 6. Public method
 
-   Clear() - Dùng để clear reset toàn bộ dữ liệu sdk
+   ```clear()``` - Dùng để clear reset toàn bộ dữ liệu sdk
 
    
 
