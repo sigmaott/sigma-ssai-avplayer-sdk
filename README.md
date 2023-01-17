@@ -48,13 +48,13 @@ Project -> app target -> General -> Embedded Binaries
    self.ssai = SSAITracking.SigmaSSAI.init(source: sessionUrl, trackingUrl, self, intervalTimeTracking)
    ```
 
-   sessionUrl: Link session (Bắt buộc có nếu muốn sdk thực hiện việc gọi và lấy link video, để trống nếu app tự thực hiện việc lấy link video)
+   ```sessionUrl```: Link session (Bắt buộc có nếu muốn sdk thực hiện việc gọi và lấy link video, để trống nếu app tự thực hiện việc lấy link video)
 
-   trackingUrl: Link tracking (Bắt buộc có nếu app thực hiện việc gọi link session và lấy link video, để trống nếu muốn  sdk thực hiện việc lấy link video)
+   ```trackingUrl```: Link tracking (Bắt buộc có nếu app thực hiện việc gọi link session và lấy link video, để trống nếu muốn  sdk thực hiện việc lấy link video)
 
-   self: implement SigmaSSAIInterface (Để lắng nghe các sự kiện sdk SSAI gọi để thực hiện các logic nếu cần)
+   ```self```: implement SigmaSSAIInterface (Để lắng nghe các sự kiện sdk SSAI gọi để thực hiện các logic nếu cần)
 
-   intervalTimeTracking: Thời gian định kỳ sdk gọi tracking data (tính bằng giây)
+   ```intervalTimeTracking```: Thời gian định kỳ sdk gọi tracking data (tính bằng giây)
 
    1. Nếu dùng sdk thực hiện việc gọi và lấy link video
 
