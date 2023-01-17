@@ -58,7 +58,7 @@ Project -> app target -> General -> Embedded Binaries
 
    1. Nếu dùng sdk thực hiện việc gọi và lấy link video
 
-   ​       1.1 - Lấy data url:  **self**.ssai?.getDataUrl() - return Dictonary["videoUrl": videoUrl, "trackingUrl": trackingUrl]
+   ​       1.1 - Lấy data url:  ```swift self.ssai?.getDataUrl() - return Dictonary["videoUrl": videoUrl, "trackingUrl": trackingUrl] ```
 
    ​       1.2 - Set player cho sdk:  **self**.ssai?.setPlayer(videoPlayer!) - set sau khi khởi tạo xong player
 
