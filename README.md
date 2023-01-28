@@ -2,9 +2,7 @@
 
 ## Requirement: IOS 12.4+
 
-### I. Cài đặt
-
-Thêm file SSAITracking.xcframework vào project.
+### I. Embed SSAITracking.xcframework in project’s target
 
 Project -> app target -> General -> Embedded Binaries
 
