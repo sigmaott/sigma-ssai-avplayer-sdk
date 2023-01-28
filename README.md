@@ -20,63 +20,61 @@ Project -> app target -> General -> Embedded Binaries
 
 ![ssai_step_4](https://i.ibb.co/Z6PW1zL/ssai-step-4.jpg)
 
-
-
-### II. Sử dụng
-
-1. Thêm SSAITracking sdk vào project (mục **I**).
-
-2. Import SSAITracking vào file: 
-
-   ```swift
-   import SSAITracking
-   ```
-
-3. Tạo biến ssai type SigmaSSAI thể hiện cho view tương tác.
-
-   ```swift
-   var ssai: SigmaSSAI?;
-   ```
-
-   
-
-4. Khởi tạo sdk
+### II. Init SDK
 
    ```swift
    self.ssai = SSAITracking.SigmaSSAI.init(source: sessionUrl, trackingUrl, self, intervalTimeTracking)
    ```
 
-   ```sessionUrl```: Link session (Bắt buộc có nếu muốn sdk thực hiện việc gọi và lấy link video, để trống nếu app tự thực hiện việc lấy link video)
+   ```sessionUrl```: Link session (Required if you want sdk makes call and get link video, set empty if app makes the call and get link video)
 
-   ```trackingUrl```: Link tracking (Bắt buộc có nếu app thực hiện việc gọi link session và lấy link video, để trống nếu muốn  sdk thực hiện việc lấy link video)
+   ```trackingUrl```: Link tracking (Required if app make call link session and get link video, set empty if you want sdk make call and get link video)
 
-   ```self```: implement SigmaSSAIInterface (Để lắng nghe các sự kiện sdk SSAI gọi để thực hiện các logic nếu cần)
+   ```self```: Implement SigmaSSAIInterface (To listen for SSAI events call and execute app logic if needed)
 
-   ```intervalTimeTracking```: Thời gian định kỳ sdk gọi tracking data (tính bằng giây)
+   ```intervalTimeTracking```: Interval time sdk calls tracking data (in seconds)
 
-   1. Nếu dùng sdk thực hiện việc gọi và lấy link video
+### III. How to use
 
-      1.1 - Lấy data url:  ```self.ssai?.getDataUrl() - return Dictonary["videoUrl": videoUrl, "trackingUrl": trackingUrl]```
+1. Embed SSAITracking.xcframework in project’s target (from **I**).
 
-      1.2 - Set player cho sdk:  ```self.ssai?.setPlayer(videoPlayer!)``` - set sau khi khởi tạo xong player
+2. Import SSAITracking: 
 
-   2. Nếu app tự thực hiện việc gọi và lấy link video
+   ```swift
+   import SSAITracking
+   ```
 
-      2.1 - ```self.ssai?.onStartPlay()``` - gọi khi player sẵn sàng play
+3. Create variable ssai type SigmaSSAI.
 
-      2.2 - ```self.ssai?.updatePlaybackTime(playbackTime: seconds)``` - gọi theo sự kiện update time play của player
+   ```swift
+   var ssai: SigmaSSAI?;
+   ```
 
-5. Các hàm listener
+4. Init sdk
+    - Follow section ***II*** and call the functions below
+   1. If using sdk to make calls and get video links (required)
 
-     ```onSessionFail()``` - Khi sdk get data session fail
+      1.1 - Get data url:  ```self.ssai?.getDataUrl() - return Dictonary["videoUrl": videoUrl, "trackingUrl": trackingUrl]```
 
-     ```onTracking(_ message: String)``` - Khi sdk gọi 1 ads tracking request
+      1.2 - Set player for sdk:  ```self.ssai?.setPlayer(videoPlayer!)``` - set after init player
 
-     ```onSessionUpdate(_ videoUrl: String)``` - Khi sdk cập nhật link video
+   2. If the app itself makes the call and gets the video link (required)
+
+      2.1 - ```self.ssai?.onStartPlay()``` - Call when player ready to play
+
+      2.2 - ```self.ssai?.updatePlaybackTime(playbackTime: seconds)``` - Call on player's time play update event
+
+5. Listener functional
+
+     ```onSessionFail()``` - When sdk get data session fail
+
+     ```onTracking(_ message: String)``` - When sdk make call 1 ads tracking request
+
+     ```onSessionUpdate(_ videoUrl: String)``` - When sdk update link video
 
 6. Public method
 
-   ```clear()``` - Dùng để clear reset toàn bộ dữ liệu sdk
+   ```clear()``` - To remove all data sdk
 
    
 
