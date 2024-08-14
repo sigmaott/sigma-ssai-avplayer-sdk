@@ -14,7 +14,7 @@ import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
 @objc public class SigmaSSAI : ObjectiveC.NSObject, AVFoundation.AVAssetResourceLoaderDelegate, ProgrammaticAccessLibrary.NonceLoaderDelegate, AVFoundation.AVPlayerItemMetadataOutputPushDelegate, AVFoundation.AVPlayerItemLegibleOutputPushDelegate {
-  public init(_ callback: any SSAITracking.SigmaSSAIInterface, _ videoView: UIKit.UIView)
+  public init(_ sessionUrl: Swift.String, _ callback: any SSAITracking.SigmaSSAIInterface, _ videoView: UIKit.UIView)
   public func setTrackingUrl(_ url: Swift.String)
   public func setShowLog(_ show: Swift.Bool)
   public func requestNonceManager()
@@ -38,5 +38,4 @@ public protocol SigmaSSAIInterface {
   func onSessionInitSuccess(_ videoUrl: Swift.String)
   func onSessionUpdate(_ videoUrl: Swift.String)
   func onTracking(_ message: Swift.String)
-  func onGetNonceSuccess(_ nonce: Swift.String)
 }

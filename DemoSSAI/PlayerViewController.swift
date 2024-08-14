@@ -34,7 +34,6 @@ import SSAITracking
 
 class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourceLoaderDelegate, AVPlayerItemMetadataCollectorPushDelegate {
     
-    var nonce: String = "";
     var videoUrl: String = "";
     var fullScreenAnimationDuration: TimeInterval {
         return 0.15
@@ -49,7 +48,6 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     var layer: AVPlayerLayer = AVPlayerLayer();
     var ssai: SigmaSSAI?;
     var sessionUrl = "";
-    var fullTrackingUrl = ""
     //change to false if not use sdk ssai cover
     //change time interval tracking
     var playBackTime = 0.0
@@ -61,14 +59,6 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     var labels: [UILabel] = [] // Keep track of UILabels
     func metadataCollector(_ metadataCollector: AVPlayerItemMetadataCollector, didCollect metadataGroups: [AVDateRangeMetadataGroup], indexesOfNewGroups: IndexSet, indexesOfModifiedGroups: IndexSet) {
         //
-    }
-    
-    func onGetNonceSuccess(_ nonce: String) {
-        print("onGetNonceSuccess=>", videoUrl)
-        self.nonce = nonce
-        getVideoAndTrackingUrl()
-        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
-        startPlayer();
     }
     func onSessionUpdate(_ videoUrl: String) {
         stopBtnPressed(UIButton())
@@ -85,13 +75,14 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
             stopBtnPressed(UIButton())
         }
         self.ssai?.clear()
-        self.ssai = SSAITracking.SigmaSSAI.init(self, playerView)
+        self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
     }
     
     func onSessionInitSuccess(_ videoUrl: String) {
         print("onSessionInitSuccess=>", videoUrl)
-//        self.videoUrl = videoUrl
-//        startPlayer();
+        self.videoUrl = videoUrl
+        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
+        startPlayer();
     }
     
     func onTracking(_ message: String) {
@@ -101,7 +92,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     override func viewDidLoad() {
         print("videoUrl=>", videoUrl);
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
-        self.ssai = SSAITracking.SigmaSSAI.init(self, playerView)
+        self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
         //show or hide ssai log
         self.ssai?.setShowLog(true)
     }
@@ -130,37 +121,6 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
             print("Portrait")
             minimizeToFrame()
         }
-    }
-    func getVideoAndTrackingUrl() {
-        let sessionUrlWithNonce = nonce.isEmpty ? sessionUrl : sessionUrl + "?nonce=" + nonce
-        print("sessionUrlWithNonce=>", sessionUrlWithNonce)
-        let dataSession = makeHttpRequestSync(address: sessionUrlWithNonce)
-        let url = URL(string: sessionUrl)
-        let sessionScheme = url?.scheme!
-        let sessionDomain = url?.host!
-        var sessionPort:String = ""
-        if let port = url?.port {
-            sessionPort = String(port)
-        }
-        let trackingUrl:String = dataSession["trackingUrl"] as! String
-        let manifestUrl:String = dataSession["manifestUrl"] as! String
-        let isFullPath = manifestUrl.hasPrefix("http")
-        let isAbsolutePath = manifestUrl.hasPrefix("/")
-        let isRelativePath = manifestUrl.hasPrefix(".")
-        let baseURL = sessionScheme! + "://" + sessionDomain! + (!sessionPort.isEmpty ? ":" + sessionPort : "")
-        if(isFullPath) {
-            videoUrl = manifestUrl
-            fullTrackingUrl = trackingUrl
-        }
-        if(isAbsolutePath) {
-            videoUrl = baseURL + manifestUrl
-            fullTrackingUrl = baseURL + trackingUrl
-        }
-        if(isRelativePath) {
-            videoUrl = URL(string: manifestUrl, relativeTo: URL(string: sessionUrl))!.absoluteString
-            fullTrackingUrl = URL(string: trackingUrl, relativeTo: URL(string: sessionUrl))!.absoluteString
-        }
-        self.ssai?.setTrackingUrl(fullTrackingUrl)
     }
     func minimizeToFrame() {
         UIView.animate(withDuration: fullScreenAnimationDuration) {
@@ -234,26 +194,6 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
             .forEach { $0.removeFromSuperlayer() }
         playerView.backgroundColor = .black
         self.title = ""
-    }
-    
-    func makeHttpRequestSync(address: String) -> Dictionary<String, Any> {
-        print("makeHttpRequestSync=>", address)
-        let url = URL(string: address)
-        let semaphore = DispatchSemaphore(value: 0)
-        
-        var result: String = ""
-        var dataReturn: Dictionary = [String: Any]()
-        
-        let task = URLSession.shared.dataTask(with: url!) { [self](data, response, error) in
-            result = String(data: data!, encoding: String.Encoding.utf8)!
-            dataReturn = convertToDictionary(text: result)!
-            semaphore.signal()
-        }
-        
-        task.resume()
-        semaphore.wait()
-        print("dataReturn=>", dataReturn)
-        return dataReturn
     }
     func convertToDictionary(text: String) -> [String: Any]? {
         if let data = text.data(using: .utf8) {

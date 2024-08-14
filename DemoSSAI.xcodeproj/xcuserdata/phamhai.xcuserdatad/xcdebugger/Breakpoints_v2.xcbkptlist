@@ -408,8 +408,8 @@
             filePath = "DemoSSAI/PlayerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
             landmarkName = "startPlayer()"
             landmarkType = "7">
          </BreakpointContent>
@@ -424,8 +424,8 @@
             filePath = "DemoSSAI/PlayerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "218"
-            endingLineNumber = "218"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
             landmarkName = "startPlayer()"
             landmarkType = "7">
          </BreakpointContent>
@@ -440,8 +440,8 @@
             filePath = "DemoSSAI/PlayerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
             landmarkName = "observeValue(forKeyPath:of:change:context:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -456,25 +456,9 @@
             filePath = "DemoSSAI/PlayerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
             landmarkName = "onTracking(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "CB9C4D52-D795-4FAE-BE8F-A14142408411"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DemoSSAI/PlayerViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "249"
-            endingLineNumber = "249"
-            landmarkName = "makeHttpRequestSync(address:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -504,8 +488,8 @@
             filePath = "../sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "383"
-            endingLineNumber = "383"
+            startingLineNumber = "421"
+            endingLineNumber = "421"
             landmarkName = "openUrl(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -520,13 +504,13 @@
             filePath = "../sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "377"
-            endingLineNumber = "377"
+            startingLineNumber = "415"
+            endingLineNumber = "415"
             landmarkName = "appDidBecomeActive(_:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "FF27FE59-5A82-4457-8183-AB0D4133E7FE - 54a7f8411ea14444"
+                  uuid = "FF27FE59-5A82-4457-8183-AB0D4133E7FE - 54a7f8411ea15085"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -536,12 +520,12 @@
                   urlString = "file:///Users/phamhai/Documents/works/company-project/sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "320"
-                  endingLineNumber = "320"
-                  offsetFromSymbolStart = "32">
+                  startingLineNumber = "415"
+                  endingLineNumber = "415"
+                  offsetFromSymbolStart = "140">
                </Location>
                <Location
-                  uuid = "FF27FE59-5A82-4457-8183-AB0D4133E7FE - 54a7f8411ea15c7b"
+                  uuid = "FF27FE59-5A82-4457-8183-AB0D4133E7FE - 54a7f8411ea15085"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -551,23 +535,8 @@
                   urlString = "file:///Users/phamhai/Documents/works/company-project/sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "381"
-                  endingLineNumber = "381"
-                  offsetFromSymbolStart = "32">
-               </Location>
-               <Location
-                  uuid = "FF27FE59-5A82-4457-8183-AB0D4133E7FE - 54a7f8411ea15dff"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SSAITracking.SigmaSSAI.appDidBecomeActive(__C.UITapGestureRecognizer) -&gt; ()"
-                  moduleName = "SSAITracking"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phamhai/Documents/works/company-project/sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "377"
-                  endingLineNumber = "377"
+                  startingLineNumber = "415"
+                  endingLineNumber = "415"
                   offsetFromSymbolStart = "32">
                </Location>
             </Locations>
@@ -583,13 +552,13 @@
             filePath = "../sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "380"
-            endingLineNumber = "380"
+            startingLineNumber = "418"
+            endingLineNumber = "418"
             landmarkName = "appDidEnterBackground(_:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "8B2C0FB7-053A-43DF-A3C7-2074734B5F3B - aafbdbeaca9b50f"
+                  uuid = "8B2C0FB7-053A-43DF-A3C7-2074734B5F3B - aafbdbeaca9a6c8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -599,12 +568,12 @@
                   urlString = "file:///Users/phamhai/Documents/works/company-project/sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "323"
-                  endingLineNumber = "323"
-                  offsetFromSymbolStart = "32">
+                  startingLineNumber = "418"
+                  endingLineNumber = "418"
+                  offsetFromSymbolStart = "140">
                </Location>
                <Location
-                  uuid = "8B2C0FB7-053A-43DF-A3C7-2074734B5F3B - aafbdbeaca9ad6a"
+                  uuid = "8B2C0FB7-053A-43DF-A3C7-2074734B5F3B - aafbdbeaca9a6c8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -614,23 +583,8 @@
                   urlString = "file:///Users/phamhai/Documents/works/company-project/sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "384"
-                  endingLineNumber = "384"
-                  offsetFromSymbolStart = "32">
-               </Location>
-               <Location
-                  uuid = "8B2C0FB7-053A-43DF-A3C7-2074734B5F3B - aafbdbeaca9adf6"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SSAITracking.SigmaSSAI.appDidEnterBackground(__C.UITapGestureRecognizer) -&gt; ()"
-                  moduleName = "SSAITracking"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/phamhai/Documents/works/company-project/sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "380"
-                  endingLineNumber = "380"
+                  startingLineNumber = "418"
+                  endingLineNumber = "418"
                   offsetFromSymbolStart = "32">
                </Location>
             </Locations>
@@ -646,8 +600,8 @@
             filePath = "../sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "198"
-            endingLineNumber = "198"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
             landmarkName = "metadataOutput(_:didOutputTimedMetadataGroups:from:)"
             landmarkType = "7">
             <Locations>
@@ -688,30 +642,62 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "C4520E8A-1CCB-40EB-A157-E927566D145E"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "483"
-            endingLineNumber = "483"
+            startingLineNumber = "521"
+            endingLineNumber = "521"
             landmarkName = "callTrackingWithType(_:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C4520E8A-1CCB-40EB-A157-E927566D145E - 246ac9fa8a8b0d1e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SSAITracking.SigmaSSAI.callTrackingWithType(Swift.String) -&gt; ()"
+                  moduleName = "SSAITracking"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phamhai/Documents/works/company-project/sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "521"
+                  endingLineNumber = "521"
+                  offsetFromSymbolStart = "1336">
+               </Location>
+               <Location
+                  uuid = "C4520E8A-1CCB-40EB-A157-E927566D145E - 246ac9fa8a8b0d1e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SSAITracking.SigmaSSAI.callTrackingWithType(Swift.String) -&gt; ()"
+                  moduleName = "SSAITracking"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/phamhai/Documents/works/company-project/sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "521"
+                  endingLineNumber = "521"
+                  offsetFromSymbolStart = "1124">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "A4BE1152-104F-4307-84FB-C309DB22C3E9"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DemoSSAI/PlayerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "183"
-            endingLineNumber = "183"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "observeValue(forKeyPath:of:change:context:)"
             landmarkType = "7">
          </BreakpointContent>

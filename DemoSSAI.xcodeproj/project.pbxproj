@@ -15,9 +15,10 @@
 		9B7D8F7627F43D4D00C683D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B7D8F7427F43D4D00C683D4 /* LaunchScreen.storyboard */; };
 		9B7D8F9127F567A300C683D4 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7D8F9027F567A300C683D4 /* PlayerViewController.swift */; };
 		9B85CBF327FAA3A700B7C935 /* AppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B85CBF227FAA3A700B7C935 /* AppUtility.swift */; };
-		9BFAE1732C6C9DC200D6A609 /* SSAITracking.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9BFAE1722C6C9DC200D6A609 /* SSAITracking.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9BFAE1742C6C9E4300D6A609 /* ProgrammaticAccessLibrary.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BDEDB582C5742870097F0B6 /* ProgrammaticAccessLibrary.xcframework */; };
 		9BFAE1752C6C9E4300D6A609 /* ProgrammaticAccessLibrary.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9BDEDB582C5742870097F0B6 /* ProgrammaticAccessLibrary.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9BFAE17E2C6CAD6500D6A609 /* SSAITracking.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BFAE1722C6C9DC200D6A609 /* SSAITracking.xcframework */; };
+		9BFAE17F2C6CAD6500D6A609 /* SSAITracking.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9BFAE1722C6C9DC200D6A609 /* SSAITracking.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,7 +37,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9BFAE1732C6C9DC200D6A609 /* SSAITracking.xcframework in Embed Frameworks */,
+				9BFAE17F2C6CAD6500D6A609 /* SSAITracking.xcframework in Embed Frameworks */,
 				9BFAE1752C6C9E4300D6A609 /* ProgrammaticAccessLibrary.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -64,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9BFAE17E2C6CAD6500D6A609 /* SSAITracking.xcframework in Frameworks */,
 				9BFAE1742C6C9E4300D6A609 /* ProgrammaticAccessLibrary.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

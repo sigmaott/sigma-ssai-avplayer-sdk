@@ -970,6 +970,95 @@
           },
           {
             "kind": "Var",
+            "name": "nonce",
+            "printedName": "nonce",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12SSAITracking9SigmaSSAIC5nonceSSvp",
+            "mangledName": "$s12SSAITracking9SigmaSSAIC5nonceSSvp",
+            "moduleName": "SSAITracking",
+            "isOpen": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12SSAITracking9SigmaSSAIC5nonceSSvg",
+                "mangledName": "$s12SSAITracking9SigmaSSAIC5nonceSSvg",
+                "moduleName": "SSAITracking",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12SSAITracking9SigmaSSAIC5nonceSSvs",
+                "mangledName": "$s12SSAITracking9SigmaSSAIC5nonceSSvs",
+                "moduleName": "SSAITracking",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12SSAITracking9SigmaSSAIC5nonceSSvM",
+                "mangledName": "$s12SSAITracking9SigmaSSAIC5nonceSSvM",
+                "moduleName": "SSAITracking",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
             "name": "videoView",
             "printedName": "videoView",
             "children": [
@@ -3645,13 +3734,19 @@
           {
             "kind": "Constructor",
             "name": "init",
-            "printedName": "init(_:_:)",
+            "printedName": "init(_:_:_:)",
             "children": [
               {
                 "kind": "TypeNominal",
                 "name": "SigmaSSAI",
                 "printedName": "SSAITracking.SigmaSSAI",
                 "usr": "c:@M@SSAITracking@objc(cs)SigmaSSAI"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
               },
               {
                 "kind": "TypeNominal",
@@ -3667,8 +3762,8 @@
               }
             ],
             "declKind": "Constructor",
-            "usr": "s:12SSAITracking9SigmaSSAICyAcA0B13SSAIInterface_p_So6UIViewCtcfc",
-            "mangledName": "$s12SSAITracking9SigmaSSAICyAcA0B13SSAIInterface_p_So6UIViewCtcfc",
+            "usr": "s:12SSAITracking9SigmaSSAICyACSS_AA0B13SSAIInterface_pSo6UIViewCtcfc",
+            "mangledName": "$s12SSAITracking9SigmaSSAICyACSS_AA0B13SSAIInterface_pSo6UIViewCtcfc",
             "moduleName": "SSAITracking",
             "declAttributes": [
               "AccessControl"
@@ -4193,6 +4288,24 @@
             "declAttributes": [
               "AccessControl"
             ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getVideoAndTrackingUrl",
+            "printedName": "getVideoAndTrackingUrl()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12SSAITracking9SigmaSSAIC22getVideoAndTrackingUrlyyF",
+            "mangledName": "$s12SSAITracking9SigmaSSAIC22getVideoAndTrackingUrlyyF",
+            "moduleName": "SSAITracking",
+            "isOpen": true,
             "funcSelfKind": "NonMutating"
           },
           {
@@ -4911,33 +5024,6 @@
             "protocolReq": true,
             "reqNewWitnessTableEntry": true,
             "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
-            "name": "onGetNonceSuccess",
-            "printedName": "onGetNonceSuccess(_:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Void",
-                "printedName": "()"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:12SSAITracking18SigmaSSAIInterfaceP17onGetNonceSuccessyySSF",
-            "mangledName": "$s12SSAITracking18SigmaSSAIInterfaceP17onGetNonceSuccessyySSF",
-            "moduleName": "SSAITracking",
-            "genericSig": "<τ_0_0 where τ_0_0 : SSAITracking.SigmaSSAIInterface>",
-            "sugared_genericSig": "<Self where Self : SSAITracking.SigmaSSAIInterface>",
-            "protocolReq": true,
-            "reqNewWitnessTableEntry": true,
-            "funcSelfKind": "NonMutating"
           }
         ],
         "declKind": "Protocol",
@@ -5123,112 +5209,119 @@
     {
       "filePath": "\/Users\/phamhai\/Documents\/works\/company-project\/sigma-dai-avplayer-ssai-plugin\/SSAITracking\/SigmaSSAI.swift",
       "kind": "StringLiteral",
-      "offset": 1472,
+      "offset": 1434,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/phamhai\/Documents\/works\/company-project\/sigma-dai-avplayer-ssai-plugin\/SSAITracking\/SigmaSSAI.swift",
       "kind": "StringLiteral",
-      "offset": 1498,
+      "offset": 1491,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/phamhai\/Documents\/works\/company-project\/sigma-dai-avplayer-ssai-plugin\/SSAITracking\/SigmaSSAI.swift",
       "kind": "StringLiteral",
-      "offset": 1520,
+      "offset": 1517,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/phamhai\/Documents\/works\/company-project\/sigma-dai-avplayer-ssai-plugin\/SSAITracking\/SigmaSSAI.swift",
+      "kind": "StringLiteral",
+      "offset": 1539,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/phamhai\/Documents\/works\/company-project\/sigma-dai-avplayer-ssai-plugin\/SSAITracking\/SigmaSSAI.swift",
       "kind": "FloatLiteral",
-      "offset": 1640,
+      "offset": 1659,
       "length": 3,
       "value": "0.0"
     },
     {
       "filePath": "\/Users\/phamhai\/Documents\/works\/company-project\/sigma-dai-avplayer-ssai-plugin\/SSAITracking\/SigmaSSAI.swift",
       "kind": "BooleanLiteral",
-      "offset": 1798,
+      "offset": 1817,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/phamhai\/Documents\/works\/company-project\/sigma-dai-avplayer-ssai-plugin\/SSAITracking\/SigmaSSAI.swift",
       "kind": "BooleanLiteral",
-      "offset": 1867,
+      "offset": 1886,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/phamhai\/Documents\/works\/company-project\/sigma-dai-avplayer-ssai-plugin\/SSAITracking\/SigmaSSAI.swift",
       "kind": "BooleanLiteral",
-      "offset": 2017,
+      "offset": 2036,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/phamhai\/Documents\/works\/company-project\/sigma-dai-avplayer-ssai-plugin\/SSAITracking\/SigmaSSAI.swift",
       "kind": "BooleanLiteral",
-      "offset": 2081,
+      "offset": 2100,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/phamhai\/Documents\/works\/company-project\/sigma-dai-avplayer-ssai-plugin\/SSAITracking\/SigmaSSAI.swift",
       "kind": "BooleanLiteral",
-      "offset": 2107,
+      "offset": 2126,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/phamhai\/Documents\/works\/company-project\/sigma-dai-avplayer-ssai-plugin\/SSAITracking\/SigmaSSAI.swift",
       "kind": "BooleanLiteral",
-      "offset": 2135,
+      "offset": 2154,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/phamhai\/Documents\/works\/company-project\/sigma-dai-avplayer-ssai-plugin\/SSAITracking\/SigmaSSAI.swift",
       "kind": "BooleanLiteral",
-      "offset": 2162,
+      "offset": 2181,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/phamhai\/Documents\/works\/company-project\/sigma-dai-avplayer-ssai-plugin\/SSAITracking\/SigmaSSAI.swift",
       "kind": "FloatLiteral",
-      "offset": 2191,
+      "offset": 2210,
       "length": 3,
       "value": "0.5"
     },
     {
       "filePath": "\/Users\/phamhai\/Documents\/works\/company-project\/sigma-dai-avplayer-ssai-plugin\/SSAITracking\/SigmaSSAI.swift",
       "kind": "BooleanLiteral",
-      "offset": 2217,
+      "offset": 2236,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/phamhai\/Documents\/works\/company-project\/sigma-dai-avplayer-ssai-plugin\/SSAITracking\/SigmaSSAI.swift",
       "kind": "StringLiteral",
-      "offset": 2250,
+      "offset": 2269,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/phamhai\/Documents\/works\/company-project\/sigma-dai-avplayer-ssai-plugin\/SSAITracking\/SigmaSSAI.swift",
       "kind": "IntegerLiteral",
-      "offset": 2281,
+      "offset": 2300,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/phamhai\/Documents\/works\/company-project\/sigma-dai-avplayer-ssai-plugin\/SSAITracking\/SigmaSSAI.swift",
       "kind": "BooleanLiteral",
-      "offset": 2301,
+      "offset": 2320,
       "length": 5,
       "value": "false"
     },
