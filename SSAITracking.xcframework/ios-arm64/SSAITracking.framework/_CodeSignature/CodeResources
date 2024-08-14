@@ -4,9 +4,25 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Frameworks/ProgrammaticAccessLibrary.framework/Info.plist</key>
+		<data>
+		Xym89mvwynVfRfylx0G7qwG/lfI=
+		</data>
+		<key>Frameworks/ProgrammaticAccessLibrary.framework/PrivacyInfo.xcprivacy</key>
+		<data>
+		GRD2Yrb8hJyP5rBFtJVBuoF5XwI=
+		</data>
+		<key>Frameworks/ProgrammaticAccessLibrary.framework/ProgrammaticAccessLibrary</key>
+		<data>
+		G+CTjitdHw7kG6ST1hl50OITK7U=
+		</data>
+		<key>Frameworks/ProgrammaticAccessLibrary.framework/_CodeSignature/CodeResources</key>
+		<data>
+		p6t6+jX2/ZIEte8b7QbAShbHbOE=
+		</data>
 		<key>Headers/SSAITracking-Swift.h</key>
 		<data>
-		SdA6zcDE0bcdijErEbLPQv5Bj8A=
+		+EFh/HnEnEQJeRRcWYqfoA6bjlg=
 		</data>
 		<key>Headers/SSAI_Tracking.h</key>
 		<data>
@@ -14,23 +30,31 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		KgwdGI5cnAgaVRWkQbxIutxMcNU=
+		A3l9oXs7wXsHi4a2Ptng2kmzkfc=
 		</data>
 		<key>Modules/SSAITracking.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo</key>
 		<data>
-		Zv0Xzdv0wUuW9Ucarr8oot182zU=
+		HgDvvHouSgHvwil6OFIIxx2E7bA=
+		</data>
+		<key>Modules/SSAITracking.swiftmodule/arm64-apple-ios.abi.json</key>
+		<data>
+		Y3KQwrgsKy+rxLgh8WR2z/4DAM0=
+		</data>
+		<key>Modules/SSAITracking.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
+		<data>
+		xeqzQ/sNRqF/zlZ31CXrMHD1kIg=
 		</data>
 		<key>Modules/SSAITracking.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		kFifX9LAGNz7iJXtohJb3juUb5E=
+		i6qAV7dTt3ommvogIVVbeOeMAsE=
 		</data>
 		<key>Modules/SSAITracking.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		HWWD8qNRzruOHXJNw5WgxrC/MNc=
+		xeqzQ/sNRqF/zlZ31CXrMHD1kIg=
 		</data>
 		<key>Modules/SSAITracking.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		NsDNY9SbmlXtkigyieZW6vb7xCw=
+		3ifryyH6egH33v/aEdPe+lt40LQ=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -39,11 +63,39 @@
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>Frameworks/ProgrammaticAccessLibrary.framework/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			+OSEZr/qE93ZfWXi61qKP8aWoJkKwXWkguLU7SFq3x8=
+			</data>
+		</dict>
+		<key>Frameworks/ProgrammaticAccessLibrary.framework/PrivacyInfo.xcprivacy</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			O4WljswGqBbIRNj/lrwUj15B19j+SosP3CUtPBd7hUs=
+			</data>
+		</dict>
+		<key>Frameworks/ProgrammaticAccessLibrary.framework/ProgrammaticAccessLibrary</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Cu3jBGGsLPSn2VC9Nn8CPYdv+zV8R270DP386dBt/qU=
+			</data>
+		</dict>
+		<key>Frameworks/ProgrammaticAccessLibrary.framework/_CodeSignature/CodeResources</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			/Bo2yTsBtQEW9t4VSAgJo6XIPwzRLuwQPvHfV/PjQBo=
+			</data>
+		</dict>
 		<key>Headers/SSAITracking-Swift.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			gmXYDoKWNONhEnyZbW3R8LQB5Bq6Kt57s79EpBPkDvg=
+			JP0yFifUCKvECQhqZJqz3/KlXKmsRT1pOzO652A8lXs=
 			</data>
 		</dict>
 		<key>Headers/SSAI_Tracking.h</key>
@@ -57,28 +109,42 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			cKHW2vnx4rbAr2B7hD7Bt6gnxNxyaKqNsTRIAeHGO/w=
+			VUrZzlxHnao8tTwS0KeOO0g8f9xqLVaoeEXstuDEFkk=
+			</data>
+		</dict>
+		<key>Modules/SSAITracking.swiftmodule/arm64-apple-ios.abi.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			WOn5z6+qoiVlh8eMlrDJPA3zIDhTlDIXvDwuLofrXE0=
+			</data>
+		</dict>
+		<key>Modules/SSAITracking.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			9bYENuX4K/2KoAFMqFooztVR+GgX7E6cgl/vK35l3RE=
 			</data>
 		</dict>
 		<key>Modules/SSAITracking.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			kQLk2nMpA6CyE28XB3LNDWOJMDh2Y5zsLO1M7KXi4Fg=
+			0yM/IDtmryg3K6QGMSyLgq29SF/ew1EI5IKXLuJmapI=
 			</data>
 		</dict>
 		<key>Modules/SSAITracking.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			PJLr5WRlip6pwbsnnL5qhqGZtM7Xf0safg4GsvqDECo=
+			9bYENuX4K/2KoAFMqFooztVR+GgX7E6cgl/vK35l3RE=
 			</data>
 		</dict>
 		<key>Modules/SSAITracking.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			8ROVk2AcrBq6eLWioEBjqg78Nj+e2gfPt/GCpxJ5a7E=
+			tKRCVhOmMjEuFMZ0bB+87KH3UKQjQeZgjhOI9FY5kzw=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
