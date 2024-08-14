@@ -15,10 +15,10 @@
 		9B7D8F7627F43D4D00C683D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B7D8F7427F43D4D00C683D4 /* LaunchScreen.storyboard */; };
 		9B7D8F9127F567A300C683D4 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7D8F9027F567A300C683D4 /* PlayerViewController.swift */; };
 		9B85CBF327FAA3A700B7C935 /* AppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B85CBF227FAA3A700B7C935 /* AppUtility.swift */; };
-		9BFAE1742C6C9E4300D6A609 /* ProgrammaticAccessLibrary.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BDEDB582C5742870097F0B6 /* ProgrammaticAccessLibrary.xcframework */; };
-		9BFAE1752C6C9E4300D6A609 /* ProgrammaticAccessLibrary.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9BDEDB582C5742870097F0B6 /* ProgrammaticAccessLibrary.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9BFAE17E2C6CAD6500D6A609 /* SSAITracking.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BFAE1722C6C9DC200D6A609 /* SSAITracking.xcframework */; };
 		9BFAE17F2C6CAD6500D6A609 /* SSAITracking.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9BFAE1722C6C9DC200D6A609 /* SSAITracking.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9BFAE1812C6CB39600D6A609 /* ProgrammaticAccessLibrary.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BFAE1802C6CB39600D6A609 /* ProgrammaticAccessLibrary.xcframework */; };
+		9BFAE1822C6CB39600D6A609 /* ProgrammaticAccessLibrary.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9BFAE1802C6CB39600D6A609 /* ProgrammaticAccessLibrary.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,7 +38,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				9BFAE17F2C6CAD6500D6A609 /* SSAITracking.xcframework in Embed Frameworks */,
-				9BFAE1752C6C9E4300D6A609 /* ProgrammaticAccessLibrary.xcframework in Embed Frameworks */,
+				9BFAE1822C6CB39600D6A609 /* ProgrammaticAccessLibrary.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -56,8 +56,8 @@
 		9B7D8F7727F43D4D00C683D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B7D8F9027F567A300C683D4 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		9B85CBF227FAA3A700B7C935 /* AppUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtility.swift; sourceTree = "<group>"; };
-		9BDEDB582C5742870097F0B6 /* ProgrammaticAccessLibrary.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:EQHXZ8M8AV:Google LLC"; lastKnownFileType = wrapper.xcframework; name = ProgrammaticAccessLibrary.xcframework; path = "../sigma-dai-avplayer-ssai-plugin/libs/ProgrammaticAccessLibrary.xcframework"; sourceTree = "<group>"; };
 		9BFAE1722C6C9DC200D6A609 /* SSAITracking.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = SSAITracking.xcframework; sourceTree = "<group>"; };
+		9BFAE1802C6CB39600D6A609 /* ProgrammaticAccessLibrary.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:EQHXZ8M8AV:Google LLC"; lastKnownFileType = wrapper.xcframework; path = ProgrammaticAccessLibrary.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,7 +66,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BFAE17E2C6CAD6500D6A609 /* SSAITracking.xcframework in Frameworks */,
-				9BFAE1742C6C9E4300D6A609 /* ProgrammaticAccessLibrary.xcframework in Frameworks */,
+				9BFAE1812C6CB39600D6A609 /* ProgrammaticAccessLibrary.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,7 +110,7 @@
 		9B7D8F8627F43E1F00C683D4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9BDEDB582C5742870097F0B6 /* ProgrammaticAccessLibrary.xcframework */,
+				9BFAE1802C6CB39600D6A609 /* ProgrammaticAccessLibrary.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
