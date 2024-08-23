@@ -168,7 +168,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
                 if let duration = self.playerItem?.duration {
                     let seconds = CMTimeGetSeconds(duration)
                 }
-                playBackTime = CMTimeGetSeconds((self.videoPlayer?.currentTime())!)
+                playBackTime = self.videoPlayer?.currentTime() != nil ? CMTimeGetSeconds((self.videoPlayer?.currentTime())!) : 0
             }
             videoPlayer?.volume = 1.0
             
