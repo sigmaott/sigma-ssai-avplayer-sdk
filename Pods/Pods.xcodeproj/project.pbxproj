@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -16,7 +16,6 @@
 			dependencies = (
 			);
 			name = SSAITracking;
-			productName = SSAITracking;
 		};
 /* End PBXAggregateTarget section */
 
@@ -41,7 +40,7 @@
 		13ABFE828DF0A655A43534EB034C38A0 /* Pods-DemoSSAI */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-DemoSSAI"; path = Pods_DemoSSAI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1502154774F9183F89FE7ACA55BD03C2 /* Pods-DemoSSAI-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DemoSSAI-Info.plist"; sourceTree = "<group>"; };
 		151769723AB08F7EAC8E80A8FE14DE75 /* Pods-DemoSSAI-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DemoSSAI-acknowledgements.markdown"; sourceTree = "<group>"; };
-		2DD86B64961DD4CABC22C407F8A2B020 /* SSAITracking.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; path = SSAITracking.xcframework; sourceTree = "<group>"; };
+		2DD86B64961DD4CABC22C407F8A2B020 /* SSAITracking.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; path = SSAITracking.xcframework; sourceTree = "<group>"; };
 		3162829E13A269B2DBFECEFEC6E199E9 /* Pods-DemoSSAI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DemoSSAI.release.xcconfig"; sourceTree = "<group>"; };
 		4F26DD505E4F77DF32C1B4082AAB3A57 /* SSAITracking-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "SSAITracking-xcframeworks.sh"; sourceTree = "<group>"; };
 		542178F509FFBFDE77A6961E147D0FF0 /* Pods-DemoSSAI-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-DemoSSAI-umbrella.h"; sourceTree = "<group>"; };
@@ -50,9 +49,9 @@
 		5D1624785FE87C1F698A378EF59BDDD3 /* Pods-DemoSSAI-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DemoSSAI-acknowledgements.plist"; sourceTree = "<group>"; };
 		6BB3A960503A2C592C83A86E21FAB1DE /* Pods-DemoSSAI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DemoSSAI.debug.xcconfig"; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BD8CFB87D94DF80D0269E243C202EA40 /* SSAITracking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SSAITracking.debug.xcconfig; sourceTree = "<group>"; };
-		D125DD9C23FAC4154CCC73308697EEA5 /* ProgrammaticAccessLibrary.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:EQHXZ8M8AV:Google LLC"; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = ProgrammaticAccessLibrary.xcframework; path = libs/ProgrammaticAccessLibrary.xcframework; sourceTree = "<group>"; };
+		D125DD9C23FAC4154CCC73308697EEA5 /* ProgrammaticAccessLibrary.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = ProgrammaticAccessLibrary.xcframework; path = libs/ProgrammaticAccessLibrary.xcframework; sourceTree = "<group>"; };
 		EE8E500AB6DCC0E2EE38531CD152A84D /* Pods-DemoSSAI-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DemoSSAI-frameworks.sh"; sourceTree = "<group>"; };
 		EFEB8D979B935E3C24C6434D548ED062 /* SSAI_Tracking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSAI_Tracking.h; path = SSAITracking/SSAI_Tracking.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -92,6 +91,7 @@
 				C91516249BC713AB90CC8B61B32ECF2B /* Frameworks */,
 				3091DDCE498DBEBAFBB649F9601F109C /* Support Files */,
 			);
+			name = SSAITracking;
 			path = SSAITracking;
 			sourceTree = "<group>";
 		};

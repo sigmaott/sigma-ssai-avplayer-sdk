@@ -1,7 +1,0 @@
-framework module ProgrammaticAccessLibrary {
-  umbrella header "ProgrammaticAccessLibrary.h"
-  
-
-  export *
-  module * { export * }
-}

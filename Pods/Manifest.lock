@@ -1,5 +1,5 @@
 PODS:
-  - SSAITracking (1.0.6)
+  - SSAITracking (1.0.7)
 
 DEPENDENCIES:
   - SSAITracking (~> 1.0)
@@ -9,7 +9,7 @@ SPEC REPOS:
     - SSAITracking
 
 SPEC CHECKSUMS:
-  SSAITracking: 6e538bfd220f6a999727bbf20cfb3810ddd464c1
+  SSAITracking: 30f21c8811c104d3750b32510af0ef05797452b2
 
 PODFILE CHECKSUM: d0d15a64c027d225a78b26d45d0227d28f38c52c
 
