@@ -1,0 +1,16 @@
+PODS:
+  - SSAITracking (1.0.7)
+
+DEPENDENCIES:
+  - SSAITracking (= 1.0.7)
+
+SPEC REPOS:
+  trunk:
+    - SSAITracking
+
+SPEC CHECKSUMS:
+  SSAITracking: 30f21c8811c104d3750b32510af0ef05797452b2
+
+PODFILE CHECKSUM: 7feddae21c0aff0753f29461b7eed6e479b0d9d9
+
+COCOAPODS: 1.15.2
