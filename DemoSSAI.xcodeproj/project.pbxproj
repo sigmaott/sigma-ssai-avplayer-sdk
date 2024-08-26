@@ -44,7 +44,6 @@
 		9B7D8F7727F43D4D00C683D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B7D8F9027F567A300C683D4 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		9B85CBF227FAA3A700B7C935 /* AppUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtility.swift; sourceTree = "<group>"; };
-		9BFAE1722C6C9DC200D6A609 /* SSAITracking.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = SSAITracking.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +70,6 @@
 		9B7D8F5D27F43D4000C683D4 = {
 			isa = PBXGroup;
 			children = (
-				9BFAE1722C6C9DC200D6A609 /* SSAITracking.xcframework */,
 				9B85CBF227FAA3A700B7C935 /* AppUtility.swift */,
 				9B7D8F6827F43D4000C683D4 /* DemoSSAI */,
 				9B7D8F6727F43D4000C683D4 /* Products */,

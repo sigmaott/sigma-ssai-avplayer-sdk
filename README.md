@@ -2,26 +2,22 @@
 
 ## Requirement: IOS 12.4+
 
-### I. Embed SSAITracking.xcframework and ProgrammaticAccessLibrary.xcframework in project’s target
+### I. Declare library SSAITracking in Podfile
 
-Project -> app target -> General -> Embedded Binaries
+```swift
+pod 'SSAITracking', '1.0.7'
+```
 
-![ssai_step_1](https://i.ibb.co/nR7v7H6/ssai-step-1.png)
+cd to your project and run
 
-![ssai_step_2](https://i.ibb.co/Hq13d4c/ssai-step-2.jpg)
-
-![ssai_step_3](https://i.ibb.co/0QsP5r0/Screen-Shot-2023-01-17-at-13-40-40.png)
-
-![ssai_step_4](https://i.ibb.co/Z6PW1zL/ssai-step-4.jpg)
-
-To embed **ProgrammaticAccessLibrary.xcframework** do the same as **SSAITracking.xcframework**. When choosing a file, select **ProgrammaticAccessLibrary.xcframework**
-
-![ssai_step_5](https://i.ibb.co/z4cCYw4/Screenshot-2024-08-14-at-16-44-33.png)
+```swift
+pod install
+```
 
 ### II. Init SDK
 
 ```swift
-   self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
+self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
 ```
 
    ``sessionUrl``: Link session (get link video and link tracking)
