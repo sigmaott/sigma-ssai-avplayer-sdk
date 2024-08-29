@@ -16,17 +16,26 @@ pod install
 
 ### II. Init SDK
 
+Implement SigmaSSAIInterface (To listen for SSAI events call and execute app logic if needed)
+
+```swift
+class PlayerViewController: SigmaSSAIInterface
+```
+
+Init sdk
+
 ```swift
 self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
 ```
 
    ``sessionUrl``: Link session (get link video and link tracking)
 
-   ``self``: Implement SigmaSSAIInterface (To listen for SSAI events call and execute app logic if needed)
+   ``self``: Your class implement SigmaSSAIInterface
 
    ``playerView``: Player UIView
 
 ### III. How to use
+
 1. Import SSAITracking:
 
    ```swift
@@ -37,7 +46,16 @@ self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
    ```swift
    var ssai: SigmaSSAI?;
    ```
-3. Listen event **onSessionInitSuccess** to start player
+3. Init sdk from **II** when view loaded
+
+   ```swift
+   override func viewDidLoad() {
+           self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
+           //show or hide ssai log
+           self.ssai?.setShowLog(true)
+       }
+   ```
+4. Listen event **onSessionInitSuccess** to start player
 
 ```swift
 func onSessionInitSuccess(_ videoUrl: String) {
