@@ -27,19 +27,17 @@ self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
    ``playerView``: Player UIView
 
 ### III. How to use
-
-1. Embed SSAITracking.xcframework in project’s target (from **I**).
-2. Import SSAITracking:
+1. Import SSAITracking:
 
    ```swift
    import SSAITracking
    ```
-3. Create variable ssai type SigmaSSAI.
+2. Create variable ssai type SigmaSSAI.
 
    ```swift
    var ssai: SigmaSSAI?;
    ```
-4. Listen event **onSessionInitSuccess** to start player
+3. Listen event **onSessionInitSuccess** to start player
 
 ```swift
 func onSessionInitSuccess(_ videoUrl: String) {
@@ -49,13 +47,13 @@ func onSessionInitSuccess(_ videoUrl: String) {
     }
 ```
 
-5. List Listener functional to execute app logic if needed
+4. List Listener functional to execute app logic if needed
 
    ``onSessionFail()`` - When sdk get data session fail
 
    ``onTracking(_ message: String)`` - When sdk make call 1 ads tracking request
 
    ``onSessionUpdate(_ videoUrl: String)`` - When sdk update link video
-6. Public method
+5. Public method
 
    ``clear()`` - To remove all data sdk
