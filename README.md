@@ -16,28 +16,44 @@ pod install
 
 ### II. Init SDK
 
+Implement SigmaSSAIInterface (To listen for SSAI events call and execute app logic if needed)
+
+```swift
+class PlayerViewController: SigmaSSAIInterface
+```
+
+Init sdk
+
 ```swift
 self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
 ```
 
    ``sessionUrl``: Link session (get link video and link tracking)
 
-   ``self``: Implement SigmaSSAIInterface (To listen for SSAI events call and execute app logic if needed)
+   ``self``: Your class implement SigmaSSAIInterface
 
    ``playerView``: Player UIView
 
 ### III. How to use
 
-1. Embed SSAITracking.xcframework in project’s target (from **I**).
-2. Import SSAITracking:
+1. Import SSAITracking:
 
    ```swift
    import SSAITracking
    ```
-3. Create variable ssai type SigmaSSAI.
+2. Create variable ssai type SigmaSSAI.
 
    ```swift
    var ssai: SigmaSSAI?;
+   ```
+3. Init sdk from **II** when view loaded
+
+   ```swift
+   override func viewDidLoad() {
+           self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
+           //show or hide ssai log
+           self.ssai?.setShowLog(true)
+       }
    ```
 4. Listen event **onSessionInitSuccess** to start player
 
@@ -49,13 +65,13 @@ func onSessionInitSuccess(_ videoUrl: String) {
     }
 ```
 
-5. List Listener functional to execute app logic if needed
+4. List Listener functional to execute app logic if needed
 
    ``onSessionFail()`` - When sdk get data session fail
 
    ``onTracking(_ message: String)`` - When sdk make call 1 ads tracking request
 
    ``onSessionUpdate(_ videoUrl: String)`` - When sdk update link video
-6. Public method
+5. Public method
 
    ``clear()`` - To remove all data sdk
