@@ -5,7 +5,7 @@
 ### I. Declare library SSAITracking in Podfile
 
 ```swift
-pod 'SSAITracking', '1.0.7'
+pod 'SSAITracking', '1.0.9'
 ```
 
 cd to your project and run
@@ -67,7 +67,7 @@ func onSessionInitSuccess(_ videoUrl: String) {
 
 4. List Listener functional to execute app logic if needed
 
-   ``onSessionFail()`` - When sdk get data session fail
+   ``onSessionFail(_ message: String)`` - When sdk get data session fail (status code other than 200 or returns data with incorrect structure)
 
    ``onTracking(_ message: String)`` - When sdk make call 1 ads tracking request
 
