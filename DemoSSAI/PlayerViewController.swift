@@ -69,13 +69,8 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         startPlayer();
     }
     //event when session fail
-    func onSessionFail() {
-        print("onSessionFailSSAI=>onSessionFail")
-        DispatchQueue.main.sync {
-            stopBtnPressed(UIButton())
-        }
-        self.ssai?.clear()
-        self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
+    func onSessionFail(_ message: String) {
+        print("onSessionFailSSAI=>\(message)")
     }
     
     func onSessionInitSuccess(_ videoUrl: String) {
@@ -185,7 +180,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     
     func stopBtnPressed(_ sender: Any) {
         videoUrl = ""
-        self.ssai?.clear()
+//        self.ssai?.clear()
         videoPlayer?.pause()
         videoPlayer = nil
         playerView.layer.sublayers?
