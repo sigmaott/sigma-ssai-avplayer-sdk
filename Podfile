@@ -6,6 +6,6 @@ target 'DemoSSAI' do
 #  use_frameworks!
 
   # Pods for DemoSSAI
- pod 'SSAITracking', '1.0.9'
+ pod 'SSAITracking', '1.0.12'
 
 end

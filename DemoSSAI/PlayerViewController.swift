@@ -88,7 +88,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
         self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
         //show or hide ssai log
-//        self.ssai?.setShowLog(true)
+        self.ssai?.setShowLog(true)
     }
     override func viewWillDisappear(_ animated: Bool) {
         print("Player viewWillDisappear", animated);

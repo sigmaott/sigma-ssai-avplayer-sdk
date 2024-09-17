@@ -490,8 +490,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "506"
             endingLineNumber = "506"
-            landmarkName = "checkAdsPlaying()"
-            landmarkType = "9">
+            landmarkName = "checkPlayerState()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -507,7 +507,7 @@
             startingLineNumber = "500"
             endingLineNumber = "500"
             landmarkName = "formatDataTracking(data:)"
-            landmarkType = "9">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -522,8 +522,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "503"
             endingLineNumber = "503"
-            landmarkName = "checkPlayerState()"
-            landmarkType = "9">
+            landmarkName = "SigmaSSAI"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -587,7 +587,7 @@
             startingLineNumber = "606"
             endingLineNumber = "606"
             landmarkName = "hideIconWta()"
-            landmarkType = "9">
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "C4520E8A-1CCB-40EB-A157-E927566D145E - 246ac9fa8a8b0d1e"
