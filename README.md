@@ -5,7 +5,7 @@
 ### I. Declare library SSAITracking in Podfile
 
 ```swift
-pod 'SSAITracking', '1.0.9'
+pod 'SSAITracking', '1.0.14'
 ```
 
 cd to your project and run
