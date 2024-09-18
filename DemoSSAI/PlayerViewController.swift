@@ -60,14 +60,6 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     func metadataCollector(_ metadataCollector: AVPlayerItemMetadataCollector, didCollect metadataGroups: [AVDateRangeMetadataGroup], indexesOfNewGroups: IndexSet, indexesOfModifiedGroups: IndexSet) {
         //
     }
-    func onSessionUpdate(_ videoUrl: String) {
-        stopBtnPressed(UIButton())
-        print("onSessionUpdate=>")
-        print("onSessionUpdate=>", videoUrl)
-        self.videoUrl = videoUrl
-        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
-        startPlayer();
-    }
     //event when session fail
     func onSessionFail(_ message: String) {
         print("onSessionFailSSAI=>\(message)")
@@ -153,7 +145,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
             let asset = AVURLAsset(url: url, options: nil);
             playerItem = AVPlayerItem(asset: asset)
             videoPlayer = AVPlayer(playerItem: playerItem)
-            self.ssai?.setPlayer(videoPlayer!, avPlayerLayer: layer)
+            self.ssai?.setPlayer(videoPlayer!)
             videoPlayer?.addObserver(self, forKeyPath: "status", options: [], context: nil)
             // listen the current time of playing video
             videoPlayer?.addPeriodicTimeObserver(forInterval: CMTime(seconds: Double(0.5), preferredTimescale: 2), queue: DispatchQueue.main) { [weak self] (sec) in
@@ -180,7 +172,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     
     func stopBtnPressed(_ sender: Any) {
         videoUrl = ""
-//        self.ssai?.clear()
+        self.ssai?.clear()
         videoPlayer?.pause()
         videoPlayer = nil
         playerView.layer.sublayers?

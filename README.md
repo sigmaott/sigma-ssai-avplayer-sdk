@@ -5,7 +5,7 @@
 ### I. Declare library SSAITracking in Podfile
 
 ```swift
-pod 'SSAITracking', '1.0.14'
+pod 'SSAITracking', '1.0.19'
 ```
 
 cd to your project and run
@@ -65,13 +65,20 @@ func onSessionInitSuccess(_ videoUrl: String) {
     }
 ```
 
-4. List Listener functional to execute app logic if needed
+5. Call **setPlayer** after init player
+
+```swift
+let asset = AVURLAsset(url: url, options: nil);
+playerItem = AVPlayerItem(asset: asset)
+videoPlayer = AVPlayer(playerItem: playerItem)
+self.ssai?.setPlayer(videoPlayer!)
+```
+
+6. List Listener functional to execute app logic if needed
 
    ``onSessionFail(_ message: String)`` - When sdk get data session fail (status code other than 200 or returns data with incorrect structure)
 
    ``onTracking(_ message: String)`` - When sdk make call 1 ads tracking request
-
-   ``onSessionUpdate(_ videoUrl: String)`` - When sdk update link video
-5. Public method
+7. Public method
 
    ``clear()`` - To remove all data sdk
