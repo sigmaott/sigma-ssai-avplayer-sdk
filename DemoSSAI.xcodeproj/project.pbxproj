@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,8 +15,6 @@
 		9B7D8F7627F43D4D00C683D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B7D8F7427F43D4D00C683D4 /* LaunchScreen.storyboard */; };
 		9B7D8F9127F567A300C683D4 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7D8F9027F567A300C683D4 /* PlayerViewController.swift */; };
 		9B85CBF327FAA3A700B7C935 /* AppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B85CBF227FAA3A700B7C935 /* AppUtility.swift */; };
-		9BE88BF82C8FE7B600B5FA99 /* ProgrammaticAccessLibrary.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BE88BF72C8FE7B600B5FA99 /* ProgrammaticAccessLibrary.xcframework */; };
-		9BE88BF92C8FE7B600B5FA99 /* ProgrammaticAccessLibrary.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9BE88BF72C8FE7B600B5FA99 /* ProgrammaticAccessLibrary.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F06D8213C46F58EA2FBE8B3F /* libPods-DemoSSAI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ECF90B095AE7F06D16B0872 /* libPods-DemoSSAI.a */; };
 /* End PBXBuildFile section */
 
@@ -36,7 +34,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9BE88BF92C8FE7B600B5FA99 /* ProgrammaticAccessLibrary.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -56,7 +53,6 @@
 		9B7D8F7727F43D4D00C683D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B7D8F9027F567A300C683D4 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		9B85CBF227FAA3A700B7C935 /* AppUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtility.swift; sourceTree = "<group>"; };
-		9BE88BF72C8FE7B600B5FA99 /* ProgrammaticAccessLibrary.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:EQHXZ8M8AV:Google LLC"; lastKnownFileType = wrapper.xcframework; name = ProgrammaticAccessLibrary.xcframework; path = "../sigma-dai-avplayer-ssai-plugin/libs/ProgrammaticAccessLibrary.xcframework"; sourceTree = "<group>"; };
 		D9BDA818F9EEF8BD13D9E66C /* Pods-DemoSSAI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoSSAI.debug.xcconfig"; path = "Target Support Files/Pods-DemoSSAI/Pods-DemoSSAI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,7 +62,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F06D8213C46F58EA2FBE8B3F /* libPods-DemoSSAI.a in Frameworks */,
-				9BE88BF82C8FE7B600B5FA99 /* ProgrammaticAccessLibrary.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,7 +80,6 @@
 		2E70C2F093B16FE060ECF291 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9BE88BF72C8FE7B600B5FA99 /* ProgrammaticAccessLibrary.xcframework */,
 				2ECF90B095AE7F06D16B0872 /* libPods-DemoSSAI.a */,
 			);
 			name = Frameworks;
@@ -138,7 +132,7 @@
 				9B7D8F6427F43D4000C683D4 /* Resources */,
 				9BBF1B83288FDC06003A6DF2 /* CopyFiles */,
 				9BE88BE92C8811EF00B5FA99 /* Embed Frameworks */,
-				52F8A7A70D716FC5849B5423 /* [CP] Embed Pods Frameworks */,
+				653789AA527BC60CC270CCD4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -196,7 +190,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		52F8A7A70D716FC5849B5423 /* [CP] Embed Pods Frameworks */ = {
+		653789AA527BC60CC270CCD4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
