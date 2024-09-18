@@ -45,21 +45,20 @@ class ViewController: UIViewController {
     @IBAction func openInteractive(_ sender: UIButton) {
         print("open interactive=>", txtVideoUrl.text!);
         let videoUrl = txtVideoUrl.text!;
-        let isEmptyVideoUrl = videoUrl.trimmingCharacters(in: .whitespacesAndNewlines).count == 0 || (!videoUrl.hasPrefix("http://") && !videoUrl.hasPrefix("https://"));
-        if(isEmptyVideoUrl) {
-            txtError.text = "Value incorrect";
-        } else {
+        if URL(string: videoUrl) != nil {
             txtError.text = "";
             self.view.endEditing(true);
             let story = UIStoryboard(name: "Main", bundle: nil);
             let controller = story.instantiateViewController(withIdentifier: "demoPlayer") as! PlayerViewController;
 //            let ViewController = ViewController(nibName: "PlayerViewController", bundle: nil);
-            controller.videoUrl = videoUrl;
+            controller.videoUrl = "";
             controller.sessionUrl = videoUrl;
             controller.bottomSafeArea = bottomSafeArea;
             controller.topSafeArea = topSafeArea
             self.navigationController?.pushViewController(controller, animated: true);
 //            self.present(controller, animated: true, completion: nil);
+        } else {
+            txtError.text = "Value incorrect";
         }
     }
 }
