@@ -2,6 +2,17 @@
 
 ## Requirement: IOS 12.4+
 
+## Prepare for iOS 14+
+
+Need request App Tracking Transparency authorization
+
+To display the App Tracking Transparency authorization request for accessing the IDFA, update your `Info.plist` to add the `NSUserTrackingUsageDescription` key with a custom message describing your usage. Here is an example description text:
+
+```
+<key>NSUserTrackingUsageDescription</key>
+<string>This identifier will be used to deliver personalized ads to you.</string>
+```
+
 ### I. Declare library SSAITracking in Podfile
 
 ```swift
