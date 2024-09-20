@@ -68,10 +68,13 @@ func onSessionInitSuccess(_ videoUrl: String) {
 5. Call **setPlayer** after init player
 
 ```swift
-let asset = AVURLAsset(url: url, options: nil);
-playerItem = AVPlayerItem(asset: asset)
-videoPlayer = AVPlayer(playerItem: playerItem)
-self.ssai?.setPlayer(videoPlayer!)
+func startPlayer() {
+    let asset = AVURLAsset(url:videoUrl, options: nil);
+    playerItem = AVPlayerItem(asset: asset)
+    videoPlayer = AVPlayer(playerItem: playerItem)
+    //set player for sdk
+    self.ssai?.setPlayer(videoPlayer!)
+}
 ```
 
 6. List Listener functional to execute app logic if needed
@@ -81,4 +84,4 @@ self.ssai?.setPlayer(videoPlayer!)
    ``onTracking(_ message: String)`` - When sdk make call 1 ads tracking request
 7. Public method
 
-   ``clear()`` - To remove all data sdk
+   ``clear()`` - To remove all data sdk (call when change video url or session url or release player)
