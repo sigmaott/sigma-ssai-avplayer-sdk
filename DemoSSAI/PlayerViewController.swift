@@ -81,7 +81,60 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
         //show or hide ssai log
         self.ssai?.setShowLog(true)
+        // Create the button
+        let button = UIButton(type: .system)
+        button.setTitle("Change", for: .normal)
+        button.addTarget(self, action: #selector(changeSessionUrl), for: .touchUpInside)
+        
+        // Set button frame (or use Auto Layout)
+        button.frame = CGRect(x: 10, y: 100, width: 100, height: 50)// Set background color
+        button.backgroundColor = UIColor.gray
+        button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 12, bottom: 5, right: 12)
+
+        // Set corner radius
+        button.layer.cornerRadius = 10
+        button.clipsToBounds = true // Ensure the corner radius is applied
+        
+        // Set title color for better visibility
+        button.setTitleColor(.white, for: .normal)
+        
+        // Add the button to the view
+        view.addSubview(button)
+        // change video url
+//        let buttonChangeVideoUrl = UIButton(type: .system)
+//        buttonChangeVideoUrl.setTitle("Change", for: .normal)
+//        buttonChangeVideoUrl.addTarget(self, action: #selector(changeVideoUrl), for: .touchUpInside)
+//        
+//        // Set button frame (or use Auto Layout)
+//        buttonChangeVideoUrl.frame = CGRect(x: 10, y: 150, width: 100, height: 50)// Set background color
+//        buttonChangeVideoUrl.backgroundColor = UIColor.gray
+//        buttonChangeVideoUrl.contentEdgeInsets = UIEdgeInsets(top: 5, left: 12, bottom: 5, right: 12)
+//
+//        // Set corner radius
+//        buttonChangeVideoUrl.layer.cornerRadius = 10
+//        buttonChangeVideoUrl.clipsToBounds = true // Ensure the corner radius is applied
+//        
+//        // Set title color for better visibility
+//        buttonChangeVideoUrl.setTitleColor(.white, for: .normal)
+//        
+//        // Add the button to the view
+//        view.addSubview(buttonChangeVideoUrl)
     }
+    @objc func changeSessionUrl() {
+        stopBtnPressed(UIButton())
+        sessionUrl = sessionUrl == "http://123.31.18.25:2180/manifest/manipulation/session/7d47b94e-7e65-4f9f-9fcf-9f104032ac0d/origin04/scte35-av4s-clear/master.m3u8" ? "https://vtvgolive-ssai.vtvdigital.vn/J2Jn4_Rz5-nFrKpNB6kvzw/1834651569/manifest/manipulation/session/a78b13b7-e735-47e8-90a0-4406b0769e2a/manifest/vtv3-ssai/master.m3u8?session.prefix_path=/J2Jn4_Rz5-nFrKpNB6kvzw/1834651569&ssai=true" : "http://123.31.18.25:2180/manifest/manipulation/session/7d47b94e-7e65-4f9f-9fcf-9f104032ac0d/origin04/scte35-av4s-clear/master.m3u8"
+        self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
+        self.ssai?.setShowLog(true)
+    }
+//    @objc func changeVideoUrl() {
+//        let newPlayerItem = AVPlayerItem(url: URL(string: videoUrl == "http://123.31.18.25:2180/manifest/manipulation/master/7d47b94e-7e65-4f9f-9fcf-9f104032ac0d/origin04/scte35-av4s-clear/master.m3u8" ? "https://vtvgolive-ssai.vtvdigital.vn/J2Jn4_Rz5-nFrKpNB6kvzw/1834651569/manifest/manipulation/master/a78b13b7-e735-47e8-90a0-4406b0769e2a/manifest/vtv3-ssai/master.m3u8?sessionId=4e8d5bf2-115b-431a-9ee6-59295ff2adc9" : "http://123.31.18.25:2180/manifest/manipulation/master/7d47b94e-7e65-4f9f-9fcf-9f104032ac0d/origin04/scte35-av4s-clear/master.m3u8")!)
+//                
+//                // Replace the current item with the new one
+//                videoPlayer?.replaceCurrentItem(with: newPlayerItem)
+//                
+//                // Optionally, start playing the new video
+//                videoPlayer?.play()
+//    }
     override func viewWillDisappear(_ animated: Bool) {
         print("Player viewWillDisappear", animated);
         stopBtnPressed(UIButton())
@@ -175,6 +228,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         self.ssai?.clear()
         videoPlayer?.pause()
         videoPlayer = nil
+        self.ssai = nil
         playerView.layer.sublayers?
             .filter { $0 is AVPlayerLayer }
             .forEach { $0.removeFromSuperlayer() }
