@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,8 +15,22 @@
 		9B7D8F7627F43D4D00C683D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B7D8F7427F43D4D00C683D4 /* LaunchScreen.storyboard */; };
 		9B7D8F9127F567A300C683D4 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7D8F9027F567A300C683D4 /* PlayerViewController.swift */; };
 		9B85CBF327FAA3A700B7C935 /* AppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B85CBF227FAA3A700B7C935 /* AppUtility.swift */; };
+		9BBB25C42CB7B94300171942 /* ProgrammaticAccessLibrary.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BBB25C32CB7B94300171942 /* ProgrammaticAccessLibrary.xcframework */; };
+		9BBB25C52CB7B94300171942 /* ProgrammaticAccessLibrary.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9BBB25C32CB7B94300171942 /* ProgrammaticAccessLibrary.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9BBB25C62CB7B94F00171942 /* SSAITracking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BBB25C22CB7B92800171942 /* SSAITracking.framework */; };
+		9BBB25C72CB7B94F00171942 /* SSAITracking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9BBB25C22CB7B92800171942 /* SSAITracking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F06D8213C46F58EA2FBE8B3F /* libPods-DemoSSAI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ECF90B095AE7F06D16B0872 /* libPods-DemoSSAI.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9BBB25C12CB7B92800171942 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9BBB25BD2CB7B92800171942 /* SSAITracking.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9B38D54F29668DD4009012B9;
+			remoteInfo = SSAITracking;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		9B2933E22C9C06DC00547252 /* Embed Frameworks */ = {
@@ -25,6 +39,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				9BBB25C52CB7B94300171942 /* ProgrammaticAccessLibrary.xcframework in Embed Frameworks */,
+				9BBB25C72CB7B94F00171942 /* SSAITracking.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -53,6 +69,8 @@
 		9B7D8F7727F43D4D00C683D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B7D8F9027F567A300C683D4 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		9B85CBF227FAA3A700B7C935 /* AppUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtility.swift; sourceTree = "<group>"; };
+		9BBB25BD2CB7B92800171942 /* SSAITracking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SSAITracking.xcodeproj; path = "../sigma-dai-avplayer-ssai-plugin/SSAITracking.xcodeproj"; sourceTree = "<group>"; };
+		9BBB25C32CB7B94300171942 /* ProgrammaticAccessLibrary.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:EQHXZ8M8AV:Google LLC"; lastKnownFileType = wrapper.xcframework; name = ProgrammaticAccessLibrary.xcframework; path = "../sigma-dai-avplayer-ssai-plugin/libs/ProgrammaticAccessLibrary.xcframework"; sourceTree = "<group>"; };
 		D9BDA818F9EEF8BD13D9E66C /* Pods-DemoSSAI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoSSAI.debug.xcconfig"; path = "Target Support Files/Pods-DemoSSAI/Pods-DemoSSAI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,7 +79,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9BBB25C62CB7B94F00171942 /* SSAITracking.framework in Frameworks */,
 				F06D8213C46F58EA2FBE8B3F /* libPods-DemoSSAI.a in Frameworks */,
+				9BBB25C42CB7B94300171942 /* ProgrammaticAccessLibrary.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +100,8 @@
 		2E70C2F093B16FE060ECF291 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9BBB25C32CB7B94300171942 /* ProgrammaticAccessLibrary.xcframework */,
+				9BBB25BD2CB7B92800171942 /* SSAITracking.xcodeproj */,
 				2ECF90B095AE7F06D16B0872 /* libPods-DemoSSAI.a */,
 			);
 			name = Frameworks;
@@ -119,6 +141,14 @@
 			path = DemoSSAI;
 			sourceTree = "<group>";
 		};
+		9BBB25BE2CB7B92800171942 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9BBB25C22CB7B92800171942 /* SSAITracking.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,7 +162,6 @@
 				9B7D8F6427F43D4000C683D4 /* Resources */,
 				9BBF1B83288FDC06003A6DF2 /* CopyFiles */,
 				9B2933E22C9C06DC00547252 /* Embed Frameworks */,
-				D4CCD4B96F0D1F45A8AD31F1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -169,12 +198,28 @@
 			mainGroup = 9B7D8F5D27F43D4000C683D4;
 			productRefGroup = 9B7D8F6727F43D4000C683D4 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 9BBB25BE2CB7B92800171942 /* Products */;
+					ProjectRef = 9BBB25BD2CB7B92800171942 /* SSAITracking.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				9B7D8F6527F43D4000C683D4 /* DemoSSAI */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		9BBB25C22CB7B92800171942 /* SSAITracking.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SSAITracking.framework;
+			remoteRef = 9BBB25C12CB7B92800171942 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		9B7D8F6427F43D4000C683D4 /* Resources */ = {
@@ -210,23 +255,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D4CCD4B96F0D1F45A8AD31F1 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DemoSSAI/Pods-DemoSSAI-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DemoSSAI/Pods-DemoSSAI-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DemoSSAI/Pods-DemoSSAI-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

@@ -51,7 +51,7 @@ class ViewController: UIViewController {
             let story = UIStoryboard(name: "Main", bundle: nil);
             let controller = story.instantiateViewController(withIdentifier: "demoPlayer") as! PlayerViewController;
 //            let ViewController = ViewController(nibName: "PlayerViewController", bundle: nil);
-            controller.videoUrl = "";
+            controller.videoUrl = videoUrl;
             controller.sessionUrl = videoUrl;
             controller.bottomSafeArea = bottomSafeArea;
             controller.topSafeArea = topSafeArea

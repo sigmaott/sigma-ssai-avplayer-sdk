@@ -35,6 +35,7 @@ import SSAITracking
 class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourceLoaderDelegate, AVPlayerItemMetadataCollectorPushDelegate {
     
     var videoUrl: String = "";
+    var adsProxy: String = "https://dev-streaming.gviet.vn:8783/api/proxy-ads/ads/88f9074c-0550-476f-b312-e932286a48a1";
     var fullScreenAnimationDuration: TimeInterval {
         return 0.15
     }
@@ -65,9 +66,8 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         print("onSessionFailSSAI=>\(message)")
     }
     
-    func onSessionInitSuccess(_ videoUrl: String) {
+    func onSessionInitSuccess() {
         print("onSessionInitSuccess=>", videoUrl)
-        self.videoUrl = videoUrl
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
         startPlayer();
     }
@@ -78,7 +78,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     
     override func viewDidLoad() {
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
-        self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
+        self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, adsProxy, self, playerView)
         //show or hide ssai log
         self.ssai?.setShowLog(true)
         // Create the button
@@ -123,7 +123,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     @objc func changeSessionUrl() {
         stopBtnPressed(UIButton())
         sessionUrl = sessionUrl == "http://123.31.18.25:2180/manifest/manipulation/session/7d47b94e-7e65-4f9f-9fcf-9f104032ac0d/origin04/scte35-av4s-clear/master.m3u8" ? "https://vtvgolive-ssai.vtvdigital.vn/J2Jn4_Rz5-nFrKpNB6kvzw/1834651569/manifest/manipulation/session/a78b13b7-e735-47e8-90a0-4406b0769e2a/manifest/vtv3-ssai/master.m3u8?session.prefix_path=/J2Jn4_Rz5-nFrKpNB6kvzw/1834651569&ssai=true" : "http://123.31.18.25:2180/manifest/manipulation/session/7d47b94e-7e65-4f9f-9fcf-9f104032ac0d/origin04/scte35-av4s-clear/master.m3u8"
-        self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
+        self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, adsProxy, self, playerView)
         self.ssai?.setShowLog(true)
     }
 //    @objc func changeVideoUrl() {
@@ -194,9 +194,11 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         }
     }
     private func startPlayer() {
+        print("start player ", videoUrl)
         if let url = URL(string: videoUrl) {
-            let asset = AVURLAsset(url: url, options: nil);
-            playerItem = AVPlayerItem(asset: asset)
+//            let asset = AVURLAsset(url: url, options: nil);
+            let asset = self.ssai?.getAsset();
+            playerItem = AVPlayerItem(asset: asset!)
             videoPlayer = AVPlayer(playerItem: playerItem)
             self.ssai?.setPlayer(videoPlayer!)
             videoPlayer?.addObserver(self, forKeyPath: "status", options: [], context: nil)
