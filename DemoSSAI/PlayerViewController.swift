@@ -9,7 +9,7 @@ extension UIViewController {
 
 func showToast(message : String, font: UIFont) {
 
-    let toastLabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.size.height-100, width: self.view.frame.size.width, height: 35))
+    let toastLabel = UILabel(frame: CGRect(x: 15, y: self.view.frame.size.height - 300, width: self.view.frame.size.width - 30, height: 45))
     toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
     toastLabel.textColor = UIColor.white
     toastLabel.font = font
@@ -19,7 +19,7 @@ func showToast(message : String, font: UIFont) {
     toastLabel.layer.cornerRadius = 10;
     toastLabel.clipsToBounds  =  true
     self.view.addSubview(toastLabel)
-    UIView.animate(withDuration: 4.0, delay: 0.1, options: .curveEaseOut, animations: {
+    UIView.animate(withDuration: 3.0, delay: 0.1, options: .curveEaseOut, animations: {
          toastLabel.alpha = 0.0
     }, completion: {(isCompleted) in
         toastLabel.removeFromSuperview()
@@ -55,9 +55,11 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     private var videoPlayer: AVPlayer?
     
     @IBOutlet weak var playerView: UIView!
+    let playPauseButton = UIButton(type: .system)
 
     var items: [String] = []
     var labels: [UILabel] = [] // Keep track of UILabels
+    
     func metadataCollector(_ metadataCollector: AVPlayerItemMetadataCollector, didCollect metadataGroups: [AVDateRangeMetadataGroup], indexesOfNewGroups: IndexSet, indexesOfModifiedGroups: IndexSet) {
         //
     }
@@ -78,9 +80,30 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     
     override func viewDidLoad() {
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
-        self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, adsProxy, self, playerView)
+        self.ssai = SSAITracking.SigmaSSAI.init(videoUrl, adsProxy, self, playerView)
         //show or hide ssai log
         self.ssai?.setShowLog(true)
+        //
+        Task {
+            do {
+                let content = try await Helper.fetchM3U8Content(from: videoUrl)
+                print("Fetched .m3u8 content:")
+                print(content)
+
+                // Define the base URL for constructing playlist links
+                let baseURL = Helper.getBaseURL(from: videoUrl)
+
+                // Extract playlist URLs
+                let playlistLinks = Helper.extractPlaylistURLs(from: content, baseURL: baseURL)
+                print("\nExtracted Playlist URLs:")
+                for url in playlistLinks {
+                    print(url)
+                }
+            } catch {
+                print("Failed to fetch .m3u8 content: \(error)")
+            }
+        }
+        setupPlayPauseButton()
         // Create the button
         let button = UIButton(type: .system)
         button.setTitle("Change", for: .normal)
@@ -120,10 +143,31 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
 //        // Add the button to the view
 //        view.addSubview(buttonChangeVideoUrl)
     }
+    private func setupPlayPauseButton() {
+            playPauseButton.setTitle("Pause", for: .normal)
+            playPauseButton.addTarget(self, action: #selector(togglePlayPause), for: .touchUpInside)
+            playPauseButton.translatesAutoresizingMaskIntoConstraints = false
+            
+            // Add button to your view
+            view.addSubview(playPauseButton)
+            NSLayoutConstraint.activate([
+                playPauseButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                playPauseButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50)
+            ])
+        }
+    @objc func togglePlayPause() {
+        if videoPlayer?.timeControlStatus == .playing {
+            videoPlayer?.pause()
+            playPauseButton.setTitle("Play", for: .normal)
+        } else {
+            videoPlayer?.play()
+            playPauseButton.setTitle("Pause", for: .normal)
+        }
+    }
     @objc func changeSessionUrl() {
         stopBtnPressed(UIButton())
-        sessionUrl = sessionUrl == "http://123.31.18.25:2180/manifest/manipulation/session/7d47b94e-7e65-4f9f-9fcf-9f104032ac0d/origin04/scte35-av4s-clear/master.m3u8" ? "https://vtvgolive-ssai.vtvdigital.vn/J2Jn4_Rz5-nFrKpNB6kvzw/1834651569/manifest/manipulation/session/a78b13b7-e735-47e8-90a0-4406b0769e2a/manifest/vtv3-ssai/master.m3u8?session.prefix_path=/J2Jn4_Rz5-nFrKpNB6kvzw/1834651569&ssai=true" : "http://123.31.18.25:2180/manifest/manipulation/session/7d47b94e-7e65-4f9f-9fcf-9f104032ac0d/origin04/scte35-av4s-clear/master.m3u8"
-        self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, adsProxy, self, playerView)
+        videoUrl = videoUrl == Constants.playlist360Url ? Constants.playlist480Url : Constants.playlist360Url
+        self.ssai = SSAITracking.SigmaSSAI.init(videoUrl, adsProxy, self, playerView)
         self.ssai?.setShowLog(true)
     }
 //    @objc func changeVideoUrl() {
@@ -196,22 +240,29 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     private func startPlayer() {
         print("start player ", videoUrl)
         if let url = URL(string: videoUrl) {
-//            let asset = AVURLAsset(url: url, options: nil);
-            let asset = self.ssai?.getAsset();
-            playerItem = AVPlayerItem(asset: asset!)
+            // Use the asset from your SSAI if applicable
+            let asset = self.ssai?.getAsset() ?? AVURLAsset(url: url)
+            playerItem = AVPlayerItem(asset: asset)
             videoPlayer = AVPlayer(playerItem: playerItem)
             self.ssai?.setPlayer(videoPlayer!)
-            videoPlayer?.addObserver(self, forKeyPath: "status", options: [], context: nil)
-            // listen the current time of playing video
-            videoPlayer?.addPeriodicTimeObserver(forInterval: CMTime(seconds: Double(0.5), preferredTimescale: 2), queue: DispatchQueue.main) { [weak self] (sec) in
+
+            // Create and configure the AVPlayerViewController
+            // playerViewController = AVPlayerViewController()
+            // playerViewController?.player = videoPlayer
+            
+            // Listen for player status changes
+            videoPlayer?.addObserver(self, forKeyPath: "status", options: [.new, .old], context: nil)
+
+            // Observe playback time
+            videoPlayer?.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.5, preferredTimescale: 600), queue: DispatchQueue.main) { [weak self] time in
                 guard let self = self else { return }
-                let seconds = CMTimeGetSeconds(sec)
-                if let duration = self.playerItem?.duration {
-                    let seconds = CMTimeGetSeconds(duration)
-                }
-                playBackTime = self.videoPlayer?.currentTime() != nil ? CMTimeGetSeconds((self.videoPlayer?.currentTime())!) : 0
+                let playbackTime = CMTimeGetSeconds(time)
+                // Update your playback time variable here
+                self.playBackTime = playbackTime
             }
+            
             videoPlayer?.volume = 1.0
+            
             
             layer = AVPlayerLayer(player: videoPlayer);
             layer.backgroundColor = UIColor.white.cgColor
@@ -222,11 +273,20 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
                 .filter { $0 is AVPlayerLayer }
                 .forEach { $0.removeFromSuperlayer() }
             playerView.layer.addSublayer(layer)
+            
+            // Present the AVPlayerViewController
+//            if let playerVC = playerViewController {
+//                playerVC.modalPresentationStyle = .fullScreen
+//                present(playerVC, animated: true) {
+//                    self.videoPlayer?.play() // Start playback when presented
+//                }
+//            }
         }
     }
+
     
     func stopBtnPressed(_ sender: Any) {
-        videoUrl = ""
+//        videoUrl = ""
         self.ssai?.clear()
         videoPlayer?.pause()
         videoPlayer = nil
