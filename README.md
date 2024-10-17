@@ -16,7 +16,7 @@ To display the App Tracking Transparency authorization request for accessing the
 ### I. Declare library SSAITracking in Podfile
 
 ```swift
-pod 'SSAITracking', '1.0.19'
+pod 'SSAITracking', '1.0.24'
 ```
 
 cd to your project and run
