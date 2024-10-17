@@ -12,7 +12,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var inputAdsProxy: UITextField!
     @IBOutlet weak var btnPlay: UIButton!
-    let urls = [Constants.masterUrl, Constants.playlist480Url, Constants.playlist360Url, Constants.masterUrl, Constants.playlist480Url, Constants.playlist360Url, Constants.masterUrl, Constants.playlist480Url, Constants.playlist360Url, Constants.masterUrl, Constants.playlist480Url, Constants.playlist360Url, Constants.masterUrl, Constants.playlist480Url, Constants.playlist360Url, Constants.masterUrl, Constants.playlist480Url, Constants.playlist360Url, Constants.masterUrl, Constants.playlist480Url, Constants.playlist360Url, Constants.masterUrl, Constants.playlist480Url, Constants.playlist360Url, Constants.masterUrl, Constants.playlist480Url, Constants.playlist360Url]
+//    let urls = [Constants.masterUrl, Constants.playlist480Url, Constants.playlist360Url, Constants.sourceTestStreamMux]
     var selectedIndex: IndexPath?
     var selectedIndexInt = 0
     let selectButton = UIButton(type: .system)
@@ -21,6 +21,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var bottomSafeArea = 0.0
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // if let sdkInstance = SsaiSDK.getInstance() as? SsaiSDK {
+        // let result = sdkInstance.generate("https://example.com")
+        // print(result)
+        // }
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -79,15 +85,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             tableView.deselectRow(at: indexPath, animated: true) // Bỏ chọn hàng
         }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return urls.count
+        return Constants.urls.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.layoutMargins = UIEdgeInsets.zero
         cell.preservesSuperviewLayoutMargins = false // Ensure margins do not persist from superview
-        cell.textLabel?.text = urls[indexPath.row]
-        
+        cell.textLabel?.text = Constants.urls[indexPath.row]["name"] as? String
+    
         // Thay đổi màu nền nếu hàng được chọn
         if indexPath == selectedIndex || indexPath.row == selectedIndexInt {
             cell.backgroundColor = UIColor.red // Màu nền cho hàng được chọn
@@ -103,9 +109,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.view.endEditing(true);
             let story = UIStoryboard(name: "Main", bundle: nil);
             let controller = story.instantiateViewController(withIdentifier: "demoPlayer") as! PlayerViewController;
-            controller.videoUrl = urls[selectedIndexInt];
-            controller.sessionUrl = urls[selectedIndexInt];
+            controller.videoUrl = Constants.urls[selectedIndexInt]["url"] as! String;
+            controller.sessionUrl = Constants.urls[selectedIndexInt]["url"] as! String;
             controller.adsProxy = adsProxy;
+            controller.isLive = Constants.urls[selectedIndexInt]["isLive"] as! Bool;
             controller.bottomSafeArea = bottomSafeArea;
             controller.topSafeArea = topSafeArea
             self.navigationController?.pushViewController(controller, animated: true);

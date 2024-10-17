@@ -52,6 +52,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     //change to false if not use sdk ssai cover
     //change time interval tracking
     var playBackTime = 0.0
+    var isLive = true
     private var videoPlayer: AVPlayer?
     
     @IBOutlet weak var playerView: UIView!
@@ -241,7 +242,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         print("start player ", videoUrl)
         if let url = URL(string: videoUrl) {
             // Use the asset from your SSAI if applicable
-            let asset = self.ssai?.getAsset() ?? AVURLAsset(url: url)
+            let asset = isLive ? self.ssai?.getAsset() ?? AVURLAsset(url: url) : AVURLAsset(url: url)
             playerItem = AVPlayerItem(asset: asset)
             videoPlayer = AVPlayer(playerItem: playerItem)
             self.ssai?.setPlayer(videoPlayer!)
