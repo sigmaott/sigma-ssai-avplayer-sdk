@@ -536,9 +536,9 @@
             filePath = "../sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "658"
-            endingLineNumber = "658"
-            landmarkName = "openUrl(_:)"
+            startingLineNumber = "661"
+            endingLineNumber = "661"
+            landmarkName = "checkAdsPlaying()"
             landmarkType = "7">
             <Locations>
                <Location
