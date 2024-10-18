@@ -6,25 +6,31 @@
 //
 
 extension UIViewController {
+    
+    func showToast(message : String, font: UIFont) {
+        
+        let toastLabel = UILabel(frame: CGRect(x: 15, y: self.view.frame.size.height - 300, width: self.view.frame.size.width - 30, height: 45))
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        toastLabel.textColor = UIColor.white
+        toastLabel.font = font
+        toastLabel.textAlignment = .center;
+        toastLabel.text = message
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 10;
+        toastLabel.clipsToBounds  =  true
+        self.view.addSubview(toastLabel)
+        UIView.animate(withDuration: 3.0, delay: 0.1, options: .curveEaseOut, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: {(isCompleted) in
+            toastLabel.removeFromSuperview()
+        })
+    }
+}
 
-func showToast(message : String, font: UIFont) {
+protocol PickerModalDelegate: AnyObject {
+    func didSelectItem(_ index: Int)
+}
 
-    let toastLabel = UILabel(frame: CGRect(x: 15, y: self.view.frame.size.height - 300, width: self.view.frame.size.width - 30, height: 45))
-    toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-    toastLabel.textColor = UIColor.white
-    toastLabel.font = font
-    toastLabel.textAlignment = .center;
-    toastLabel.text = message
-    toastLabel.alpha = 1.0
-    toastLabel.layer.cornerRadius = 10;
-    toastLabel.clipsToBounds  =  true
-    self.view.addSubview(toastLabel)
-    UIView.animate(withDuration: 3.0, delay: 0.1, options: .curveEaseOut, animations: {
-         toastLabel.alpha = 0.0
-    }, completion: {(isCompleted) in
-        toastLabel.removeFromSuperview()
-    })
-} }
 
 import Foundation
 import UIKit
@@ -32,10 +38,11 @@ import AVFoundation
 import AVKit
 import SSAITracking
 
-class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourceLoaderDelegate, AVPlayerItemMetadataCollectorPushDelegate {
+class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourceLoaderDelegate, AVPlayerItemMetadataCollectorPushDelegate, PickerModalDelegate {
     
+    var itemIndex: Int = -1;
     var videoUrl: String = "";
-    var adsProxy: String = "https://dev-streaming.gviet.vn:8783/api/proxy-ads/ads/88f9074c-0550-476f-b312-e932286a48a1";
+    var adsProxy: String = "";
     var fullScreenAnimationDuration: TimeInterval {
         return 0.15
     }
@@ -54,13 +61,18 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     var playBackTime = 0.0
     var isLive = true
     private var videoPlayer: AVPlayer?
-    
+    var selectedLabel: UILabel!
+
     @IBOutlet weak var playerView: UIView!
     let playPauseButton = UIButton(type: .system)
-
-    var items: [String] = []
-    var labels: [UILabel] = [] // Keep track of UILabels
+    var pickerView: UIPickerView!
     
+    func didSelectItem(_ index: Int) {
+        if(itemIndex != index) {
+            itemIndex = index
+            changeVideoUrlWithIndex(index)
+        }
+    }
     func metadataCollector(_ metadataCollector: AVPlayerItemMetadataCollector, didCollect metadataGroups: [AVDateRangeMetadataGroup], indexesOfNewGroups: IndexSet, indexesOfModifiedGroups: IndexSet) {
         //
     }
@@ -84,6 +96,20 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         self.ssai = SSAITracking.SigmaSSAI.init(videoUrl, adsProxy, self, playerView)
         //show or hide ssai log
         self.ssai?.setShowLog(true)
+        
+        
+        let openModalButton = UIButton(type: .system)
+        openModalButton.setTitle("Open Picker", for: .normal)
+        openModalButton.addTarget(self, action: #selector(openPickerModal), for: .touchUpInside)
+        openModalButton.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(openModalButton)
+
+        NSLayoutConstraint.activate([
+            openModalButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            openModalButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
         //
         Task {
             do {
@@ -124,26 +150,31 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         
         // Add the button to the view
         view.addSubview(button)
-        // change video url
-//        let buttonChangeVideoUrl = UIButton(type: .system)
-//        buttonChangeVideoUrl.setTitle("Change", for: .normal)
-//        buttonChangeVideoUrl.addTarget(self, action: #selector(changeVideoUrl), for: .touchUpInside)
-//        
-//        // Set button frame (or use Auto Layout)
-//        buttonChangeVideoUrl.frame = CGRect(x: 10, y: 150, width: 100, height: 50)// Set background color
-//        buttonChangeVideoUrl.backgroundColor = UIColor.gray
-//        buttonChangeVideoUrl.contentEdgeInsets = UIEdgeInsets(top: 5, left: 12, bottom: 5, right: 12)
-//
-//        // Set corner radius
-//        buttonChangeVideoUrl.layer.cornerRadius = 10
-//        buttonChangeVideoUrl.clipsToBounds = true // Ensure the corner radius is applied
-//        
-//        // Set title color for better visibility
-//        buttonChangeVideoUrl.setTitleColor(.white, for: .normal)
-//        
-//        // Add the button to the view
-//        view.addSubview(buttonChangeVideoUrl)
+        // Create and configure the label
+        selectedLabel = UILabel()
+        selectedLabel.textColor = .white
+        selectedLabel.frame = CGRect(x: 120, y: 100, width: 100, height: 50)// Set background color
+        selectedLabel.text = (Constants.urls[itemIndex]["name"] as? String)!
+        selectedLabel.textAlignment = .center
+        selectedLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(selectedLabel)
+
+//        NSLayoutConstraint.activate([
+//            selectedLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+//        ])
     }
+    @objc func openPickerModal() {
+        let pickerVC = PickerModalViewController()
+        pickerVC.selectedIndexPure = itemIndex
+        pickerVC.selectedIndex = itemIndex
+        pickerVC.selectedItem = Constants.urls[itemIndex]
+        pickerVC.modalPresentationStyle = .formSheet
+        pickerVC.delegate = self
+        present(pickerVC, animated: true, completion: nil)
+    }
+    @objc func closeModal() {
+            dismiss(animated: true, completion: nil)
+        }
     private func setupPlayPauseButton() {
             playPauseButton.setTitle("Pause", for: .normal)
             playPauseButton.addTarget(self, action: #selector(togglePlayPause), for: .touchUpInside)
@@ -166,20 +197,22 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         }
     }
     @objc func changeSessionUrl() {
-        stopBtnPressed(UIButton())
-        videoUrl = videoUrl == Constants.playlist360Url ? Constants.playlist480Url : Constants.playlist360Url
-        self.ssai = SSAITracking.SigmaSSAI.init(videoUrl, adsProxy, self, playerView)
-        self.ssai?.setShowLog(true)
+        let nextIndex = itemIndex == Constants.urls.count - 1 ? 0 : itemIndex + 1
+        if(nextIndex != -1) {
+            changeVideoUrlWithIndex(nextIndex)
+        }
     }
-//    @objc func changeVideoUrl() {
-//        let newPlayerItem = AVPlayerItem(url: URL(string: videoUrl == "http://123.31.18.25:2180/manifest/manipulation/master/7d47b94e-7e65-4f9f-9fcf-9f104032ac0d/origin04/scte35-av4s-clear/master.m3u8" ? "https://vtvgolive-ssai.vtvdigital.vn/J2Jn4_Rz5-nFrKpNB6kvzw/1834651569/manifest/manipulation/master/a78b13b7-e735-47e8-90a0-4406b0769e2a/manifest/vtv3-ssai/master.m3u8?sessionId=4e8d5bf2-115b-431a-9ee6-59295ff2adc9" : "http://123.31.18.25:2180/manifest/manipulation/master/7d47b94e-7e65-4f9f-9fcf-9f104032ac0d/origin04/scte35-av4s-clear/master.m3u8")!)
-//                
-//                // Replace the current item with the new one
-//                videoPlayer?.replaceCurrentItem(with: newPlayerItem)
-//                
-//                // Optionally, start playing the new video
-//                videoPlayer?.play()
-//    }
+    func changeVideoUrlWithIndex(_ index: Int) {
+        stopBtnPressed(UIButton())
+        if(index >= 0) {
+            let nextItem = Constants.urls[index]
+            isLive = (nextItem["isLive"] as? Bool)!
+            videoUrl = (nextItem["url"] as? String)!
+            self.ssai = SSAITracking.SigmaSSAI.init(videoUrl, adsProxy, self, playerView)
+            itemIndex = index
+            self.ssai?.setShowLog(true)
+        }
+    }
     override func viewWillDisappear(_ animated: Bool) {
         print("Player viewWillDisappear", animated);
         stopBtnPressed(UIButton())

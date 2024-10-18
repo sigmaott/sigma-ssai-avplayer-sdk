@@ -115,6 +115,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             controller.isLive = Constants.urls[selectedIndexInt]["isLive"] as! Bool;
             controller.bottomSafeArea = bottomSafeArea;
             controller.topSafeArea = topSafeArea
+            controller.itemIndex = selectedIndexInt
             self.navigationController?.pushViewController(controller, animated: true);
         } else {
             showToast(message: "Please enter ads proxy", font: .systemFont(ofSize: 13))
