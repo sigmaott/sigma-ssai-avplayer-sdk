@@ -79,14 +79,28 @@ struct Helper {
             return ""
         }
         
-        // Construct the base URL by using the scheme, host, and port (if any)
-        var baseURL = "\(String(describing: url.scheme))://\(url.host ?? "")"
+        // Construct the base URL using the scheme, host, and port (if any)
+        var baseURL = "\(url.scheme!)://\(url.host ?? "")"
+        
         if let port = url.port {
             baseURL += ":\(port)"
         }
         
-        // Return the base URL with a trailing slash
-        return baseURL + "/"
+        // Handle path components, ensuring no double slashes
+        let pathComponents = url.pathComponents
+        
+        // Remove the last component (the M3U8 file itself)
+        if pathComponents.count > 1 {
+            let basePath = pathComponents.dropLast().joined(separator: "/")
+            // Remove leading slash from basePath to avoid double slashes
+            var cleanedBasePath = basePath.hasPrefix("/") ? String(basePath.dropFirst()) : basePath
+            cleanedBasePath = cleanedBasePath.replacingOccurrences(of: "//", with: "/")
+            baseURL += (cleanedBasePath.hasPrefix("/") ? "" : "/") + cleanedBasePath
+        }
+        
+        // Ensure there's a trailing slash at the end of the base URL
+        
+        return baseURL.hasSuffix("/") ? baseURL : baseURL + "/"
     }
     // Function to fetch and parse .m3u8 content
     
@@ -111,17 +125,33 @@ struct Helper {
     }
 
     // Function to extract playlist URLs from the .m3u8 content
-    static func extractPlaylistURLs(from content: String, baseURL: String) -> [String] {
-        var urls = [String]()
+    static func extractPlaylistURLs(from content: String, baseURL: String) -> [[String: String]] {
+        var urls = [[String: String]]()
         let lines = content.components(separatedBy: "\n")
 
         for line in lines {
             if line.hasSuffix(".m3u8") {
-                let fullURL = baseURL + line
-                urls.append(fullURL)
+//                let fullURL = baseURL + line
+                let fullURL = URL(string: line, relativeTo: URL(string: baseURL))?.absoluteString ?? line
+                if isValidURL(fullURL) {
+                    urls.append(["name": line, "url": fullURL])
+                }
             }
         }
 
         return urls
+    }
+    
+    static func isValidURL(_ urlString: String) -> Bool {
+        // Check if the string can be converted to a URL
+        guard let url = URL(string: urlString) else {
+            return false
+        }
+        // Check that the URL has a valid scheme (http or https) and a non-empty host
+        if let host = url.host, (url.scheme == "http" || url.scheme == "https"), !host.isEmpty {
+            return true
+        }
+        
+        return false
     }
 }

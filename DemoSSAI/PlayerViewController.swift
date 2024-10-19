@@ -28,7 +28,7 @@ extension UIViewController {
 }
 
 protocol PickerModalDelegate: AnyObject {
-    func didSelectItem(_ index: Int)
+    func didSelectItem(_ index: Int, _ isProfile: Bool)
 }
 
 
@@ -41,8 +41,14 @@ import SSAITracking
 class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourceLoaderDelegate, AVPlayerItemMetadataCollectorPushDelegate, PickerModalDelegate {
     
     var itemIndex: Int = -1;
+    var profileIndex: Int = -1;
     var videoUrl: String = "";
     var adsProxy: String = "";
+    var listProfile:[[String: String]] = []
+    var changeSourceNeedReset: Bool = false;
+    var changeButton: UIButton!
+    var changeProfileButton: UIButton!
+
     var fullScreenAnimationDuration: TimeInterval {
         return 0.15
     }
@@ -65,12 +71,21 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
 
     @IBOutlet weak var playerView: UIView!
     let playPauseButton = UIButton(type: .system)
-    var pickerView: UIPickerView!
+    var pickerSourceView: PickerModalViewController!
+    var pickerProfileView: PickerModalProfile!
     
-    func didSelectItem(_ index: Int) {
-        if(itemIndex != index) {
-            itemIndex = index
-            changeVideoUrlWithIndex(index)
+    func didSelectItem(_ index: Int, _ isProfile: Bool) {
+        if(isProfile) {
+            profileIndex = index
+            videoUrl = listProfile[index]["url"]!
+            changeCurrentItemPlayer()
+            setTitleButtonProfile()
+        } else {
+            profileIndex = -1
+            if(itemIndex != index) {
+                itemIndex = index
+                changeVideoUrlWithIndex(index)
+            }
         }
     }
     func metadataCollector(_ metadataCollector: AVPlayerItemMetadataCollector, didCollect metadataGroups: [AVDateRangeMetadataGroup], indexesOfNewGroups: IndexSet, indexesOfModifiedGroups: IndexSet) {
@@ -83,6 +98,9 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     
     func onSessionInitSuccess() {
         print("onSessionInitSuccess=>", videoUrl)
+        if(profileIndex == -1) {
+            fetchM3u8Url()
+        }
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
         startPlayer();
     }
@@ -96,20 +114,61 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         self.ssai = SSAITracking.SigmaSSAI.init(videoUrl, adsProxy, self, playerView)
         //show or hide ssai log
         self.ssai?.setShowLog(true)
+        setupPlayPauseButton()
+        // Create the button
+        changeButton = UIButton(type: .system)
+        setTitleButton()
+        changeButton.addTarget(self, action: #selector(openPickerModal), for: .touchUpInside)
         
+        // Set button frame (or use Auto Layout)
+//        button.frame = CGRect(x: 30, y: 100, width: 500, height: 50)// Set background color
+        changeButton.backgroundColor = UIColor.gray
+        changeButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 12, bottom: 5, right: 12)
+
+        // Set corner radius
+        changeButton.layer.cornerRadius = 10
+        changeButton.clipsToBounds = true // Ensure the corner radius is applied
         
-        let openModalButton = UIButton(type: .system)
-        openModalButton.setTitle("Open Picker", for: .normal)
-        openModalButton.addTarget(self, action: #selector(openPickerModal), for: .touchUpInside)
-        openModalButton.translatesAutoresizingMaskIntoConstraints = false
+        // Set title color for better visibility
+        changeButton.setTitleColor(.white, for: .normal)
+        
+        // Add the button to the view
+        view.addSubview(changeButton)
+        changeButton.translatesAutoresizingMaskIntoConstraints = false
 
-        view.addSubview(openModalButton)
+        //profile button
+        
+        changeProfileButton = UIButton(type: .system)
+        setTitleButtonProfile()
+        changeProfileButton.addTarget(self, action: #selector(openPickerProfileModal), for: .touchUpInside)
+        
+        // Set button frame (or use Auto Layout)
+//        button.frame = CGRect(x: 30, y: 100, width: 500, height: 50)// Set background color
+        changeProfileButton.backgroundColor = UIColor.gray
+        changeProfileButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 12, bottom: 5, right: 12)
 
+        // Set corner radius
+        changeProfileButton.layer.cornerRadius = 10
+        changeProfileButton.clipsToBounds = true // Ensure the corner radius is applied
+        
+        // Set title color for better visibility
+        changeProfileButton.setTitleColor(.white, for: .normal)
+        
+        changeProfileButton.isHidden = true
+        // Add the button to the view
+        view.addSubview(changeProfileButton)
+        changeProfileButton.translatesAutoresizingMaskIntoConstraints = false
+        //end profile button
         NSLayoutConstraint.activate([
-            openModalButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            openModalButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            changeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor), // Center horizontally
+            changeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 100), // Set the top position
+            changeButton.heightAnchor.constraint(equalToConstant: 50), // Set a fixed heightntally
+            changeProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor), // Center horizontally
+            changeProfileButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 170), // Set the top position
+            changeProfileButton.heightAnchor.constraint(equalToConstant: 50) // Set a fixed height
         ])
-        
+    }
+    func fetchM3u8Url() {
         //
         Task {
             do {
@@ -119,74 +178,68 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
 
                 // Define the base URL for constructing playlist links
                 let baseURL = Helper.getBaseURL(from: videoUrl)
-
+                print("baseURL==>", baseURL)
                 // Extract playlist URLs
-                let playlistLinks = Helper.extractPlaylistURLs(from: content, baseURL: baseURL)
+                listProfile = Helper.extractPlaylistURLs(from: content, baseURL: baseURL)
                 print("\nExtracted Playlist URLs:")
-                for url in playlistLinks {
-                    print(url)
+                print("listProfile=>", listProfile)
+                if listProfile.isEmpty {
+                    changeProfileButton.isHidden = true
+                } else {
+                    changeProfileButton.isHidden = false
+                    if let pickerProfileView = pickerProfileView {
+                        pickerProfileView.setData(listProfile)
+                    }
                 }
             } catch {
                 print("Failed to fetch .m3u8 content: \(error)")
             }
         }
-        setupPlayPauseButton()
-        // Create the button
-        let button = UIButton(type: .system)
-        button.setTitle("Change", for: .normal)
-        button.addTarget(self, action: #selector(changeSessionUrl), for: .touchUpInside)
-        
-        // Set button frame (or use Auto Layout)
-        button.frame = CGRect(x: 10, y: 100, width: 100, height: 50)// Set background color
-        button.backgroundColor = UIColor.gray
-        button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 12, bottom: 5, right: 12)
-
-        // Set corner radius
-        button.layer.cornerRadius = 10
-        button.clipsToBounds = true // Ensure the corner radius is applied
-        
-        // Set title color for better visibility
-        button.setTitleColor(.white, for: .normal)
-        
-        // Add the button to the view
-        view.addSubview(button)
-        // Create and configure the label
-        selectedLabel = UILabel()
-        selectedLabel.textColor = .white
-        selectedLabel.frame = CGRect(x: 120, y: 100, width: 100, height: 50)// Set background color
-        selectedLabel.text = (Constants.urls[itemIndex]["name"] as? String)!
-        selectedLabel.textAlignment = .center
-        selectedLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(selectedLabel)
-
-//        NSLayoutConstraint.activate([
-//            selectedLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-//        ])
     }
     @objc func openPickerModal() {
-        let pickerVC = PickerModalViewController()
-        pickerVC.selectedIndexPure = itemIndex
-        pickerVC.selectedIndex = itemIndex
-        pickerVC.selectedItem = Constants.urls[itemIndex]
-        pickerVC.modalPresentationStyle = .formSheet
-        pickerVC.delegate = self
-        present(pickerVC, animated: true, completion: nil)
+        if pickerSourceView == nil {
+            pickerSourceView = PickerModalViewController()
+            pickerSourceView?.modalPresentationStyle = .formSheet
+            pickerSourceView?.delegate = self
+        } else {
+            pickerSourceView.changeItem(itemIndex)
+        }
+        pickerSourceView.selectedIndexPure = itemIndex
+        pickerSourceView.selectedIndex = itemIndex
+        pickerSourceView.selectedItem = Constants.urls[itemIndex]
+        present(pickerSourceView, animated: true, completion: nil)
     }
+    
+    @objc func openPickerProfileModal() {
+        if pickerProfileView == nil {
+            pickerProfileView = PickerModalProfile(data: listProfile, selectedIndex: 0)
+            pickerProfileView?.modalPresentationStyle = .formSheet
+            pickerProfileView?.delegate = self
+        } else {
+            if(profileIndex != -1) {
+                pickerProfileView.selectedIndex = profileIndex
+                pickerProfileView.selectedItem = listProfile[profileIndex]
+            }
+            pickerProfileView.changeItem(itemIndex)
+        }
+        present(pickerProfileView, animated: true, completion: nil)
+    }
+    
     @objc func closeModal() {
-            dismiss(animated: true, completion: nil)
-        }
+        dismiss(animated: true, completion: nil)
+    }
     private func setupPlayPauseButton() {
-            playPauseButton.setTitle("Pause", for: .normal)
-            playPauseButton.addTarget(self, action: #selector(togglePlayPause), for: .touchUpInside)
-            playPauseButton.translatesAutoresizingMaskIntoConstraints = false
-            
-            // Add button to your view
-            view.addSubview(playPauseButton)
-            NSLayoutConstraint.activate([
-                playPauseButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                playPauseButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50)
-            ])
-        }
+        playPauseButton.setTitle("Pause", for: .normal)
+        playPauseButton.addTarget(self, action: #selector(togglePlayPause), for: .touchUpInside)
+        playPauseButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Add button to your view
+        view.addSubview(playPauseButton)
+        NSLayoutConstraint.activate([
+            playPauseButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            playPauseButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50)
+        ])
+    }
     @objc func togglePlayPause() {
         if videoPlayer?.timeControlStatus == .playing {
             videoPlayer?.pause()
@@ -202,15 +255,28 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
             changeVideoUrlWithIndex(nextIndex)
         }
     }
+    func setTitleButton() {
+        let nextItem = Constants.urls[itemIndex]
+        let name = (nextItem["name"] as? String)!
+        changeButton.setTitle("Change source (\(name))", for: .normal)
+    }
+    func setTitleButtonProfile() {
+        changeProfileButton.setTitle("Select profile (\(profileIndex != -1 ? listProfile[profileIndex]["name"]! : "Auto"))", for: .normal)
+    }
     func changeVideoUrlWithIndex(_ index: Int) {
         stopBtnPressed(UIButton())
         if(index >= 0) {
             let nextItem = Constants.urls[index]
             isLive = (nextItem["isLive"] as? Bool)!
             videoUrl = (nextItem["url"] as? String)!
-            self.ssai = SSAITracking.SigmaSSAI.init(videoUrl, adsProxy, self, playerView)
             itemIndex = index
-            self.ssai?.setShowLog(true)
+            setTitleButton()
+            if videoPlayer != nil && !changeSourceNeedReset {
+                changeCurrentItemPlayer()
+            } else {
+                self.ssai = SSAITracking.SigmaSSAI.init(videoUrl, adsProxy, self, playerView)
+                self.ssai?.setShowLog(true)
+            }
         }
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -271,6 +337,16 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
             }
         }
     }
+    func changeCurrentItemPlayer() {
+        print("changeCurrentItemPlayer=>", videoUrl)
+        if let url = URL(string: videoUrl) {
+            self.ssai?.setVideoUrl(videoUrl)
+            let asset = isLive ? self.ssai?.getAsset() ?? AVURLAsset(url: url) : AVURLAsset(url: url)
+            playerItem = AVPlayerItem(asset: asset)
+            videoPlayer?.replaceCurrentItem(with: playerItem)
+            videoPlayer?.play()
+        }
+    }
     private func startPlayer() {
         print("start player ", videoUrl)
         if let url = URL(string: videoUrl) {
@@ -279,14 +355,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
             playerItem = AVPlayerItem(asset: asset)
             videoPlayer = AVPlayer(playerItem: playerItem)
             self.ssai?.setPlayer(videoPlayer!)
-
-            // Create and configure the AVPlayerViewController
-            // playerViewController = AVPlayerViewController()
-            // playerViewController?.player = videoPlayer
-            
-            // Listen for player status changes
             videoPlayer?.addObserver(self, forKeyPath: "status", options: [.new, .old], context: nil)
-
             // Observe playback time
             videoPlayer?.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.5, preferredTimescale: 600), queue: DispatchQueue.main) { [weak self] time in
                 guard let self = self else { return }
@@ -294,10 +363,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
                 // Update your playback time variable here
                 self.playBackTime = playbackTime
             }
-            
             videoPlayer?.volume = 1.0
-            
-            
             layer = AVPlayerLayer(player: videoPlayer);
             layer.backgroundColor = UIColor.white.cgColor
             let heightVideo = widthDevice * (9/16);
@@ -307,28 +373,21 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
                 .filter { $0 is AVPlayerLayer }
                 .forEach { $0.removeFromSuperlayer() }
             playerView.layer.addSublayer(layer)
-            
-            // Present the AVPlayerViewController
-//            if let playerVC = playerViewController {
-//                playerVC.modalPresentationStyle = .fullScreen
-//                present(playerVC, animated: true) {
-//                    self.videoPlayer?.play() // Start playback when presented
-//                }
-//            }
         }
     }
 
     
     func stopBtnPressed(_ sender: Any) {
-//        videoUrl = ""
-        self.ssai?.clear()
-        videoPlayer?.pause()
-        videoPlayer = nil
-        self.ssai = nil
-        playerView.layer.sublayers?
-            .filter { $0 is AVPlayerLayer }
-            .forEach { $0.removeFromSuperlayer() }
-        playerView.backgroundColor = .black
+        if(changeSourceNeedReset) {
+            self.ssai?.clear()
+            videoPlayer?.pause()
+            videoPlayer = nil
+            self.ssai = nil
+            playerView.layer.sublayers?
+                .filter { $0 is AVPlayerLayer }
+                .forEach { $0.removeFromSuperlayer() }
+            playerView.backgroundColor = .black
+        }
         self.title = ""
     }
     func convertToDictionary(text: String) -> [String: Any]? {
