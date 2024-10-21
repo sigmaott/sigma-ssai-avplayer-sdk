@@ -35,7 +35,7 @@ class PickerModalProfile: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         pickerView.delegate = self
         pickerView.dataSource = self
         pickerView.translatesAutoresizingMaskIntoConstraints = false
-        pickerView.selectRow(selectedIndex, inComponent: 0, animated: false)
+        pickerView.selectRow(data.count - 1, inComponent: 0, animated: false)
 
         view.addSubview(pickerView)
 
@@ -46,22 +46,35 @@ class PickerModalProfile: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             pickerView.heightAnchor.constraint(equalToConstant: 200)
         ])
 
-        let closeButton = UIButton(type: .system)
-        closeButton.setTitle("Choose", for: .normal)
-        closeButton.addTarget(self, action: #selector(changeSource), for: .touchUpInside)
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        let choiceButton = UIButton(type: .system)
+        choiceButton.setTitle("Choose", for: .normal)
+        choiceButton.addTarget(self, action: #selector(changeSource), for: .touchUpInside)
+        choiceButton.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(closeButton)
+        let cancelButton = UIButton(type: .system)
+        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.setTitleColor(.red, for: .normal)
+        cancelButton.addTarget(self, action: #selector(cancel), for: .touchUpInside)
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(choiceButton)
+        view.addSubview(cancelButton)
 
         NSLayoutConstraint.activate([
-            closeButton.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 20),
-            closeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            choiceButton.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 20),
+            choiceButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            cancelButton.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 50),
+            cancelButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 
     @objc func changeSource() {
         delegate?.didSelectItem(selectedIndex, true)
-//        updateHighlightedIndex(selectedIndex)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func cancel() {
         dismiss(animated: true, completion: nil)
     }
     public func changeItem(_ index: Int) {

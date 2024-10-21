@@ -125,7 +125,7 @@ struct Helper {
     }
 
     // Function to extract playlist URLs from the .m3u8 content
-    static func extractPlaylistURLs(from content: String, baseURL: String) -> [[String: String]] {
+    static func extractPlaylistURLs(from content: String, baseURL: String, videoUrl: String) -> [[String: String]] {
         var urls = [[String: String]]()
         let lines = content.components(separatedBy: "\n")
 
@@ -138,7 +138,9 @@ struct Helper {
                 }
             }
         }
-
+        if(urls.count > 0) {
+            urls.append(["name": "Auto", "url": videoUrl, "isAuto": "true"])
+        }
         return urls
     }
     
@@ -153,5 +155,11 @@ struct Helper {
         }
         
         return false
+    }
+    static func formatPlaybackTime(_ seconds: Double) -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.zeroFormattingBehavior = [.pad]
+        return formatter.string(from: seconds) ?? "00:00:00"
     }
 }

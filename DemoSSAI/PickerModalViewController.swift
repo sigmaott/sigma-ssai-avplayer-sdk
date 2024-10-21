@@ -36,23 +36,36 @@ class PickerModalViewController: UIViewController, UIPickerViewDelegate, UIPicke
             pickerView.widthAnchor.constraint(equalTo: view.widthAnchor),
             pickerView.heightAnchor.constraint(equalToConstant: 200)
         ])
-
-        let closeButton = UIButton(type: .system)
-        closeButton.setTitle("Change", for: .normal)
-        closeButton.addTarget(self, action: #selector(changeSource), for: .touchUpInside)
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(closeButton)
+
+        let choiceButton = UIButton(type: .system)
+        choiceButton.setTitle("Choose", for: .normal)
+        choiceButton.addTarget(self, action: #selector(changeSource), for: .touchUpInside)
+        choiceButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        let cancelButton = UIButton(type: .system)
+        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.setTitleColor(.red, for: .normal)
+        cancelButton.addTarget(self, action: #selector(cancel), for: .touchUpInside)
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(choiceButton)
+        view.addSubview(cancelButton)
 
         NSLayoutConstraint.activate([
-            closeButton.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 20),
-            closeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            choiceButton.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 20),
+            choiceButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            cancelButton.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 50),
+            cancelButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 
     @objc func changeSource() {
         delegate?.didSelectItem(selectedIndex, false)
-//        updateHighlightedIndex(selectedIndex)
+        dismiss(animated: true, completion: nil)
+    }
+    @objc func cancel() {
         dismiss(animated: true, completion: nil)
     }
     public func changeItem(_ index: Int) {

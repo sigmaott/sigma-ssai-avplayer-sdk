@@ -12,7 +12,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var inputAdsProxy: UITextField!
     @IBOutlet weak var btnPlay: UIButton!
-//    let urls = [Constants.masterUrl, Constants.playlist480Url, Constants.playlist360Url, Constants.sourceTestStreamMux]
+    @IBOutlet var pilotSwitch: [UISwitch]!
+    @IBOutlet var clearPlayerSwitch: [UISwitch]!
+    //    let urls = [Constants.masterUrl, Constants.playlist480Url, Constants.playlist360Url, Constants.sourceTestStreamMux]
     var selectedIndex: IndexPath?
     var selectedIndexInt = 0
     let selectButton = UIButton(type: .system)
@@ -26,7 +28,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // let result = sdkInstance.generate("https://example.com")
         // print(result)
         // }
-        
+        for (index, switchControl) in pilotSwitch.enumerated() {
+            switchControl.isOn = false // Initialize all switches to OFF
+            switchControl.tag = index // Assign a tag for identification
+            switchControl.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
+        }
+        for (index, switchControl) in clearPlayerSwitch.enumerated() {
+            switchControl.isOn = false // Initialize all switches to OFF
+            switchControl.tag = index // Assign a tag for identification
+            switchControl.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
+        }
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -43,6 +54,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             ])
         btnPlay.frame.size.width = 200 // Set desired width
     }
+    @objc func switchValueChanged(_ sender: UISwitch) {
+            if sender.isOn {
+                print("Switch is ON")
+            } else {
+                print("Switch is OFF")
+            }
+        }
     func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         tapGesture.cancelsTouchesInView = false // Cho phép các sự kiện chạm tiếp tục
@@ -106,6 +124,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBAction func handlerPlay(_ sender: Any) {
         let adsProxy = inputAdsProxy.text!;
         if URL(string: adsProxy) != nil {
+            var isEnablePilot = false
+            for (index, switchControl) in pilotSwitch.enumerated() {
+                if switchControl.isOn {
+                    isEnablePilot = true
+                } else {
+                    print("Switch \(index) is OFF")
+                }
+            }
+            var isEnableClearPlayerWhenChangeSource = false
+            for (index, switchControl) in clearPlayerSwitch.enumerated() {
+                if switchControl.isOn {
+                    isEnableClearPlayerWhenChangeSource = true
+                } else {
+                    print("Switch \(index) is OFF")
+                }
+            }
             self.view.endEditing(true);
             let story = UIStoryboard(name: "Main", bundle: nil);
             let controller = story.instantiateViewController(withIdentifier: "demoPlayer") as! PlayerViewController;
@@ -116,6 +150,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             controller.bottomSafeArea = bottomSafeArea;
             controller.topSafeArea = topSafeArea
             controller.itemIndex = selectedIndexInt
+            controller.itemIndex = selectedIndexInt
+            controller.pilotEnable = isEnablePilot
+            controller.changeSourceNeedReset = isEnableClearPlayerWhenChangeSource
             self.navigationController?.pushViewController(controller, animated: true);
         } else {
             showToast(message: "Please enter ads proxy", font: .systemFont(ofSize: 13))

@@ -66,19 +66,31 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     //change time interval tracking
     var playBackTime = 0.0
     var isLive = true
+    var pilotEnable = false
     private var videoPlayer: AVPlayer?
     var selectedLabel: UILabel!
 
     @IBOutlet weak var playerView: UIView!
     let playPauseButton = UIButton(type: .system)
+    let playbackTimeLabel = UILabel()
     var pickerSourceView: PickerModalViewController!
     var pickerProfileView: PickerModalProfile!
     
     func didSelectItem(_ index: Int, _ isProfile: Bool) {
         if(isProfile) {
             profileIndex = index
-            videoUrl = listProfile[index]["url"]!
-            changeCurrentItemPlayer()
+            let itemProfile = listProfile[index]
+            videoUrl = itemProfile["url"]!
+            if let isAuto = itemProfile["isAuto"] {
+                if(isAuto == "true") {
+                    profileIndex = -1
+                }
+            }
+            if changeSourceNeedReset {
+                changeVideoProfile()
+            } else {
+                changeCurrentItemPlayer()
+            }
             setTitleButtonProfile()
         } else {
             profileIndex = -1
@@ -86,6 +98,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
                 itemIndex = index
                 changeVideoUrlWithIndex(index)
             }
+            setTitleButtonProfile()
         }
     }
     func metadataCollector(_ metadataCollector: AVPlayerItemMetadataCollector, didCollect metadataGroups: [AVDateRangeMetadataGroup], indexesOfNewGroups: IndexSet, indexesOfModifiedGroups: IndexSet) {
@@ -96,7 +109,8 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         print("onSessionFailSSAI=>\(message)")
     }
     
-    func onSessionInitSuccess() {
+    func onSessionInitSuccess(_ videoUrl: String) {
+        self.videoUrl = videoUrl
         print("onSessionInitSuccess=>", videoUrl)
         if(profileIndex == -1) {
             fetchM3u8Url()
@@ -105,13 +119,29 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         startPlayer();
     }
     
+    func onChangeVideoUrlSuccess(_ videoUrl: String) {
+        self.videoUrl = videoUrl
+        print("onChangeVideoUrlSuccess=>", videoUrl)
+        if(profileIndex == -1) {
+            fetchM3u8Url()
+        }
+        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
+        if let url = URL(string: videoUrl) {
+            let asset = isLive ? self.ssai?.getAsset() ?? AVURLAsset(url: url) : AVURLAsset(url: url)
+            let newPlayerItem = AVPlayerItem(asset: asset)
+            videoPlayer?.replaceCurrentItem(with: newPlayerItem)
+            playerItem = newPlayerItem
+            videoPlayer?.play()
+        }
+    }
+    
     func onTracking(_ message: String) {
         self.showToast(message: message, font: .systemFont(ofSize: 12.0))
     }
     
     override func viewDidLoad() {
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
-        self.ssai = SSAITracking.SigmaSSAI.init(videoUrl, adsProxy, self, playerView)
+        self.ssai = SSAITracking.SigmaSSAI.init(videoUrl, adsProxy, self, playerView, pilotEnable)
         //show or hide ssai log
         self.ssai?.setShowLog(true)
         setupPlayPauseButton()
@@ -180,7 +210,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
                 let baseURL = Helper.getBaseURL(from: videoUrl)
                 print("baseURL==>", baseURL)
                 // Extract playlist URLs
-                listProfile = Helper.extractPlaylistURLs(from: content, baseURL: baseURL)
+                listProfile = Helper.extractPlaylistURLs(from: content, baseURL: baseURL, videoUrl: videoUrl)
                 print("\nExtracted Playlist URLs:")
                 print("listProfile=>", listProfile)
                 if listProfile.isEmpty {
@@ -211,6 +241,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     }
     
     @objc func openPickerProfileModal() {
+        var finalIndex = profileIndex
         if pickerProfileView == nil {
             pickerProfileView = PickerModalProfile(data: listProfile, selectedIndex: 0)
             pickerProfileView?.modalPresentationStyle = .formSheet
@@ -219,8 +250,23 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
             if(profileIndex != -1) {
                 pickerProfileView.selectedIndex = profileIndex
                 pickerProfileView.selectedItem = listProfile[profileIndex]
+                pickerProfileView.pickerView.selectRow(profileIndex, inComponent: 0, animated: false)
+            } else if listProfile.count > 0 {
+                let keyToFind = "isAuto"
+                let valueToMatch = "true"
+                if let index = listProfile.firstIndex(where: { $0[keyToFind] == valueToMatch }) {
+                    pickerProfileView.selectedIndex = index
+                    pickerProfileView.selectedItem = listProfile[index]
+                    pickerProfileView.pickerView.selectRow(index, inComponent: 0, animated: false)
+                    finalIndex = index
+                } else {
+                    profileIndex = -1
+                    finalIndex = -1
+                    pickerProfileView.changeItem(itemIndex)
+                    print("No item found with \(keyToFind) == \(valueToMatch)")
+                }
             }
-            pickerProfileView.changeItem(itemIndex)
+            pickerProfileView.changeItem(finalIndex)
         }
         present(pickerProfileView, animated: true, completion: nil)
     }
@@ -232,12 +278,24 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         playPauseButton.setTitle("Pause", for: .normal)
         playPauseButton.addTarget(self, action: #selector(togglePlayPause), for: .touchUpInside)
         playPauseButton.translatesAutoresizingMaskIntoConstraints = false
+        playPauseButton.backgroundColor = UIColor.white
+        playPauseButton.layer.cornerRadius = 10
+        playPauseButton.clipsToBounds = true
+        playPauseButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
         
-        // Add button to your view
         view.addSubview(playPauseButton)
+        playbackTimeLabel.numberOfLines = 0
+        setPlaybackTimeText(0)
+        playbackTimeLabel.textColor = .white
+        playbackTimeLabel.textAlignment = .center
+        playbackTimeLabel.backgroundColor = .black
+        playbackTimeLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(playbackTimeLabel)
         NSLayoutConstraint.activate([
             playPauseButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            playPauseButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50)
+            playPauseButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+            playbackTimeLabel.centerXAnchor.constraint(equalTo: playPauseButton.centerXAnchor),
+            playbackTimeLabel.bottomAnchor.constraint(equalTo: playPauseButton.topAnchor, constant: -8),
         ])
     }
     @objc func togglePlayPause() {
@@ -264,7 +322,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         changeProfileButton.setTitle("Select profile (\(profileIndex != -1 ? listProfile[profileIndex]["name"]! : "Auto"))", for: .normal)
     }
     func changeVideoUrlWithIndex(_ index: Int) {
-        stopBtnPressed(UIButton())
+        clearPlayer()
         if(index >= 0) {
             let nextItem = Constants.urls[index]
             isLive = (nextItem["isLive"] as? Bool)!
@@ -274,14 +332,27 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
             if videoPlayer != nil && !changeSourceNeedReset {
                 changeCurrentItemPlayer()
             } else {
-                self.ssai = SSAITracking.SigmaSSAI.init(videoUrl, adsProxy, self, playerView)
+                self.ssai = SSAITracking.SigmaSSAI.init(videoUrl, adsProxy, self, playerView, pilotEnable)
                 self.ssai?.setShowLog(true)
             }
         }
     }
+    
+    func changeVideoProfile() {
+        clearPlayer()
+        self.ssai = SSAITracking.SigmaSSAI.init(videoUrl, adsProxy, self, playerView, pilotEnable)
+        self.ssai?.setShowLog(true)
+    }
+    
+    func changeCurrentItemPlayer() {
+        print("changeCurrentItemPlayer=>", videoUrl)
+        if let url = URL(string: videoUrl) {
+            self.ssai?.setVideoUrl(videoUrl)
+        }
+    }
     override func viewWillDisappear(_ animated: Bool) {
         print("Player viewWillDisappear", animated);
-        stopBtnPressed(UIButton())
+        destroyPlayer(UIButton())
         super.viewWillDisappear(animated);
         let value = UIInterfaceOrientation.portrait.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")	
@@ -333,19 +404,12 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
                 self.layer.frame = CGRect(x: 0, y: (self.heightDevice - heightVideo)/2, width: self.widthDevice, height: heightVideo)
                 self.layer.videoGravity = .resizeAspectFill;
             } else if player.status == .failed {
-                stopBtnPressed(UIButton())
+                clearPlayer()
             }
         }
     }
-    func changeCurrentItemPlayer() {
-        print("changeCurrentItemPlayer=>", videoUrl)
-        if let url = URL(string: videoUrl) {
-            self.ssai?.setVideoUrl(videoUrl)
-            let asset = isLive ? self.ssai?.getAsset() ?? AVURLAsset(url: url) : AVURLAsset(url: url)
-            playerItem = AVPlayerItem(asset: asset)
-            videoPlayer?.replaceCurrentItem(with: playerItem)
-            videoPlayer?.play()
-        }
+    func setPlaybackTimeText(_ time: Double) {
+        playbackTimeLabel.text = "Pilot: \(pilotEnable), Reset: \(changeSourceNeedReset)\n\(Helper.formatPlaybackTime(time))"
     }
     private func startPlayer() {
         print("start player ", videoUrl)
@@ -361,7 +425,9 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
                 guard let self = self else { return }
                 let playbackTime = CMTimeGetSeconds(time)
                 // Update your playback time variable here
-                self.playBackTime = playbackTime
+                print("playbackTime=>", self.playBackTime, playbackTime)
+                self.playBackTime += 0.5
+                setPlaybackTimeText(self.playBackTime)
             }
             videoPlayer?.volume = 1.0
             layer = AVPlayerLayer(player: videoPlayer);
@@ -377,8 +443,9 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     }
 
     
-    func stopBtnPressed(_ sender: Any) {
+    func clearPlayer() {
         if(changeSourceNeedReset) {
+            print("---Clear player---")
             self.ssai?.clear()
             videoPlayer?.pause()
             videoPlayer = nil
@@ -388,6 +455,22 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
                 .forEach { $0.removeFromSuperlayer() }
             playerView.backgroundColor = .black
         }
+        self.playBackTime = 0
+        self.title = ""
+    }
+    
+    func destroyPlayer(_ sender: Any) {
+        print("---Destroy player---")
+        self.ssai?.clear()
+        videoPlayer?.pause()
+        videoPlayer = nil
+        self.ssai = nil
+        self.playBackTime = 0
+        self.videoUrl = ""
+        playerView.layer.sublayers?
+            .filter { $0 is AVPlayerLayer }
+            .forEach { $0.removeFromSuperlayer() }
+        playerView.backgroundColor = .black
         self.title = ""
     }
     func convertToDictionary(text: String) -> [String: Any]? {
