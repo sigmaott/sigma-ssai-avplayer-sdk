@@ -16,7 +16,7 @@ To display the App Tracking Transparency authorization request for accessing the
 ### I. Declare library SSAITracking in Podfile
 
 ```swift
-pod 'SSAITracking', '1.0.19'
+pod 'SSAITracking', :git => 'https://github.com/sigmaott/sigma-ssai-ios.git', :tag => '1.0.39'
 ```
 
 cd to your project and run
@@ -25,74 +25,96 @@ cd to your project and run
 pod install
 ```
 
-### II. Init SDK
 
-Implement SigmaSSAIInterface (To listen for SSAI events call and execute app logic if needed)
+## Step 1: Initialize the SDK
+
+First, initialize the SDK with the required parameters:
 
 ```swift
-class PlayerViewController: SigmaSSAIInterface
+// Initialize the SDK
+self.ssai = SSAITracking.SigmaSSAI.init(adsProxy, self, playerView)
 ```
 
-Init sdk
+### Parameter Definitions
+
+* **`adsProxy`** : your ads proxy, responsible for handling ad requests and responses.
+* **`self`** : A reference to the current instance of your class, which must conform to the `SigmaSSAIInterface` protocol to handle callbacks.
+* **`playerView`** : The view where the video player will be displayed.
+
+## Step 2: Generate Video URL
+
+Once the SDK is initialized, generate the video URL by calling the `generateUrl` method with the `videoUrl` parameter.
 
 ```swift
-self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
+self.ssai?.generateUrl(videoUrl)
 ```
 
-   ``sessionUrl``: Link session (get link video and link tracking)
+### Listening for Callbacks
 
-   ``self``: Your class implement SigmaSSAIInterface
+After calling `generateUrl`, listen for callbacks from the SDK. The SDK will notify you whether the URL generation was successful or failed through the following methods:
 
-   ``playerView``: Player UIView
+1. **Success Callback** : If the video URL is generated successfully, you will receive a call to the `onGenerateVideoUrlSuccess` method. This is where you will call the `playVideo` method.
+2. **Failure Callback** : If there is an error generating the video URL, you will receive a call to the `onGenerateVideoUrlFail` method.
 
-### III. How to use
+## Implementing the Interface
 
-1. Import SSAITracking:
-
-   ```swift
-   import SSAITracking
-   ```
-2. Create variable ssai type SigmaSSAI.
-
-   ```swift
-   var ssai: SigmaSSAI?;
-   ```
-3. Init sdk from **II** when view loaded
-
-   ```swift
-   override func viewDidLoad() {
-           self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
-           //show or hide ssai log
-           self.ssai?.setShowLog(true)
-       }
-   ```
-4. Listen event **onSessionInitSuccess** to start player
+You must implement the `SigmaSSAIInterface` protocol in your class to handle the callbacks properly. Here’s an example implementation:
 
 ```swift
-func onSessionInitSuccess(_ videoUrl: String) {
-        self.videoUrl = videoUrl
-        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
-        startPlayer();
+// Implement the success callback
+    func onGenerateVideoUrlSuccess(_ videoUrl: String) {
+       self.videoUrl = videoUrl
+        // Call the playVideo method with the new video URL
+        print("Generated video URL: \(videoUrl)")
+       startPlayer()
+    }
+  
+    // Implement the failure callback
+    func onGenerateVideoUrlFail(_ message: String) {
+        print("Failed to generate video URL: \(message)")
+        // Handle the failure appropriately
+    }
+  
+    // Implement the tracking callback if needed
+    func onTracking(_ message: String) {
+        print("Tracking message: \(message)")
+        // Handle tracking message if needed
+    }
+   // Method to play video
+    func startPlayer() {
+        // Set up the AVPlayer with the new video URL
+        let asset = AVAsset(url: URL(string: self.videoUrl)!)
+        playerItem = AVPlayerItem(asset: asset)
+  
+        if videoPlayer == nil {
+            // If videoPlayer is not initialized, create a new one
+            videoPlayer = AVPlayer(playerItem: playerItem)
+            self.ssai?.setPlayer(videoPlayer!)
+        } else {
+            // If videoPlayer already exists, replace the current item
+            let newPlayerItem = AVPlayerItem(asset: asset)
+            videoPlayer?.replaceCurrentItem(with: newPlayerItem)
+            playerItem = newPlayerItem
+  
+            // Set the player in the SDK again after replacing the item
+            self.ssai?.setPlayer(videoPlayer!)
+        }
+
+        // Start playing the video
+        videoPlayer?.play()
     }
 ```
 
-5. Call **setPlayer** after init player
+### Important Note
 
-```swift
-func startPlayer() {
-    let asset = AVURLAsset(url:videoUrl, options: nil);
-    playerItem = AVPlayerItem(asset: asset)
-    videoPlayer = AVPlayer(playerItem: playerItem)
-    //set player for sdk
-    self.ssai?.setPlayer(videoPlayer!)
-}
-```
+**Always remember to call `setPlayer` on the SDK after initializing the `AVPlayer` or replacing the current item. This ensures that the SDK is correctly aware of the active player and can manage ad tracking effectively.**
 
-6. List Listener functional to execute app logic if needed
+### Callbacks Description
 
-   ``onSessionFail(_ message: String)`` - When sdk get data session fail (status code other than 200 or returns data with incorrect structure)
+* **`onGenerateVideoUrlSuccess(_ videoUrl: String)`** : This method is called when the video URL is successfully generated. Here, you call the `playVideo` method with the new video URL.
+* **`onGenerateVideoUrlFail(_ message: String)`** : This method is called when there is an error generating the video URL. Use the `message` parameter to display an error or log it.
+* **`onTracking(_ message: String)`** : This method is called whenever there is a tracking message. You can use it to handle any tracking-related tasks.
 
-   ``onTracking(_ message: String)`` - When sdk make call 1 ads tracking request
-7. Public method
+## Conclusion
 
-   ``clear()`` - To remove all data sdk (call when change video url or session url or release player)
+Following the above steps, you can successfully integrate and use the SSAI Tracking SDK in your application. Ensure you handle the success and failure callbacks to provide a seamless user experience.
