@@ -109,9 +109,13 @@ You must implement the `SigmaSSAIInterface` protocol in your class to handle the
 
 **Always remember to call `setPlayer` on the SDK after initializing the `AVPlayer` or replacing the current item. This ensures that the SDK is correctly aware of the active player and can manage ad tracking effectively.**
 
+### Recommended Usage
+
+When you need to clear the player, it’s recommended to use the `clear` method on the SDK `self.ssai?.clear()`. This ensures that the SDK is properly reset and can manage ad tracking effectively after clearing the player.
+
 ### Callbacks Description
 
-* **`onGenerateVideoUrlSuccess(_ videoUrl: String)`** : This method is called when the video URL is successfully generated. Here, you call the `playVideo` method with the new video URL.
+* **`onGenerateVideoUrlSuccess(_ videoUrl: String)`** : This method is called when the video URL is successfully generated. Here, you call the `startPlayer` method with the new video URL.
 * **`onGenerateVideoUrlFail(_ message: String)`** : This method is called when there is an error generating the video URL. Use the `message` parameter to display an error or log it.
 * **`onTracking(_ message: String)`** : This method is called whenever there is a tracking message. You can use it to handle any tracking-related tasks.
 
