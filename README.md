@@ -58,7 +58,7 @@ self.ssai?.generateUrl(videoUrl)
 
 After calling `generateUrl`, listen for callbacks from the SDK. The SDK will notify you whether the URL generation was successful or failed through the following methods:
 
-1. **Success Callback** : If the video URL is generated successfully, you will receive a call to the `onGenerateVideoUrlSuccess` method. This is where you will call the `playVideo` method.
+1. **Success Callback** : If the video URL is generated successfully, you will receive a call to the `onGenerateVideoUrlSuccess` method. This is where you will call the `startPlayer` method.
 2. **Failure Callback** : If there is an error generating the video URL, you will receive a call to the `onGenerateVideoUrlFail` method.
 
 ## Implementing the Interface
