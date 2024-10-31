@@ -25,10 +25,15 @@ cd to your project and run
 pod install
 ```
 
-
 ## Step 1: Initialize the SDK
 
-First, initialize the SDK with the required parameters:
+Import SDK
+
+```swift
+import SSAITracking
+```
+
+Initialize the SDK with the required parameters:
 
 ```swift
 // Initialize the SDK
