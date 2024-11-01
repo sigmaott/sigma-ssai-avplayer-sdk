@@ -33,7 +33,24 @@ Import SDK
 import SSAITracking
 ```
 
-Initialize the SDK with the required parameters:
+Call **initServer** function when your app launch
+
+```swift
+SSAITracking.SigmaSSAI.initServer()
+```
+
+Example:
+
+
+```swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    SSAITracking.SigmaSSAI.initServer()
+    return true
+}
+```
+
+
+Initialize the SDK with the required parameters before play video:
 
 ```swift
 // Initialize the SDK
