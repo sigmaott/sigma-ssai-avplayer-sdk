@@ -33,7 +33,7 @@ Import SDK
 import SSAITracking
 ```
 
-Call **initServer** function when your app launch
+Call **start** function when your app launch
 
 ```swift
 SSAITracking.SigmaSSAI.start()
