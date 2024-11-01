@@ -65,11 +65,21 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     //change to false if not use sdk ssai cover
     //change time interval tracking
     var playBackTime = 0.0
+    let periodicTime = 1.0
+    var timeStartPlay = 0
+    var countLoadingShow = 0
+    var lastPlaybackTimePlayer = 0.0
     var isLive = true
+    var isDrm = false
+    var timeObserverToken: Any?
     var pilotEnable = false
+    var resetSessionWhenChangeProfile = false
+    var autoRotate = false
     private var videoPlayer: AVPlayer?
     var selectedLabel: UILabel!
+    private var orientationTimer: Timer?
 
+    let activityIndicator = UIActivityIndicatorView(style: .large)
     @IBOutlet weak var playerView: UIView!
     let playPauseButton = UIButton(type: .system)
     let playbackTimeLabel = UILabel()
@@ -87,51 +97,55 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
                 }
             }
             if changeSourceNeedReset {
-                changeVideoProfile()
+                clearPlayer()
+                setupSSAI()
             } else {
-                changeCurrentItemPlayer()
+                changeCurrentItemPlayer(false)
             }
-            setTitleButtonProfile()
         } else {
             profileIndex = -1
             if(itemIndex != index) {
                 itemIndex = index
                 changeVideoUrlWithIndex(index)
             }
-            setTitleButtonProfile()
         }
+        setTitleButtonProfile()
     }
     func metadataCollector(_ metadataCollector: AVPlayerItemMetadataCollector, didCollect metadataGroups: [AVDateRangeMetadataGroup], indexesOfNewGroups: IndexSet, indexesOfModifiedGroups: IndexSet) {
         //
     }
-    //event when session fail
-    func onSessionFail(_ message: String) {
-        print("onSessionFailSSAI=>\(message)")
+    func setupSSAI() {
+        self.ssai = SSAITracking.SigmaSSAI.init(adsProxy, self, playerView)
+        //show or hide ssai log
+        self.ssai?.setShowLog(true)
+        self.ssai?.generateUrl(videoUrl)
     }
-    
-    func onSessionInitSuccess(_ videoUrl: String) {
+    func onGenerateVideoUrlFail(_ message: String) {
+        print("onGenerateVideoUrlFail=>\(message)")
+    }
+    func onGenerateVideoUrlSuccess(_ videoUrl: String) {
         self.videoUrl = videoUrl
-        print("onSessionInitSuccess=>", videoUrl)
+        print("---Clear player onGenerateVideoUrlSuccess---", videoUrl, self.ssai)
         if(profileIndex == -1) {
             fetchM3u8Url()
         }
-        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
-        startPlayer();
-    }
-    
-    func onChangeVideoUrlSuccess(_ videoUrl: String) {
-        self.videoUrl = videoUrl
-        print("onChangeVideoUrlSuccess=>", videoUrl)
-        if(profileIndex == -1) {
-            fetchM3u8Url()
-        }
-        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
-        if let url = URL(string: videoUrl) {
-            let asset = isLive ? self.ssai?.getAsset() ?? AVURLAsset(url: url) : AVURLAsset(url: url)
-            let newPlayerItem = AVPlayerItem(asset: asset)
-            videoPlayer?.replaceCurrentItem(with: newPlayerItem)
-            playerItem = newPlayerItem
-            videoPlayer?.play()
+        if videoPlayer == nil {
+            try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
+            startPlayer();
+        } else {
+            if changeSourceNeedReset {
+                startPlayer()
+            } else {
+                if let asset = getAssetWrapper() {
+                    let newPlayerItem = AVPlayerItem(asset: asset)
+                    videoPlayer?.replaceCurrentItem(with: newPlayerItem)
+                    addPeriodicTimeObserver()
+                    self.playBackTime = 0
+                    playerItem = newPlayerItem
+                    videoPlayer?.play()
+                    self.ssai?.setPlayer(videoPlayer!)
+                }
+            }
         }
     }
     
@@ -141,9 +155,10 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     
     override func viewDidLoad() {
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
-        self.ssai = SSAITracking.SigmaSSAI.init(videoUrl, adsProxy, self, playerView, pilotEnable)
-        //show or hide ssai log
-        self.ssai?.setShowLog(true)
+        setDrmInfo()
+        setupActivityIndicator()
+        activityIndicator.startAnimating()
+        setupSSAI()
         setupPlayPauseButton()
         // Create the button
         changeButton = UIButton(type: .system)
@@ -197,6 +212,83 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
             changeProfileButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 170), // Set the top position
             changeProfileButton.heightAnchor.constraint(equalToConstant: 50) // Set a fixed height
         ])
+    }
+    func setupActivityIndicator() {
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = .red
+        view.addSubview(activityIndicator)
+    }
+    func setDrmInfo() {
+        #if !targetEnvironment(simulator)
+            if isDrm {
+                SigmaDRM.getInstance().setAppId(Constants.appId)
+                SigmaDRM.getInstance().setMerchantId(Constants.merchantId)
+                SigmaDRM.getInstance().setUserUid("234")
+                SigmaDRM.getInstance().setDrmUrl([])
+                SigmaDRM.getInstance().setSessionId("1234")
+            }
+        #endif
+    }
+    private func startOrientationTimer() {
+        // Khóa hướng ban đầu là ngang
+        setOrientation(.portrait)
+        orientationTimer?.invalidate()
+        
+        // Thiết lập Timer để thay đổi hướng sau 10 giây
+        orientationTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { [weak self] _ in
+            self?.toggleOrientation()
+        }
+    }
+
+    private func toggleOrientation() {
+        print("toggleOrientation", UIDevice.current.orientation.isLandscape, UIApplication.shared.windows.first?.windowScene?.interfaceOrientation.isLandscape)
+        if (UIApplication.shared.windows.first?.windowScene?.interfaceOrientation.isLandscape)! {
+            setOrientation(.portrait)
+        } else {
+            setOrientation(.landscapeLeft)
+        }
+    }
+    private func setOrientation(_ orientation: UIInterfaceOrientation) {
+        // Ensure the app is running on iOS 16 or later
+        if #available(iOS 16.0, *) {
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+            
+            // Specify the interface orientations based on the requested orientation
+            let orientationMask: UIInterfaceOrientationMask = {
+                switch orientation {
+                case .landscapeLeft, .landscapeRight:
+                    return .landscape
+                case .portrait, .portraitUpsideDown:
+                    return .portrait
+                default:
+                    return .all
+                }
+            }()
+            
+            // Request the geometry update
+            windowScene.requestGeometryUpdate(.iOS(interfaceOrientations: orientationMask))
+        } else {
+            // Fallback for iOS versions lower than 16
+            // Note: You should not be using this for iOS 16 and later
+            UIDevice.current.setValue(orientation.rawValue, forKey: "orientation")
+            UIViewController.attemptRotationToDeviceOrientation()
+        }
+    }
+
+
+
+    // Khóa hướng theo chiều ngang và dọc
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .all
+    }
+
+    override var shouldAutorotate: Bool {
+        return true
+    }
+
+    deinit {
+        orientationTimer?.invalidate()
     }
     func fetchM3u8Url() {
         //
@@ -326,28 +418,23 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         if(index >= 0) {
             let nextItem = Constants.urls[index]
             isLive = (nextItem["isLive"] as? Bool)!
+            isDrm = (nextItem["isDrm"] as? Bool)!
             videoUrl = (nextItem["url"] as? String)!
             itemIndex = index
             setTitleButton()
+            setDrmInfo()
             if videoPlayer != nil && !changeSourceNeedReset {
-                changeCurrentItemPlayer()
+                changeCurrentItemPlayer(true)
             } else {
-                self.ssai = SSAITracking.SigmaSSAI.init(videoUrl, adsProxy, self, playerView, pilotEnable)
-                self.ssai?.setShowLog(true)
+                setupSSAI()
             }
         }
     }
     
-    func changeVideoProfile() {
-        clearPlayer()
-        self.ssai = SSAITracking.SigmaSSAI.init(videoUrl, adsProxy, self, playerView, pilotEnable)
-        self.ssai?.setShowLog(true)
-    }
-    
-    func changeCurrentItemPlayer() {
+    func changeCurrentItemPlayer(_ needReset: Bool) {
         print("changeCurrentItemPlayer=>", videoUrl)
         if let url = URL(string: videoUrl) {
-            self.ssai?.setVideoUrl(videoUrl)
+            self.ssai?.generateUrl(videoUrl)
         }
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -355,8 +442,28 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         destroyPlayer(UIButton())
         super.viewWillDisappear(animated);
         let value = UIInterfaceOrientation.portrait.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")	
+        UIDevice.current.setValue(value, forKey: "orientation")
+        if let navigationBar = self.navigationController?.navigationBar {
+            navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        }
         AppUtility.lockOrientation(.portrait)
+    }
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if (UIApplication.shared.windows.first?.windowScene?.interfaceOrientation.isLandscape)! {
+            if #available(iOS 11.0, *) {
+                topSafeArea = view.safeAreaInsets.top
+                bottomSafeArea = view.safeAreaInsets.bottom
+            } else {
+                topSafeArea = topLayoutGuide.length
+                bottomSafeArea = bottomLayoutGuide.length
+            }
+            print("Landscape=>",topSafeArea, bottomSafeArea);
+            goFullscreen()
+        } else {
+            print("Portrait")
+            minimizeToFrame()
+        }
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         print("viewWillTransition=>")
@@ -393,42 +500,95 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         }
     }
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        print("observeValueKeyPath=>", keyPath)
         if let player = object as? AVPlayer, player == videoPlayer, keyPath == "status" {
             if player.status == .readyToPlay {
+                print("readyToPlay==>")
                 if let duration = player.currentItem?.duration {
                     let seconds = CMTimeGetSeconds(duration)
                     print("Seconds :: \(seconds)")
                 }
+                countLoadingShow = 0
+                activityIndicator.stopAnimating()
                 videoPlayer?.play()
                 let heightVideo = self.widthDevice * (9/16);
                 self.layer.frame = CGRect(x: 0, y: (self.heightDevice - heightVideo)/2, width: self.widthDevice, height: heightVideo)
                 self.layer.videoGravity = .resizeAspectFill;
             } else if player.status == .failed {
-                clearPlayer()
+                print("observeValue==>Failed")
+                destroyPlayer(UIButton())
             }
         }
+        if keyPath == "timeControlStatus" {
+            if videoPlayer?.timeControlStatus == .waitingToPlayAtSpecifiedRate {
+                    print("Player is waiting to play")
+                    activityIndicator.startAnimating() // Show loading indicator
+                    countLoadingShow += 1
+                } else {
+                    print("Player is playing or paused")
+                    activityIndicator.stopAnimating() // Hide loading indicator
+                }
+            }
     }
     func setPlaybackTimeText(_ time: Double) {
-        playbackTimeLabel.text = "Pilot: \(pilotEnable), Reset: \(changeSourceNeedReset)\n\(Helper.formatPlaybackTime(time))"
+        playbackTimeLabel.text = "Reset player: \(changeSourceNeedReset),Reset session: \(resetSessionWhenChangeProfile)\nLoading: \(countLoadingShow)\n\(Helper.formatPlaybackTime(timeStartPlay > 0 ? Double(Int(Date().timeIntervalSince1970) - timeStartPlay) : 0))"
+    }
+    func getAssetWrapper() -> AVURLAsset? {
+        print("getAssetWrapper=>", videoUrl)
+        if autoRotate {
+            startOrientationTimer()
+        }
+        if let url = URL(string: videoUrl) {
+            //SigmaDRM not support simulator
+            #if !targetEnvironment(simulator)
+                let asset = isDrm ? SigmaDRM.getInstance().asset(withUrl: videoUrl) : AVURLAsset(url: url)
+                if asset != nil {
+                    return asset
+                } else {
+                    return AVURLAsset(url: url)
+                }
+            #else
+                return AVURLAsset(url: url)
+            #endif
+        } else {
+            return nil
+        }
+    }
+    
+    func removePeriodicTimeObserver() {
+        if let token = timeObserverToken {
+            videoPlayer?.removeTimeObserver(token)
+            timeObserverToken = nil // Clear the token
+        }
+    }
+    func addPeriodicTimeObserver() {
+        // Add the periodic time observer
+        timeObserverToken = videoPlayer?.addPeriodicTimeObserver(forInterval: CMTime(seconds: periodicTime, preferredTimescale: 600), queue: DispatchQueue.main) { [weak self] time in
+            guard let self = self else { return }
+            let playbackTime = CMTimeGetSeconds(time)
+            // Update your playback time variable here
+            print("playbackTime=>", self.playBackTime, playbackTime)
+            if(self.playBackTime == 0) {
+                timeStartPlay = Int(Date().timeIntervalSince1970)
+            }
+            if(lastPlaybackTimePlayer != playbackTime) {
+                self.playBackTime += periodicTime
+            }
+            lastPlaybackTimePlayer = playbackTime
+            setPlaybackTimeText(self.playBackTime)
+        }
     }
     private func startPlayer() {
-        print("start player ", videoUrl)
-        if let url = URL(string: videoUrl) {
-            // Use the asset from your SSAI if applicable
-            let asset = isLive ? self.ssai?.getAsset() ?? AVURLAsset(url: url) : AVURLAsset(url: url)
+        print("startPlayer=>", self.ssai != nil ? "inited" : "nil")
+        if let asset = getAssetWrapper() {
             playerItem = AVPlayerItem(asset: asset)
             videoPlayer = AVPlayer(playerItem: playerItem)
             self.ssai?.setPlayer(videoPlayer!)
             videoPlayer?.addObserver(self, forKeyPath: "status", options: [.new, .old], context: nil)
+            videoPlayer?.addObserver(self, forKeyPath: "timeControlStatus", options: [.new, .old], context: nil)
             // Observe playback time
-            videoPlayer?.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.5, preferredTimescale: 600), queue: DispatchQueue.main) { [weak self] time in
-                guard let self = self else { return }
-                let playbackTime = CMTimeGetSeconds(time)
-                // Update your playback time variable here
-                print("playbackTime=>", self.playBackTime, playbackTime)
-                self.playBackTime += 0.5
-                setPlaybackTimeText(self.playBackTime)
-            }
+            addPeriodicTimeObserver()
+            self.playBackTime = 0
             videoPlayer?.volume = 1.0
             layer = AVPlayerLayer(player: videoPlayer);
             layer.backgroundColor = UIColor.white.cgColor
@@ -445,11 +605,14 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     
     func clearPlayer() {
         if(changeSourceNeedReset) {
-            print("---Clear player---")
             self.ssai?.clear()
+            self.ssai = nil
+            print("---Clear player---")
+            removePeriodicTimeObserver()
+            videoPlayer?.removeObserver(self, forKeyPath: "timeControlStatus")
+            videoPlayer?.removeObserver(self, forKeyPath: "status")
             videoPlayer?.pause()
             videoPlayer = nil
-            self.ssai = nil
             playerView.layer.sublayers?
                 .filter { $0 is AVPlayerLayer }
                 .forEach { $0.removeFromSuperlayer() }
@@ -462,6 +625,10 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     func destroyPlayer(_ sender: Any) {
         print("---Destroy player---")
         self.ssai?.clear()
+        removePeriodicTimeObserver()
+        videoPlayer?.removeObserver(self, forKeyPath: "timeControlStatus")
+        videoPlayer?.removeObserver(self, forKeyPath: "status")
+        removePeriodicTimeObserver()
         videoPlayer?.pause()
         videoPlayer = nil
         self.ssai = nil

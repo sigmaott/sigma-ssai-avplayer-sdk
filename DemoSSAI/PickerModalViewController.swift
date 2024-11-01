@@ -39,24 +39,30 @@ class PickerModalViewController: UIViewController, UIPickerViewDelegate, UIPicke
         
 
         let choiceButton = UIButton(type: .system)
-        choiceButton.setTitle("Choose", for: .normal)
+        choiceButton.setTitle("  Choose  ", for: .normal)
         choiceButton.addTarget(self, action: #selector(changeSource), for: .touchUpInside)
         choiceButton.translatesAutoresizingMaskIntoConstraints = false
+        choiceButton.layer.borderWidth = 1.0
+        choiceButton.layer.borderColor = UIColor.blue.cgColor
+        choiceButton.layer.cornerRadius = 5.0
         
         let cancelButton = UIButton(type: .system)
-        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.setTitle("  Cancel  ", for: .normal)
         cancelButton.setTitleColor(.red, for: .normal)
         cancelButton.addTarget(self, action: #selector(cancel), for: .touchUpInside)
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        cancelButton.layer.borderWidth = 1.0
+        cancelButton.layer.borderColor = UIColor.red.cgColor
+        cancelButton.layer.cornerRadius = 5.0
         
         view.addSubview(choiceButton)
         view.addSubview(cancelButton)
 
         NSLayoutConstraint.activate([
-            choiceButton.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 20),
+            choiceButton.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 0),
             choiceButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            cancelButton.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 50),
+            cancelButton.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 40),
             cancelButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
@@ -92,5 +98,8 @@ class PickerModalViewController: UIViewController, UIPickerViewDelegate, UIPicke
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selectedItem = Constants.urls[row]
         selectedIndex = row
+    }
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 35 // Chiều cao hàng bạn mong muốn
     }
 }
