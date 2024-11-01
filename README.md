@@ -41,7 +41,6 @@ SSAITracking.SigmaSSAI.start()
 
 Example:
 
-
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     SSAITracking.SigmaSSAI.start()
@@ -49,8 +48,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 }
 ```
 
-
-Initialize the SDK with the required parameters before play video:
+Initialize the SDK with the required parameters:
 
 ```swift
 // Initialize the SDK
