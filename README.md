@@ -36,7 +36,7 @@ import SSAITracking
 Call **initServer** function when your app launch
 
 ```swift
-SSAITracking.SigmaSSAI.initServer()
+SSAITracking.SigmaSSAI.start()
 ```
 
 Example:
@@ -44,7 +44,7 @@ Example:
 
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    SSAITracking.SigmaSSAI.initServer()
+    SSAITracking.SigmaSSAI.start()
     return true
 }
 ```
