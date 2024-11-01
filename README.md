@@ -1,6 +1,6 @@
 # SSAITracking SDK
 
-## Requirement: IOS 12.4+
+## Requirement: IOS 12.4+ and Physical device
 
 ## Prepare for iOS 14+
 
@@ -42,7 +42,7 @@ self.ssai = SSAITracking.SigmaSSAI.init(adsProxy, self, playerView)
 
 ### Parameter Definitions
 
-* **`adsProxy`** : your ads proxy, responsible for handling ad requests and responses.
+* **`adsProxy`** : your ads proxy, responsible for handling ad requests and responses. Here is document for it [https://placid-skateboard-a71.notion.site/T-i-li-u-H-ng-d-n-S-d-ng-Endpoint-cspm-control-12f7a665ded5802696b6c156bae20576](https://placid-skateboard-a71.notion.site/T-i-li-u-H-ng-d-n-S-d-ng-Endpoint-cspm-control-12f7a665ded5802696b6c156bae20576)
 * **`self`** : A reference to the current instance of your class, which must conform to the `SigmaSSAIInterface` protocol to handle callbacks.
 * **`playerView`** : The view where the video player will be displayed.
 
