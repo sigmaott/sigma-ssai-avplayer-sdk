@@ -1,7 +1,8 @@
 # SSAITracking SDK Integration Guide
 
  **Version** : 1.0.39
- **Organization** : Thủ Đô Multimedia
+
+**Organization** : Thủ Đô Multimedia
 
 ## Table of Contents
 
