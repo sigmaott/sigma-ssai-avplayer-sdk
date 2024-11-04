@@ -30,7 +30,7 @@ This document applies to iOS developers who want to integrate the SSAITracking S
 
 * **Operating System** : iOS 12.4 and above
 * **Device** : Physical device required
-* **Additional Requirement** : App Tracking Transparency authorization needed
+* **Additional Requirement** : App Tracking Transparency authorization needed **on ios 14+**
 
 ## 4. SDK Installation
 
