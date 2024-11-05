@@ -45,13 +45,13 @@ To install the SSAITracking SDK, follow these steps:
 <string>This identifier will be used to deliver personalized ads to you.</string>
 ```
 
-1. **Declare the library in Podfile** :
+2. **Declare the library in Podfile** :
 
 ```swift
 pod 'SSAITracking', :git => 'https://github.com/sigmaott/sigma-ssai-ios.git', :tag => '1.0.39'
 ```
 
-1. **Run the installation command** :
+3. **Run the installation command** :
 
 ```swift
 cd [path to your project]
