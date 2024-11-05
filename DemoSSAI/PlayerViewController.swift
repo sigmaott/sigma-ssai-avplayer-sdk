@@ -154,6 +154,9 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     }
     
     override func viewDidLoad() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
         setDrmInfo()
         setupActivityIndicator()
@@ -212,6 +215,13 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
             changeProfileButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 170), // Set the top position
             changeProfileButton.heightAnchor.constraint(equalToConstant: 50) // Set a fixed height
         ])
+    }
+    
+    @objc private func appDidBecomeActive(_ gesture: UITapGestureRecognizer) {
+        self.videoPlayer?.play()
+    }
+    @objc private func appDidEnterBackground(_ gesture: UITapGestureRecognizer) {
+        self.videoPlayer?.pause()
     }
     func setupActivityIndicator() {
         activityIndicator.center = view.center
@@ -541,7 +551,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         if let url = URL(string: videoUrl) {
             //SigmaDRM not support simulator
             #if !targetEnvironment(simulator)
-                let asset = isDrm ? SigmaDRM.getInstance().asset(withUrl: videoUrl) : AVURLAsset(url: url)
+            let asset = isDrm ? SigmaDRM.getInstance().asset(withUrl: videoUrl) : self.ssai?.getAsset()
                 if asset != nil {
                     return asset
                 } else {
