@@ -2,7 +2,7 @@
 
  **Version**: 1.0.39
 
- **Organization**: Thủ Đô Multimedia
+**Organization**: Thủ Đô Multimedia
 
 ## Table of Contents
 
@@ -11,9 +11,9 @@
 3. System Requirements
 4. SDK Installation
 5. SDK Integration
-   5.1 SDK Initialization
-   5.2 Generating Video URL
-   5.3 Listening for Callbacks
+   * 5.1 SDK Initialization
+   * 5.2 Generating Video URL
+   * 5.3 Listening for Callbacks
 6. Important Notes
 7. Callback Descriptions
 8. Conclusion
