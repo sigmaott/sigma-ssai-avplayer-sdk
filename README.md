@@ -1,8 +1,8 @@
 # SSAITracking SDK Integration Guide
 
- **Version** : 1.0.39
+ **Version**: 1.0.39
 
-**Organization** : Thủ Đô Multimedia
+ **Organization**: Thủ Đô Multimedia
 
 ## Table of Contents
 
@@ -11,9 +11,9 @@
 3. System Requirements
 4. SDK Installation
 5. SDK Integration
-   * 5.1 SDK Initialization
-   * 5.2 Generating Video URL
-   * 5.3 Listening for Callbacks
+   5.1 SDK Initialization
+   5.2 Generating Video URL
+   5.3 Listening for Callbacks
 6. Important Notes
 7. Callback Descriptions
 8. Conclusion
@@ -29,15 +29,15 @@ This document applies to iOS developers who want to integrate the SSAITracking S
 
 ## 3. System Requirements
 
-* **Operating System** : iOS 12.4 and above
-* **Device** : Physical device required
-* **Additional Requirement** : App Tracking Transparency authorization needed **on ios 14+**
+* **Operating System**: iOS 12.4 and above
+* **Device**: Physical device required
+* **Additional Requirement**: App Tracking Transparency authorization needed **on ios 14+**
 
 ## 4. SDK Installation
 
 To install the SSAITracking SDK, follow these steps:
 
-1. **Update Info.plist** :
+1. **Update Info.plist**:
    Add the `NSUserTrackingUsageDescription` key with a custom message describing the usage of IDFA:
 
 ```swift
@@ -45,13 +45,13 @@ To install the SSAITracking SDK, follow these steps:
 <string>This identifier will be used to deliver personalized ads to you.</string>
 ```
 
-2. **Declare the library in Podfile** :
+2. **Declare the library in Podfile**:
 
 ```swift
 pod 'SSAITracking', :git => 'https://github.com/sigmaott/sigma-ssai-ios.git', :tag => '1.0.39'
 ```
 
-3. **Run the installation command** :
+3. **Run the installation command**:
 
 ```swift
 cd [path to your project]
@@ -62,13 +62,13 @@ pod install
 
 ### 5.1 SDK Initialization
 
-* **Import the SDK** :
+* **Import the SDK**:
 
 ```swift
 import SSAITracking
 ```
 
-* **Call the start function when your application launches** :
+* **Call the start function when your application launches**:
 
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -77,7 +77,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
   }
 ```
 
-* **Initialize the SDK with the required parameters** :
+* **Initialize the SDK with the required parameters**:
 
 ```swift
 self.ssai = SSAITracking.SigmaSSAI.init(adsProxy, self, playerView)
@@ -85,9 +85,9 @@ self.ssai = SSAITracking.SigmaSSAI.init(adsProxy, self, playerView)
 
 ### Parameter Definitions
 
-* **`adsProxy`** : your ads proxy, responsible for handling ad requests and responses. Here is document for it [https://placid-skateboard-a71.notion.site/T-i-li-u-H-ng-d-n-S-d-ng-Endpoint-cspm-control-12f7a665ded5802696b6c156bae20576](https://placid-skateboard-a71.notion.site/T-i-li-u-H-ng-d-n-S-d-ng-Endpoint-cspm-control-12f7a665ded5802696b6c156bae20576)
-* **`self`** : A reference to the current instance of your class, which must conform to the `SigmaSSAIInterface` protocol to handle callbacks.
-* **`playerView`** : The view where the video player will be displayed.
+* **`adsProxy`**: your ads proxy, responsible for handling ad requests and responses. Here is document for it [https://placid-skateboard-a71.notion.site/T-i-li-u-H-ng-d-n-S-d-ng-Endpoint-cspm-control-12f7a665ded5802696b6c156bae20576](https://placid-skateboard-a71.notion.site/T-i-li-u-H-ng-d-n-S-d-ng-Endpoint-cspm-control-12f7a665ded5802696b6c156bae20576)
+* **`self`**: A reference to the current instance of your class, which must conform to the `SigmaSSAIInterface` protocol to handle callbacks.
+* **`playerView`**: The view where the video player will be displayed.
 
 ### 5.2 Generating Video URL
 
@@ -101,9 +101,9 @@ self.ssai?.generateUrl(videoUrl)
 
 After calling `generateUrl`, listen for callbacks from the SDK:
 
-* **Success Callback** :
+* **Success Callback**:
   When the video URL is successfully generated, the `onGenerateVideoUrlSuccess` method will be called.
-* **Failure Callback** :
+* **Failure Callback**:
   If there is an error generating the video URL, the `onGenerateVideoUrlFail` method will be invoked.
 
 ## 6. Important Notes
