@@ -38,27 +38,29 @@ This document applies to iOS developers who want to integrate the SSAITracking S
 To install the SSAITracking SDK, follow these steps:
 
 1. **Update Info.plist**:
-   Add the `NSUserTrackingUsageDescription` key with a custom message describing the usage of IDFA:
+   - Add the `NSUserTrackingUsageDescription` key with a custom message describing the usage of IDFA:
 
 ```swift
 <key>NSUserTrackingUsageDescription</key>
 <string>This identifier will be used to deliver personalized ads to you.</string>
 ```
 
-    Allow HTTP Requests to localhost. Add the following configuration to allow HTTP requests specifically to localhost:
+- Allow HTTP Requests to localhost. Add the following configuration to allow HTTP requests specifically to localhost:
 
 ```swift
 <key>NSAppTransportSecurity</key>
 <dict>
-    <key>NSExceptionDomains</key>
-    <dict>
-        <key>localhost</key>
-        <dict>
-            <key>NSExceptionAllowsInsecureHTTPLoads</key>
-            <true/>
-            <key>NSIncludesSubdomains</key>
-            <true/>
-        </dict>
+   <key>NSAllowsArbitraryLoads</key>
+   <true/>
+   <key>NSExceptionDomains</key>
+   <dict>
+      <key>localhost</key>
+      <dict>
+          <key>NSExceptionAllowsInsecureHTTPLoads</key>
+          <true/>
+          <key>NSIncludesSubdomains</key>
+          <true/>
+      </dict>
     </dict>
 </dict>
 ```
