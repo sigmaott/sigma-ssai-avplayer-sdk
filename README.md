@@ -85,8 +85,7 @@ self.ssai = SSAITracking.SigmaSSAI.init(adsEndpoint, self, playerView)
 
 ### Parameter Definitions
 
-* **`adsEndpoint`**: Your ads endpoint. Here is document for it [https://placid-skateboard-a71.notion.site/T-i-li-u-H-ng-d-n-S-d-ng-Endpoint-cspm-control-12f7a665ded5802696b6c156bae20576
-  ](https://placid-skateboard-a71.notion.site/T-i-li-u-H-ng-d-n-S-d-ng-Endpoint-cspm-control-12f7a665ded5802696b6c156bae20576)
+* **`adsEndpoint`**: Your ads endpoint (it will be obtained from the detailed endpoint information page in the SSAI product).
 * **`self`**: A reference to the current instance of your class, which must conform to the `SigmaSSAIInterface` protocol to handle callbacks.
 * **`playerView`**: The view where the video player will be displayed.
 
