@@ -1,12 +1,12 @@
 # SSAITracking SDK Integration Guide
 
- **Version**: 1.0.39
+ **Version**: 1.0.0
 
 **Organization**: Thủ Đô Multimedia
 
 ## Table of Contents
 
-1. Introduction
+1. [Introduction](#1-introduction)
 2. Scope
 3. System Requirements
 4. SDK Installation
@@ -48,7 +48,7 @@ To install the SSAITracking SDK, follow these steps:
 2. **Declare the library in Podfile**:
 
 ```swift
-pod 'SSAITracking', :git => 'https://github.com/sigmaott/sigma-ssai-ios.git', :tag => '1.0.39'
+pod 'SSAITracking', :git => 'https://github.com/sigmaott/sigma-ssai-ios.git', :tag => '1.0.0'
 ```
 
 3. **Run the installation command**:
@@ -80,12 +80,13 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 * **Initialize the SDK with the required parameters**:
 
 ```swift
-self.ssai = SSAITracking.SigmaSSAI.init(adsProxy, self, playerView)
+self.ssai = SSAITracking.SigmaSSAI.init(adsEndpoint, self, playerView)
 ```
 
 ### Parameter Definitions
 
-* **`adsProxy`**: your ads proxy, responsible for handling ad requests and responses. Here is document for it [https://placid-skateboard-a71.notion.site/T-i-li-u-H-ng-d-n-S-d-ng-Endpoint-cspm-control-12f7a665ded5802696b6c156bae20576](https://placid-skateboard-a71.notion.site/T-i-li-u-H-ng-d-n-S-d-ng-Endpoint-cspm-control-12f7a665ded5802696b6c156bae20576)
+* **`adsEndpoint`**: Your ads endpoint. Here is document for it [https://placid-skateboard-a71.notion.site/T-i-li-u-H-ng-d-n-S-d-ng-Endpoint-cspm-control-12f7a665ded5802696b6c156bae20576
+  ](https://placid-skateboard-a71.notion.site/T-i-li-u-H-ng-d-n-S-d-ng-Endpoint-cspm-control-12f7a665ded5802696b6c156bae20576)
 * **`self`**: A reference to the current instance of your class, which must conform to the `SigmaSSAIInterface` protocol to handle callbacks.
 * **`playerView`**: The view where the video player will be displayed.
 
@@ -108,7 +109,7 @@ After calling `generateUrl`, listen for callbacks from the SDK:
 
 ## 6. Important Notes
 
-Always remember to call `setPlayer` on the SDK after initializing the `AVPlayer` or replacing the current item. This ensures that the SDK correctly recognizes the active video player and can effectively manage ad tracking.
+Always remember to call `setPlayer` on the SDK after initializing the `AVPlayer` or replacing the current item. This ensures that the SDK correctly recognizes the active video player and can effectively manage ad tracking. If you need to change the `adsEndpoint`, it is essential to reinitialize the SDK. This ensures that the new endpoint is properly configured and used for tracking.
 
 ## 7. Callback Descriptions
 
