@@ -16,8 +16,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "138"
             endingLineNumber = "138"
-            landmarkName = "tableView(_:numberOfRowsInSection:)"
-            landmarkType = "7">
+            landmarkName = "ViewController"
+            landmarkType = "3">
             <Locations>
                <Location
                   uuid = "B1A74C16-5B22-46F6-A485-90F3BB0DD9D3 - 76c33e4146a8248c"
@@ -77,9 +77,9 @@
             filePath = "../sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "436"
-            endingLineNumber = "436"
-            landmarkName = "legibleOutput(_:didOutputAttributedStrings:nativeSampleBuffers:forItemTime:)"
+            startingLineNumber = "434"
+            endingLineNumber = "434"
+            landmarkName = "getAsset()"
             landmarkType = "7">
             <Locations>
                <Location
@@ -172,9 +172,9 @@
             filePath = "../sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "378"
-            endingLineNumber = "378"
-            landmarkName = "updatePlaybackTime(playbackTime:)"
+            startingLineNumber = "376"
+            endingLineNumber = "376"
+            landmarkName = "metadataOutput(_:didOutputTimedMetadataGroups:from:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -644,8 +644,8 @@
             filePath = "../sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "442"
-            endingLineNumber = "442"
+            startingLineNumber = "440"
+            endingLineNumber = "440"
             landmarkName = "getAsset()"
             landmarkType = "7">
          </BreakpointContent>
@@ -660,8 +660,8 @@
             filePath = "../sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "592"
-            endingLineNumber = "592"
+            startingLineNumber = "590"
+            endingLineNumber = "590"
             landmarkName = "formatDataTracking(data:_:)"
             landmarkType = "7">
             <Locations>
@@ -1300,9 +1300,9 @@
             filePath = "../sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "469"
-            endingLineNumber = "469"
-            landmarkName = "addMetadataOutput()"
+            startingLineNumber = "467"
+            endingLineNumber = "467"
+            landmarkName = "setPlayer(_:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -1519,8 +1519,8 @@
             filePath = "../sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "906"
-            endingLineNumber = "906"
+            startingLineNumber = "904"
+            endingLineNumber = "904"
             landmarkName = "makeHttpRequest(_:type:eventId:retryCount:)"
             landmarkType = "7">
             <Locations>
@@ -1582,8 +1582,8 @@
             filePath = "../sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "883"
-            endingLineNumber = "883"
+            startingLineNumber = "881"
+            endingLineNumber = "881"
             landmarkName = "makeHttpRequest(_:type:eventId:retryCount:)"
             landmarkType = "7">
             <Locations>

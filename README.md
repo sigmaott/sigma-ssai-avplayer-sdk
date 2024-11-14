@@ -7,7 +7,7 @@
 ## Table of Contents
 
 1. [Introduction](#1-introduction)
-2. [Scope](#1-scope)
+2. [Scope](#2-scope)
 3. [System Requirements](#3-system-requirements)
 4. [SDK Installation](#4-sdk-installation)
 5. [SDK Integration](#5-sdk-installation)

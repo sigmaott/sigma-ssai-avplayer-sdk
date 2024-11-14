@@ -75,13 +75,13 @@
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ads proxy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="84c-GC-DFB">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ads endpoint" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="84c-GC-DFB">
                                                 <rect key="frame" x="10" y="247.5" width="353" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="https://dev-streaming.gviet.vn:8783/api/proxy-ads/ads/9a71d386-fbe9-4a74-a980-1db06ce41163" borderStyle="roundedRect" placeholder="Enter ads proxy url" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CQ5-Z0-eaQ">
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="5605b454-a6ee-4443-81ce-8ffae574fbe4" borderStyle="roundedRect" placeholder="Enter ads proxy url" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CQ5-Z0-eaQ">
                                                 <rect key="frame" x="10" y="283" width="353" height="34"/>
                                                 <directionalEdgeInsets key="directionalLayoutMargins" top="15" leading="15" bottom="15" trailing="15"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -122,7 +122,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="btnPlay" destination="28N-mM-LBV" id="DV7-cy-g6I"/>
-                        <outlet property="inputAdsProxy" destination="CQ5-Z0-eaQ" id="SbU-4n-paz"/>
+                        <outlet property="inputAdsEndpoint" destination="CQ5-Z0-eaQ" id="3Ze-Qz-sVW"/>
                         <outlet property="stackView" destination="QPx-tr-GzN" id="qcE-bT-bFw"/>
                         <outlet property="tableView" destination="mq5-l6-OCW" id="EWH-7j-Nag"/>
                         <outletCollection property="clearPlayerSwitch" destination="uqx-4L-Opi" collectionClass="NSMutableArray" id="v0V-WA-9N6"/>

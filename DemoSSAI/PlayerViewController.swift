@@ -43,7 +43,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     var itemIndex: Int = -1;
     var profileIndex: Int = -1;
     var videoUrl: String = "";
-    var adsProxy: String = "";
+    var adsEndpoint: String = "";
     var listProfile:[[String: String]] = []
     var changeSourceNeedReset: Bool = false;
     var changeButton: UIButton!
@@ -115,7 +115,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         //
     }
     func setupSSAI() {
-        self.ssai = SSAITracking.SigmaSSAI.init(adsProxy, self, playerView)
+        self.ssai = SSAITracking.SigmaSSAI.init(adsEndpoint, self, playerView)
         //show or hide ssai log
         self.ssai?.setShowLog(true)
         self.ssai?.generateUrl(videoUrl)
@@ -541,7 +541,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
             }
     }
     func setPlaybackTimeText(_ time: Double) {
-        playbackTimeLabel.text = "Reset player: \(changeSourceNeedReset),Reset session: \(resetSessionWhenChangeProfile)\nLoading: \(countLoadingShow)\n\(Helper.formatPlaybackTime(timeStartPlay > 0 ? Double(Int(Date().timeIntervalSince1970) - timeStartPlay) : 0))"
+        playbackTimeLabel.text = "Reset player: \(changeSourceNeedReset)\nLoading: \(countLoadingShow)\n\(Helper.formatPlaybackTime(timeStartPlay > 0 ? Double(Int(Date().timeIntervalSince1970) - timeStartPlay) : 0))"
     }
     func getAssetWrapper() -> AVURLAsset? {
         print("getAssetWrapper=>", videoUrl)
@@ -551,7 +551,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         if let url = URL(string: videoUrl) {
             //SigmaDRM not support simulator
             #if !targetEnvironment(simulator)
-            let asset = isDrm ? SigmaDRM.getInstance().asset(withUrl: videoUrl) : self.ssai?.getAsset()
+            let asset = isDrm ? SigmaDRM.getInstance().asset(withUrl: videoUrl) : AVURLAsset(url: URL(string: videoUrl)!)
                 if asset != nil {
                     return asset
                 } else {

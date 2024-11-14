@@ -10,8 +10,8 @@ import UIKit
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var inputAdsProxy: UITextField!
     @IBOutlet weak var btnPlay: UIButton!
+    @IBOutlet weak var inputAdsEndpoint: UITextField!
     @IBOutlet var autoRotateLabel: [UILabel]!
     @IBOutlet var autoRotate: [UISwitch]!
     @IBOutlet var labelResetSession: [UILabel]!
@@ -54,9 +54,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         setupTapGesture()
-        inputAdsProxy.translatesAutoresizingMaskIntoConstraints = false
+        inputAdsEndpoint.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            inputAdsProxy.heightAnchor.constraint(equalToConstant: 50) // Thiết lập chiều cao
+            inputAdsEndpoint.heightAnchor.constraint(equalToConstant: 50) // Thiết lập chiều cao
         ])
         tableView.contentInset = UIEdgeInsets.zero
         tableView.layoutMargins = UIEdgeInsets.zero
@@ -102,7 +102,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         dismissKeyboard()
     }
     @objc func dismissKeyboard() {
-        inputAdsProxy.resignFirstResponder() // Ẩn bàn phím
+        inputAdsEndpoint.resignFirstResponder() // Ẩn bàn phím
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -153,65 +153,61 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     @IBAction func handlerPlay(_ sender: Any) {
-        let adsProxy = inputAdsProxy.text!;
-        if URL(string: adsProxy) != nil {
-            var isEnablePilot = false
-            for (index, switchControl) in pilotSwitch.enumerated() {
-                if switchControl.isOn {
-                    isEnablePilot = true
-                } else {
-                    print("Switch \(index) is OFF")
-                }
+        let adsEndpoint = inputAdsEndpoint.text!;
+        var isEnablePilot = false
+        for (index, switchControl) in pilotSwitch.enumerated() {
+            if switchControl.isOn {
+                isEnablePilot = true
+            } else {
+                print("Switch \(index) is OFF")
             }
-            var isEnableClearPlayerWhenChangeSource = false
-            for (index, switchControl) in clearPlayerSwitch.enumerated() {
-                if switchControl.isOn {
-                    isEnableClearPlayerWhenChangeSource = true
-                } else {
-                    print("Switch \(index) is OFF")
-                }
-            }
-            var autoRotateValue = false
-            for (index, switchControl) in autoRotate.enumerated() {
-                if switchControl.isOn {
-                    autoRotateValue = true
-                } else {
-                    print("Switch \(index) is OFF")
-                }
-            }
-            var isEnableResetSession = false
-            if !isEnableClearPlayerWhenChangeSource {
-                for (index, switchControl) in sessionSwitch.enumerated() {
-                    if switchControl.isOn {
-                        isEnableResetSession = true
-                    } else {
-                        print("Switch \(index) is OFF")
-                    }
-                }
-            }
-            self.view.endEditing(true);
-            let story = UIStoryboard(name: "Main", bundle: nil);
-            let controller = story.instantiateViewController(withIdentifier: "demoPlayer") as! PlayerViewController;
-            controller.title = isEnablePilot || true ? "Manipolution" : "Sigma-CSPM"
-            if let navigationBar = self.navigationController?.navigationBar {
-                navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]  // Change UIColor.red to your desired color
-            }
-            controller.isDrm = Constants.urls[selectedIndexInt]["isDrm"] as! Bool;
-            controller.videoUrl = Constants.urls[selectedIndexInt]["url"] as! String;
-            controller.sessionUrl = Constants.urls[selectedIndexInt]["url"] as! String;
-            controller.adsProxy = adsProxy;
-            controller.isLive = Constants.urls[selectedIndexInt]["isLive"] as! Bool;
-            controller.bottomSafeArea = bottomSafeArea;
-            controller.topSafeArea = topSafeArea
-            controller.itemIndex = selectedIndexInt
-            controller.itemIndex = selectedIndexInt
-            controller.pilotEnable = isEnablePilot
-            controller.autoRotate = autoRotateValue
-            controller.resetSessionWhenChangeProfile = isEnableResetSession
-            controller.changeSourceNeedReset = isEnableClearPlayerWhenChangeSource
-            self.navigationController?.pushViewController(controller, animated: true);
-        } else {
-            showToast(message: "Please enter ads proxy", font: .systemFont(ofSize: 13))
         }
+        var isEnableClearPlayerWhenChangeSource = false
+        for (index, switchControl) in clearPlayerSwitch.enumerated() {
+            if switchControl.isOn {
+                isEnableClearPlayerWhenChangeSource = true
+            } else {
+                print("Switch \(index) is OFF")
+            }
+        }
+        var autoRotateValue = false
+        for (index, switchControl) in autoRotate.enumerated() {
+            if switchControl.isOn {
+                autoRotateValue = true
+            } else {
+                print("Switch \(index) is OFF")
+            }
+        }
+        var isEnableResetSession = false
+        if !isEnableClearPlayerWhenChangeSource {
+            for (index, switchControl) in sessionSwitch.enumerated() {
+                if switchControl.isOn {
+                    isEnableResetSession = true
+                } else {
+                    print("Switch \(index) is OFF")
+                }
+            }
+        }
+        self.view.endEditing(true);
+        let story = UIStoryboard(name: "Main", bundle: nil);
+        let controller = story.instantiateViewController(withIdentifier: "demoPlayer") as! PlayerViewController;
+        controller.title = isEnablePilot || true ? "Manipolution" : "Sigma-CSPM"
+        if let navigationBar = self.navigationController?.navigationBar {
+            navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]  // Change UIColor.red to your desired color
+        }
+        controller.isDrm = Constants.urls[selectedIndexInt]["isDrm"] as! Bool;
+        controller.videoUrl = Constants.urls[selectedIndexInt]["url"] as! String;
+        controller.sessionUrl = Constants.urls[selectedIndexInt]["url"] as! String;
+        controller.adsEndpoint = adsEndpoint;
+        controller.isLive = Constants.urls[selectedIndexInt]["isLive"] as! Bool;
+        controller.bottomSafeArea = bottomSafeArea;
+        controller.topSafeArea = topSafeArea
+        controller.itemIndex = selectedIndexInt
+        controller.itemIndex = selectedIndexInt
+        controller.pilotEnable = isEnablePilot
+        controller.autoRotate = autoRotateValue
+        controller.resetSessionWhenChangeProfile = isEnableResetSession
+        controller.changeSourceNeedReset = isEnableClearPlayerWhenChangeSource
+        self.navigationController?.pushViewController(controller, animated: true);
     }
 }
