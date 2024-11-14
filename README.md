@@ -45,24 +45,7 @@ To install the SSAITracking SDK, follow these steps:
 <string>This identifier will be used to deliver personalized ads to you.</string>
 ```
 
-    Allow HTTP Requests to Localhost. Add the following configuration to allow HTTP requests specifically to localhost:
-
-```swift
-<key>NSAppTransportSecurity</key>
-<dict>
-    <key>NSExceptionDomains</key>
-    <dict>
-        <key>localhost</key>
-        <dict>
-            <key>NSExceptionAllowsInsecureHTTPLoads</key>
-            <true/>
-            <key>NSIncludesSubdomains</key>
-            <true/>
-        </dict>
-    </dict>
-</dict>
-
-```
+    Allow HTTP Requests to localhost. Add the following configuration to allow HTTP requests specifically to localhost:
 
 2. **Declare the library in Podfile**:
 
