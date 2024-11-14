@@ -2,10 +2,7 @@
 platform :ios, '13.4'
 
 target 'DemoSSAI' do
-  # Comment the next line if you don't want to use dynamic frameworks
-#  use_frameworks!
 
-  # Pods for DemoSSAI
-  pod 'SSAITracking', '1.0.23'
+ pod 'SSAITracking', :git => 'https://github.com/sigmaott/sigma-ssai-ios.git', :tag => '1.0.0'
 
 end

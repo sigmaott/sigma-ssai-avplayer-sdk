@@ -1,98 +1,125 @@
-# SSAITracking SDK
+# SSAITracking SDK Integration Guide
 
-## Requirement: IOS 12.4+
+ **Version**: 1.0.0
 
-## Prepare for iOS 14+
+**Organization**: Thủ Đô Multimedia
 
-Need request App Tracking Transparency authorization
+## Table of Contents
 
-To display the App Tracking Transparency authorization request for accessing the IDFA, update your `Info.plist` to add the `NSUserTrackingUsageDescription` key with a custom message describing your usage. Here is an example description text:
+1. [Introduction](#1-introduction)
+2. [Scope](#2-scope)
+3. [System Requirements](#3-system-requirements)
+4. [SDK Installation](#4-sdk-installation)
+5. [SDK Integration](#5-sdk-installation)
+   * 5.1 [SDK Initialization](#51-sdk-initialization)
+   * 5.2 [Generating Video URL](#52-generating-video-url)
+   * 5.3 [Listening for Callbacks](#53-listening-for-callbacks)
+6. [Important Notes](#6-important-notes)
+7. [Callback Descriptions](#7-callback-descriptions)
+8. [Conclusion](#8-conclusion)
+9. [References](#9-references)
 
-```
+## 1. Introduction
+
+This document provides a guide for integrating and using the SSAITracking SDK for iOS applications, specifically for iOS version 12.4 and above. It includes detailed information on installation, SDK initialization, and handling necessary callbacks.
+
+## 2. Scope
+
+This document applies to iOS developers who want to integrate the SSAITracking SDK into their applications, including requesting IDFA access as per App Tracking Transparency requirements.
+
+## 3. System Requirements
+
+* **Operating System**: iOS 12.4 and above
+* **Device**: Physical device required
+* **Additional Requirement**: App Tracking Transparency authorization needed **on ios 14+**
+
+## 4. SDK Installation
+
+To install the SSAITracking SDK, follow these steps:
+
+1. **Update Info.plist**:
+   Add the `NSUserTrackingUsageDescription` key with a custom message describing the usage of IDFA:
+
+```swift
 <key>NSUserTrackingUsageDescription</key>
 <string>This identifier will be used to deliver personalized ads to you.</string>
 ```
 
-### I. Declare library SSAITracking in Podfile
+2. **Declare the library in Podfile**:
 
 ```swift
-pod 'SSAITracking', '1.0.19'
+pod 'SSAITracking', :git => 'https://github.com/sigmaott/sigma-ssai-ios.git', :tag => '1.0.0'
 ```
 
-cd to your project and run
+3. **Run the installation command**:
 
 ```swift
+cd [path to your project]
 pod install
 ```
 
-### II. Init SDK
+## 5. SDK Integration
 
-Implement SigmaSSAIInterface (To listen for SSAI events call and execute app logic if needed)
+### 5.1 SDK Initialization
 
-```swift
-class PlayerViewController: SigmaSSAIInterface
-```
-
-Init sdk
+* **Import the SDK**:
 
 ```swift
-self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
+import SSAITracking
 ```
 
-   ``sessionUrl``: Link session (get link video and link tracking)
-
-   ``self``: Your class implement SigmaSSAIInterface
-
-   ``playerView``: Player UIView
-
-### III. How to use
-
-1. Import SSAITracking:
-
-   ```swift
-   import SSAITracking
-   ```
-2. Create variable ssai type SigmaSSAI.
-
-   ```swift
-   var ssai: SigmaSSAI?;
-   ```
-3. Init sdk from **II** when view loaded
-
-   ```swift
-   override func viewDidLoad() {
-           self.ssai = SSAITracking.SigmaSSAI.init(sessionUrl, self, playerView)
-           //show or hide ssai log
-           self.ssai?.setShowLog(true)
-       }
-   ```
-4. Listen event **onSessionInitSuccess** to start player
+* **Call the start function when your application launches**:
 
 ```swift
-func onSessionInitSuccess(_ videoUrl: String) {
-        self.videoUrl = videoUrl
-        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
-        startPlayer();
-    }
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+      SSAITracking.SigmaSSAI.start()
+      return true
+  }
 ```
 
-5. Call **setPlayer** after init player
+* **Initialize the SDK with the required parameters**:
 
 ```swift
-func startPlayer() {
-    let asset = AVURLAsset(url:videoUrl, options: nil);
-    playerItem = AVPlayerItem(asset: asset)
-    videoPlayer = AVPlayer(playerItem: playerItem)
-    //set player for sdk
-    self.ssai?.setPlayer(videoPlayer!)
-}
+self.ssai = SSAITracking.SigmaSSAI.init(adsEndpoint, self, playerView)
 ```
 
-6. List Listener functional to execute app logic if needed
+### Parameter Definitions
 
-   ``onSessionFail(_ message: String)`` - When sdk get data session fail (status code other than 200 or returns data with incorrect structure)
+* **`adsEndpoint`**: Your ads endpoint (it will be obtained from the detailed endpoint information page in the SSAI product).
+* **`self`**: A reference to the current instance of your class, which must conform to the `SigmaSSAIInterface` protocol to handle callbacks.
+* **`playerView`**: The view where the video player will be displayed.
 
-   ``onTracking(_ message: String)`` - When sdk make call 1 ads tracking request
-7. Public method
+### 5.2 Generating Video URL
 
-   ``clear()`` - To remove all data sdk (call when change video url or session url or release player)
+Once the SDK is initialized, generate the video URL by calling the `generateUrl` method with the `videoUrl` parameter:
+
+```swift
+self.ssai?.generateUrl(videoUrl)
+```
+
+### 5.3 Listening for Callbacks
+
+After calling `generateUrl`, listen for callbacks from the SDK:
+
+* **Success Callback**:
+  When the video URL is successfully generated, the `onGenerateVideoUrlSuccess` method will be called.
+* **Failure Callback**:
+  If there is an error generating the video URL, the `onGenerateVideoUrlFail` method will be invoked.
+
+## 6. Important Notes
+
+Always remember to call `setPlayer` on the SDK after initializing the `AVPlayer` or replacing the current item. This ensures that the SDK correctly recognizes the active video player and can effectively manage ad tracking. If you need to change the `adsEndpoint`, it is essential to reinitialize the SDK. This ensures that the new endpoint is properly configured and used for tracking.
+
+## 7. Callback Descriptions
+
+* `onGenerateVideoUrlSuccess(_ videoUrl: String)`: Called when the video URL is successfully generated.
+* `onGenerateVideoUrlFail(_ message: String)`: Called when there is an error in generating the video URL.
+* `onTracking(_ message: String)`: Called whenever there is a tracking message.
+
+## 8. Conclusion
+
+By following the steps outlined above, you can successfully integrate and utilize the SSAITracking SDK within your application. Ensure that you handle both success and failure callbacks to provide a seamless user experience.
+
+## 9. References
+
+* SSAITracking demo link: [Demo Link](https://github.com/sigmaott/sigma-ssai-avplayer-sdk)
