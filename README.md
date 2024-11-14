@@ -7,17 +7,17 @@
 ## Table of Contents
 
 1. [Introduction](#1-introduction)
-2. Scope
-3. System Requirements
-4. SDK Installation
-5. SDK Integration
-   * 5.1 SDK Initialization
-   * 5.2 Generating Video URL
-   * 5.3 Listening for Callbacks
-6. Important Notes
-7. Callback Descriptions
-8. Conclusion
-9. References
+2. [Scope](#1-scope)
+3. [System Requirements](#3-system-requirements)
+4. [SDK Installation](#4-sdk-installation)
+5. [SDK Integration](#5-sdk-installation)
+   * 5.1 [SDK Initialization](#51-sdk-initialization)
+   * 5.2 [Generating Video URL](#52-generating-video-url)
+   * 5.3 [Listening for Callbacks](#53-listening-for-callbacks)
+6. [Important Notes](#6-important-notes)
+7. [Callback Descriptions](#7-callback-descriptions)
+8. [Conclusion](#8-conclusion)
+9. [References](#9-references)
 
 ## 1. Introduction
 
