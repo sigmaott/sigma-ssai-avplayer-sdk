@@ -47,6 +47,22 @@ To install the SSAITracking SDK, follow these steps:
 
     Allow HTTP Requests to localhost. Add the following configuration to allow HTTP requests specifically to localhost:
 
+```swift
+<key>NSAppTransportSecurity</key>
+<dict>
+    <key>NSExceptionDomains</key>
+    <dict>
+        <key>localhost</key>
+        <dict>
+            <key>NSExceptionAllowsInsecureHTTPLoads</key>
+            <true/>
+            <key>NSIncludesSubdomains</key>
+            <true/>
+        </dict>
+    </dict>
+</dict>
+```
+
 2. **Declare the library in Podfile**:
 
 ```swift
