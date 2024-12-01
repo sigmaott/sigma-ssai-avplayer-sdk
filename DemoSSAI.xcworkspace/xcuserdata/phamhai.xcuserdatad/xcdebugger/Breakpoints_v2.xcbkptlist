@@ -376,9 +376,9 @@
             filePath = "DemoSSAI/PlayerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "516"
-            endingLineNumber = "516"
-            landmarkName = "observeValue(forKeyPath:of:change:context:)"
+            startingLineNumber = "519"
+            endingLineNumber = "519"
+            landmarkName = "generateUrl()"
             landmarkType = "7">
             <Locations>
                <Location
@@ -1375,10 +1375,10 @@
             filePath = "DemoSSAI/PlayerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "651"
-            endingLineNumber = "651"
-            landmarkName = "PlayerViewController"
-            landmarkType = "3">
+            startingLineNumber = "654"
+            endingLineNumber = "654"
+            landmarkName = "generateUrl()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1564,9 +1564,9 @@
             filePath = "DemoSSAI/PlayerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "568"
-            endingLineNumber = "568"
-            landmarkName = "getAssetWrapper()"
+            startingLineNumber = "571"
+            endingLineNumber = "571"
+            landmarkName = "generateUrl()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1580,9 +1580,9 @@
             filePath = "DemoSSAI/PlayerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "532"
-            endingLineNumber = "532"
-            landmarkName = "observeValue(forKeyPath:of:change:context:)"
+            startingLineNumber = "535"
+            endingLineNumber = "535"
+            landmarkName = "generateUrl()"
             landmarkType = "7">
             <Locations>
                <Location
@@ -1643,9 +1643,9 @@
             filePath = "DemoSSAI/PlayerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "551"
-            endingLineNumber = "551"
-            landmarkName = "observeValue(forKeyPath:of:change:context:)"
+            startingLineNumber = "554"
+            endingLineNumber = "554"
+            landmarkName = "generateUrl()"
             landmarkType = "7">
             <Locations>
                <Location

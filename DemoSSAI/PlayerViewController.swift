@@ -118,7 +118,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         self.ssai = SSAITracking.SigmaSSAI.init(adsEndpoint, self, playerView)
         //show or hide ssai log
         self.ssai?.setShowLog(true)
-        self.ssai?.generateUrl(videoUrl)
+        generateUrl()
     }
     func onGenerateVideoUrlFail(_ message: String) {
         print("onGenerateVideoUrlFail=>\(message)")
@@ -443,8 +443,11 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     
     func changeCurrentItemPlayer(_ needReset: Bool) {
         print("changeCurrentItemPlayer=>", videoUrl)
+        generateUrl()
+    }
+    func generateUrl() {
         if let url = URL(string: videoUrl) {
-            self.ssai?.generateUrl(videoUrl)
+            self.ssai?.generateUrl("\(videoUrl)?sigma.dai.adsEndpoint=\(adsEndpoint)")
         }
     }
     override func viewWillDisappear(_ animated: Bool) {
