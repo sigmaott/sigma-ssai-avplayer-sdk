@@ -120,11 +120,6 @@ Once the SDK is initialized, generate the video URL by calling the `generateUrl`
 ```swift
 self.ssai?.generateUrl(videoUrl)
 ```
-If you want to pass the adsEndpoint in the query string of the videoUrl, you can include it as follows:
-```swift
-let videoUrl = "https://demo/master.m3u8?sigma.dai.adsEndpoint=12345678901234567qwertyuiop"
-```
-**`adsEndpoint`** is embedded as a query parameter with the key **`sigma.dai.adsEndpoint`**. SDK will prioritize extracting the **`adsEndpoint`** from the query string (if it exists), overriding any default or pre-set values
 
 ### 5.3 Listening for Callbacks
 
