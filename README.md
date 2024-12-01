@@ -6,18 +6,21 @@
 
 ## Table of Contents
 
-1. [Introduction](#1-introduction)
-2. [Scope](#2-scope)
-3. [System Requirements](#3-system-requirements)
-4. [SDK Installation](#4-sdk-installation)
-5. [SDK Integration](#5-sdk-installation)
-   * 5.1 [SDK Initialization](#51-sdk-initialization)
-   * 5.2 [Generating Video URL](#52-generating-video-url)
-   * 5.3 [Listening for Callbacks](#53-listening-for-callbacks)
-6. [Important Notes](#6-important-notes)
-7. [Callback Descriptions](#7-callback-descriptions)
-8. [Conclusion](#8-conclusion)
-9. [References](#9-references)
+- [SSAITracking SDK Integration Guide](#ssaitracking-sdk-integration-guide)
+  - [Table of Contents](#table-of-contents)
+  - [1. Introduction](#1-introduction)
+  - [2. Scope](#2-scope)
+  - [3. System Requirements](#3-system-requirements)
+  - [4. SDK Installation](#4-sdk-installation)
+  - [5. SDK Integration](#5-sdk-integration)
+    - [5.1 SDK Initialization](#51-sdk-initialization)
+    - [Parameter Definitions](#parameter-definitions)
+    - [5.2 Generating Video URL](#52-generating-video-url)
+    - [5.3 Listening for Callbacks](#53-listening-for-callbacks)
+  - [6. Important Notes](#6-important-notes)
+  - [7. Callback Descriptions](#7-callback-descriptions)
+  - [8. Conclusion](#8-conclusion)
+  - [9. References](#9-references)
 
 ## 1. Introduction
 
@@ -69,7 +72,7 @@ To install the SSAITracking SDK, follow these steps:
 2. **Declare the library in Podfile**:
 
 ```swift
-pod 'SSAITracking', :git => 'https://github.com/sigmaott/sigma-ssai-ios.git', :tag => '1.0.0'
+pod 'SSAITracking', :git => 'https://github.com/sigmaott/sigma-ssai-ios.git', :tag => '1.0.1'
 ```
 
 3. **Run the installation command**:
@@ -117,6 +120,11 @@ Once the SDK is initialized, generate the video URL by calling the `generateUrl`
 ```swift
 self.ssai?.generateUrl(videoUrl)
 ```
+If you want to pass the adsEndpoint in the query string of the videoUrl, you can include it as follows:
+```swift
+let videoUrl = "https://demo/master.m3u8?sigma.dai.adsEndpoint=12345678901234567qwertyuiop"
+```
+**`adsEndpoint`** is embedded as a query parameter with the key **`sigma.dai.adsEndpoint`**. SDK will prioritize extracting the **`adsEndpoint`** from the query string (if it exists), overriding any default or pre-set values
 
 ### 5.3 Listening for Callbacks
 
