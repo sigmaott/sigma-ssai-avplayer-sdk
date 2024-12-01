@@ -525,20 +525,32 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
                 self.layer.frame = CGRect(x: 0, y: (self.heightDevice - heightVideo)/2, width: self.widthDevice, height: heightVideo)
                 self.layer.videoGravity = .resizeAspectFill;
             } else if player.status == .failed {
+                let playerItem = player.currentItem;
+                let error = playerItem?.error;
+                if(error != nil){
+                    print(error?.localizedDescription)
+                }
                 print("observeValue==>Failed")
                 destroyPlayer(UIButton())
             }
         }
         if keyPath == "timeControlStatus" {
             if videoPlayer?.timeControlStatus == .waitingToPlayAtSpecifiedRate {
-                    print("Player is waiting to play")
-                    activityIndicator.startAnimating() // Show loading indicator
-                    countLoadingShow += 1
-                } else {
-                    print("Player is playing or paused")
-                    activityIndicator.stopAnimating() // Hide loading indicator
-                }
+                print("Player is waiting to play")
+                activityIndicator.startAnimating() // Show loading indicator
+                countLoadingShow += 1
+            } else {
+                print("Player is playing or paused")
+                activityIndicator.stopAnimating() // Hide loading indicator
             }
+        }
+        if keyPath == "error" {
+            let playerItem = object as? AVPlayerItem
+            let error = playerItem?.error;
+            if(error != nil){
+                print(error?.localizedDescription ?? "")
+            }
+        }
     }
     func setPlaybackTimeText(_ time: Double) {
         playbackTimeLabel.text = "Reset player: \(changeSourceNeedReset)\nLoading: \(countLoadingShow)\n\(Helper.formatPlaybackTime(timeStartPlay > 0 ? Double(Int(Date().timeIntervalSince1970) - timeStartPlay) : 0))"
@@ -588,14 +600,17 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
             setPlaybackTimeText(self.playBackTime)
         }
     }
+    
     private func startPlayer() {
         print("startPlayer=>", self.ssai != nil ? "inited" : "nil")
         if let asset = getAssetWrapper() {
             playerItem = AVPlayerItem(asset: asset)
+            playerItem?.preferredForwardBufferDuration = 1
             videoPlayer = AVPlayer(playerItem: playerItem)
             self.ssai?.setPlayer(videoPlayer!)
             videoPlayer?.addObserver(self, forKeyPath: "status", options: [.new, .old], context: nil)
             videoPlayer?.addObserver(self, forKeyPath: "timeControlStatus", options: [.new, .old], context: nil)
+            playerItem?.addObserver(self, forKeyPath: "error", options: [.new, .old], context: nil)
             // Observe playback time
             addPeriodicTimeObserver()
             self.playBackTime = 0
@@ -611,6 +626,8 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
             playerView.layer.addSublayer(layer)
         }
     }
+
+    
 
     
     func clearPlayer() {

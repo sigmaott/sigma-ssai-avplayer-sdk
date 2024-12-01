@@ -3,6 +3,6 @@ platform :ios, '13.4'
 
 target 'DemoSSAI' do
 
- pod 'SSAITracking', :git => 'https://github.com/sigmaott/sigma-ssai-ios.git', :tag => '1.0.0'
+pod 'SSAITracking', :git => 'https://github.com/sigmaott/sigma-ssai-ios.git', :tag => '1.0.1'
 
 end
