@@ -447,7 +447,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     }
     func generateUrl() {
         if let url = URL(string: videoUrl) {
-            self.ssai?.generateUrl("\(videoUrl)?sigma.dai.adsEndpoint=\(adsEndpoint)")
+            self.ssai?.generateUrl(videoUrl)
         }
     }
     override func viewWillDisappear(_ animated: Bool) {

@@ -12,11 +12,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var btnPlay: UIButton!
     @IBOutlet weak var inputAdsEndpoint: UITextField!
-    @IBOutlet var autoRotateLabel: [UILabel]!
-    @IBOutlet var autoRotate: [UISwitch]!
-    @IBOutlet var labelResetSession: [UILabel]!
-    @IBOutlet var pilotSwitch: [UISwitch]!
-    @IBOutlet var sessionSwitch: [UISwitch]!
+    @IBOutlet weak var inputVideoUrl: UITextField!
     @IBOutlet var clearPlayerSwitch: [UISwitch]!
     //    let urls = [Constants.masterUrl, Constants.playlist480Url, Constants.playlist360Url, Constants.sourceTestStreamMux]
     var selectedIndex: IndexPath?
@@ -30,25 +26,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         #if !targetEnvironment(simulator)
             SigmaDRM.getInstance()
         #endif
-        for (index, switchControl) in pilotSwitch.enumerated() {
-            switchControl.isOn = false // Initialize all switches to OFF
-            switchControl.tag = index // Assign a tag for identification
-            switchControl.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
-        }
         for (index, switchControl) in clearPlayerSwitch.enumerated() {
             switchControl.isOn = false // Initialize all switches to OFF
             switchControl.tag = index // Assign a tag for identification
             switchControl.addTarget(self, action: #selector(switchValueResetSourceChanged(_:)), for: .valueChanged)
-        }
-        for (index, switchControl) in sessionSwitch.enumerated() {
-            switchControl.isOn = false // Initialize all switches to OFF
-            switchControl.tag = index // Assign a tag for identification
-            switchControl.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
-        }
-        for (index, switchControl) in autoRotate.enumerated() {
-            switchControl.isOn = false // Initialize all switches to OFF
-            switchControl.tag = index // Assign a tag for identification
-            switchControl.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
         }
         tableView.delegate = self
         tableView.dataSource = self
@@ -75,21 +56,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     @objc func switchValueResetSourceChanged(_ sender: UISwitch) {
             if sender.isOn {
-                print("Switch is ON")
-                for toggle in sessionSwitch {
-                    toggle.isHidden = true
-                }
-                for label in labelResetSession {
-                    label.isHidden = true
-                }
             } else {
-                print("Switch is OFF")
-                for toggle in sessionSwitch {
-                    toggle.isHidden = false
-                }
-                for label in labelResetSession {
-                    label.isHidden = false
-                }
             }
         }
     func setupTapGesture() {
@@ -103,6 +70,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     @objc func dismissKeyboard() {
         inputAdsEndpoint.resignFirstResponder() // Ẩn bàn phím
+        inputVideoUrl.resignFirstResponder() // Ẩn bàn phím
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -154,14 +122,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     @IBAction func handlerPlay(_ sender: Any) {
         let adsEndpoint = inputAdsEndpoint.text!;
-        var isEnablePilot = false
-        for (index, switchControl) in pilotSwitch.enumerated() {
-            if switchControl.isOn {
-                isEnablePilot = true
-            } else {
-                print("Switch \(index) is OFF")
-            }
-        }
+        let videoUrl = inputVideoUrl.text!;
+        var isEnablePilot = true
         var isEnableClearPlayerWhenChangeSource = false
         for (index, switchControl) in clearPlayerSwitch.enumerated() {
             if switchControl.isOn {
@@ -170,24 +132,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 print("Switch \(index) is OFF")
             }
         }
+        if(!videoUrl.isEmpty && !Helper.isValidURL(videoUrl)) {
+            showToast(message: "Video url invalid!", font: .systemFont(ofSize: 18.0))
+            return
+        }
         var autoRotateValue = false
-        for (index, switchControl) in autoRotate.enumerated() {
-            if switchControl.isOn {
-                autoRotateValue = true
-            } else {
-                print("Switch \(index) is OFF")
-            }
-        }
         var isEnableResetSession = false
-        if !isEnableClearPlayerWhenChangeSource {
-            for (index, switchControl) in sessionSwitch.enumerated() {
-                if switchControl.isOn {
-                    isEnableResetSession = true
-                } else {
-                    print("Switch \(index) is OFF")
-                }
-            }
-        }
         self.view.endEditing(true);
         let story = UIStoryboard(name: "Main", bundle: nil);
         let controller = story.instantiateViewController(withIdentifier: "demoPlayer") as! PlayerViewController;
@@ -196,7 +146,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]  // Change UIColor.red to your desired color
         }
         controller.isDrm = Constants.urls[selectedIndexInt]["isDrm"] as! Bool;
-        controller.videoUrl = Constants.urls[selectedIndexInt]["url"] as! String;
+        controller.videoUrl = !videoUrl.isEmpty && Helper.isValidURL(videoUrl) ? videoUrl : Constants.urls[selectedIndexInt]["url"] as! String;
         controller.sessionUrl = Constants.urls[selectedIndexInt]["url"] as! String;
         controller.adsEndpoint = adsEndpoint;
         controller.isLive = Constants.urls[selectedIndexInt]["isLive"] as! Bool;

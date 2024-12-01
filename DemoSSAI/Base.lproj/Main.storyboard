@@ -33,68 +33,37 @@
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="uqx-4L-Opi">
                                                 <rect key="frame" x="10" y="43.5" width="355" height="31"/>
                                             </switch>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reset session when change profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="68t-07-XjI">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ads endpoint" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="84c-GC-DFB">
                                                 <rect key="frame" x="10" y="89.5" width="353" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="75Q-df-6Pm">
-                                                <rect key="frame" x="10" y="125" width="355" height="31"/>
-                                            </switch>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="SLM-Bh-77S">
-                                                <rect key="frame" x="10" y="171" width="353" height="61.5"/>
-                                                <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pSa-ro-EQg">
-                                                        <rect key="frame" x="0.0" y="0.0" width="268" height="61.5"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Pilot enable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nLe-98-78e">
-                                                                <rect key="frame" x="0.0" y="0.0" width="268" height="20.5"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wgf-Bs-lZW">
-                                                                <rect key="frame" x="0.0" y="30.5" width="270" height="31"/>
-                                                            </switch>
-                                                        </subviews>
-                                                    </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ngo-QV-E0o">
-                                                        <rect key="frame" x="278" y="0.0" width="75" height="61.5"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Auto xoay" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5vE-4v-LaY">
-                                                                <rect key="frame" x="0.0" y="0.0" width="75" height="20.5"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Dgo-LF-Y01">
-                                                                <rect key="frame" x="0.0" y="30.5" width="77" height="31"/>
-                                                            </switch>
-                                                        </subviews>
-                                                    </stackView>
-                                                </subviews>
-                                            </stackView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ads endpoint" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="84c-GC-DFB">
-                                                <rect key="frame" x="10" y="247.5" width="353" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="5605b454-a6ee-4443-81ce-8ffae574fbe4" borderStyle="roundedRect" placeholder="Enter ads proxy url" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CQ5-Z0-eaQ">
-                                                <rect key="frame" x="10" y="283" width="353" height="34"/>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="5605b454-a6ee-4443-81ce-8ffae574fbe4" borderStyle="roundedRect" placeholder="Enter adsEndpoint" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CQ5-Z0-eaQ">
+                                                <rect key="frame" x="10" y="125" width="353" height="34"/>
                                                 <directionalEdgeInsets key="directionalLayoutMargins" top="15" leading="15" bottom="15" trailing="15"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="continue" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video url" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yzj-Pl-1D9">
+                                                <rect key="frame" x="10" y="174" width="353" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter video url" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3nB-5O-ckH">
+                                                <rect key="frame" x="10" y="209.5" width="353" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="List source" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mrh-8W-LtM">
-                                                <rect key="frame" x="10" y="332" width="353" height="20.5"/>
+                                                <rect key="frame" x="10" y="258.5" width="353" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="mq5-l6-OCW">
-                                                <rect key="frame" x="10" y="367.5" width="353" height="313"/>
+                                                <rect key="frame" x="10" y="294" width="353" height="386.5"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="0.0" bottom="8" trailing="0.0"/>
                                             </tableView>
@@ -123,14 +92,10 @@
                     <connections>
                         <outlet property="btnPlay" destination="28N-mM-LBV" id="DV7-cy-g6I"/>
                         <outlet property="inputAdsEndpoint" destination="CQ5-Z0-eaQ" id="3Ze-Qz-sVW"/>
+                        <outlet property="inputVideoUrl" destination="3nB-5O-ckH" id="Ac2-nQ-jeZ"/>
                         <outlet property="stackView" destination="QPx-tr-GzN" id="qcE-bT-bFw"/>
                         <outlet property="tableView" destination="mq5-l6-OCW" id="EWH-7j-Nag"/>
                         <outletCollection property="clearPlayerSwitch" destination="uqx-4L-Opi" collectionClass="NSMutableArray" id="v0V-WA-9N6"/>
-                        <outletCollection property="sessionSwitch" destination="75Q-df-6Pm" collectionClass="NSMutableArray" id="jbY-qR-zCM"/>
-                        <outletCollection property="labelResetSession" destination="68t-07-XjI" collectionClass="NSMutableArray" id="xXi-Qp-iBd"/>
-                        <outletCollection property="pilotSwitch" destination="wgf-Bs-lZW" collectionClass="NSMutableArray" id="cPr-Qf-jql"/>
-                        <outletCollection property="autoRotate" destination="Dgo-LF-Y01" collectionClass="NSMutableArray" id="ZoB-SL-exy"/>
-                        <outletCollection property="autoRotateLabel" destination="5vE-4v-LaY" collectionClass="NSMutableArray" id="2z1-Zd-GNC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
