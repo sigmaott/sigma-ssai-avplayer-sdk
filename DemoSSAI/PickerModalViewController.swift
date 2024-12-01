@@ -16,7 +16,6 @@ class PickerModalViewController: UIViewController, UIPickerViewDelegate, UIPicke
     var selectedIndexPure: Int = 0
     
     var pickerView: UIPickerView!
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -86,17 +85,17 @@ class PickerModalViewController: UIViewController, UIPickerViewDelegate, UIPicke
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return Constants.urls.count
+        return URLManager.shared.urls.count
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        let item = Constants.urls[row] as [String: Any]
+        let item = URLManager.shared.urls[row] as [String: Any]
         let name = (item["name"] as? String)!
         return "\(name) \(row == selectedIndex ? " (Đang phát)" : "")"
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedItem = Constants.urls[row]
+        selectedItem = URLManager.shared.urls[row]
         selectedIndex = row
     }
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {

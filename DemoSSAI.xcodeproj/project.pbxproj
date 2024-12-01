@@ -17,10 +17,11 @@
 		9B7D8F7627F43D4D00C683D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B7D8F7427F43D4D00C683D4 /* LaunchScreen.storyboard */; };
 		9B7D8F9127F567A300C683D4 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7D8F9027F567A300C683D4 /* PlayerViewController.swift */; };
 		9B85CBF327FAA3A700B7C935 /* AppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B85CBF227FAA3A700B7C935 /* AppUtility.swift */; };
+		9B8BAA2E2CFCF2B3006674CC /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8BAA2D2CFCF2B3006674CC /* URLManager.swift */; };
 		9B9AC2212CC2123E00CB7EE5 /* PickerModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9AC2202CC2123E00CB7EE5 /* PickerModalViewController.swift */; };
 		9B9AC22E2CC3605900CB7EE5 /* PickerModalProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9AC22D2CC3605900CB7EE5 /* PickerModalProfile.swift */; };
 		9BA3AF182CBE14890004EB4E /* helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3AF172CBE14890004EB4E /* helper.swift */; };
-		F06D8213C46F58EA2FBE8B3F /* libPods-DemoSSAI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ECF90B095AE7F06D16B0872 /* libPods-DemoSSAI.a */; };
+		E6E781CD2C8AC4CEE8717AF2 /* libPods-DemoSSAI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE39E58D9C59878744122794 /* libPods-DemoSSAI.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,8 +37,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2ECF90B095AE7F06D16B0872 /* libPods-DemoSSAI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DemoSSAI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8191CF44775D2494FE4E2677 /* Pods-DemoSSAI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoSSAI.release.xcconfig"; path = "Target Support Files/Pods-DemoSSAI/Pods-DemoSSAI.release.xcconfig"; sourceTree = "<group>"; };
+		711BD623E3DA72779B2017D2 /* Pods-DemoSSAI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoSSAI.debug.xcconfig"; path = "Target Support Files/Pods-DemoSSAI/Pods-DemoSSAI.debug.xcconfig"; sourceTree = "<group>"; };
 		9B197FD52CBCC59D005CDC2B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9B3974D62CC7380000705E1C /* libSigmaDRM.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSigmaDRM.a; path = libs/libSigmaDRM.a; sourceTree = SOURCE_ROOT; };
 		9B3974D92CC7381000705E1C /* SigmaDRM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SigmaDRM.h; sourceTree = "<group>"; };
@@ -53,10 +53,12 @@
 		9B7D8F7727F43D4D00C683D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B7D8F9027F567A300C683D4 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		9B85CBF227FAA3A700B7C935 /* AppUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtility.swift; sourceTree = "<group>"; };
+		9B8BAA2D2CFCF2B3006674CC /* URLManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLManager.swift; sourceTree = "<group>"; };
 		9B9AC2202CC2123E00CB7EE5 /* PickerModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerModalViewController.swift; sourceTree = "<group>"; };
 		9B9AC22D2CC3605900CB7EE5 /* PickerModalProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerModalProfile.swift; sourceTree = "<group>"; };
 		9BA3AF172CBE14890004EB4E /* helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helper.swift; sourceTree = "<group>"; };
-		D9BDA818F9EEF8BD13D9E66C /* Pods-DemoSSAI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoSSAI.debug.xcconfig"; path = "Target Support Files/Pods-DemoSSAI/Pods-DemoSSAI.debug.xcconfig"; sourceTree = "<group>"; };
+		B98C157E1FB03F531384979E /* Pods-DemoSSAI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoSSAI.release.xcconfig"; path = "Target Support Files/Pods-DemoSSAI/Pods-DemoSSAI.release.xcconfig"; sourceTree = "<group>"; };
+		EE39E58D9C59878744122794 /* libPods-DemoSSAI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DemoSSAI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,8 +66,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F06D8213C46F58EA2FBE8B3F /* libPods-DemoSSAI.a in Frameworks */,
 				9B3974D82CC7380100705E1C /* libSigmaDRM.a in Frameworks */,
+				E6E781CD2C8AC4CEE8717AF2 /* libPods-DemoSSAI.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,8 +77,8 @@
 		11164599CD849CDF56C40F12 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				D9BDA818F9EEF8BD13D9E66C /* Pods-DemoSSAI.debug.xcconfig */,
-				8191CF44775D2494FE4E2677 /* Pods-DemoSSAI.release.xcconfig */,
+				711BD623E3DA72779B2017D2 /* Pods-DemoSSAI.debug.xcconfig */,
+				B98C157E1FB03F531384979E /* Pods-DemoSSAI.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -85,7 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				9B61F1202CCF6D7100119C47 /* ProgrammaticAccessLibrary.xcframework */,
-				2ECF90B095AE7F06D16B0872 /* libPods-DemoSSAI.a */,
+				EE39E58D9C59878744122794 /* libPods-DemoSSAI.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -127,6 +129,7 @@
 				9B9AC2202CC2123E00CB7EE5 /* PickerModalViewController.swift */,
 				9B9AC22D2CC3605900CB7EE5 /* PickerModalProfile.swift */,
 				9B3974DA2CC7387A00705E1C /* DemoSSAI-Bridging-Header.h */,
+				9B8BAA2D2CFCF2B3006674CC /* URLManager.swift */,
 			);
 			path = DemoSSAI;
 			sourceTree = "<group>";
@@ -138,12 +141,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9B7D8F7A27F43D4D00C683D4 /* Build configuration list for PBXNativeTarget "DemoSSAI" */;
 			buildPhases = (
-				C39747CE7CDB0B992BAB69F1 /* [CP] Check Pods Manifest.lock */,
+				962F5F54E84594E4FE43CA50 /* [CP] Check Pods Manifest.lock */,
 				9B7D8F6227F43D4000C683D4 /* Sources */,
 				9B7D8F6327F43D4000C683D4 /* Frameworks */,
 				9B7D8F6427F43D4000C683D4 /* Resources */,
 				9BBF1B83288FDC06003A6DF2 /* CopyFiles */,
-				8C41B40D1B57D22561F639A7 /* [CP] Embed Pods Frameworks */,
+				D141FAF8EC78E21BB5394ACE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -201,24 +204,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8C41B40D1B57D22561F639A7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DemoSSAI/Pods-DemoSSAI-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DemoSSAI/Pods-DemoSSAI-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DemoSSAI/Pods-DemoSSAI-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C39747CE7CDB0B992BAB69F1 /* [CP] Check Pods Manifest.lock */ = {
+		962F5F54E84594E4FE43CA50 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -240,6 +226,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D141FAF8EC78E21BB5394ACE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DemoSSAI/Pods-DemoSSAI-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DemoSSAI/Pods-DemoSSAI-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DemoSSAI/Pods-DemoSSAI-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -250,6 +253,7 @@
 				9B7D8F6E27F43D4000C683D4 /* ViewController.swift in Sources */,
 				9B7D8F9127F567A300C683D4 /* PlayerViewController.swift in Sources */,
 				9BA3AF182CBE14890004EB4E /* helper.swift in Sources */,
+				9B8BAA2E2CFCF2B3006674CC /* URLManager.swift in Sources */,
 				9B85CBF327FAA3A700B7C935 /* AppUtility.swift in Sources */,
 				9B9AC2212CC2123E00CB7EE5 /* PickerModalViewController.swift in Sources */,
 				9B7D8F6A27F43D4000C683D4 /* AppDelegate.swift in Sources */,
@@ -401,12 +405,12 @@
 		};
 		9B7D8F7B27F43D4D00C683D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D9BDA818F9EEF8BD13D9E66C /* Pods-DemoSSAI.debug.xcconfig */;
+			baseConfigurationReference = 711BD623E3DA72779B2017D2 /* Pods-DemoSSAI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = 653RQ2NUA9;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64, armv7 arm64e,";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -453,12 +457,12 @@
 		};
 		9B7D8F7C27F43D4D00C683D4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8191CF44775D2494FE4E2677 /* Pods-DemoSSAI.release.xcconfig */;
+			baseConfigurationReference = B98C157E1FB03F531384979E /* Pods-DemoSSAI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = 653RQ2NUA9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

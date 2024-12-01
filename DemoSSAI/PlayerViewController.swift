@@ -39,7 +39,6 @@ import AVKit
 import SSAITracking
 
 class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourceLoaderDelegate, AVPlayerItemMetadataCollectorPushDelegate, PickerModalDelegate {
-    
     var itemIndex: Int = -1;
     var profileIndex: Int = -1;
     var videoUrl: String = "";
@@ -150,11 +149,11 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     }
     
     func onTracking(_ message: String) {
-        self.showToast(message: message, font: .systemFont(ofSize: 12.0))
+        self.showToast(message: message, font: .systemFont(ofSize: 13.0))
     }
     
     override func viewDidLoad() {
-        
+        showToast(message: "listVideoUrl=>\(URLManager.shared.urls.count)", font: .systemFont(ofSize: 13.0))
         NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
@@ -338,7 +337,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         }
         pickerSourceView.selectedIndexPure = itemIndex
         pickerSourceView.selectedIndex = itemIndex
-        pickerSourceView.selectedItem = Constants.urls[itemIndex]
+        pickerSourceView.selectedItem = URLManager.shared.urls[itemIndex]
         present(pickerSourceView, animated: true, completion: nil)
     }
     
@@ -410,14 +409,14 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         }
     }
     @objc func changeSessionUrl() {
-        let nextIndex = itemIndex == Constants.urls.count - 1 ? 0 : itemIndex + 1
+        let nextIndex = itemIndex == URLManager.shared.urls.count - 1 ? 0 : itemIndex + 1
         if(nextIndex != -1) {
             changeVideoUrlWithIndex(nextIndex)
         }
     }
     func setTitleButton() {
-        let nextItem = Constants.urls[itemIndex]
-        let name = (nextItem["name"] as? String)!
+        let item = URLManager.shared.urls[itemIndex]
+        let name = (item["name"] as? String)!
         changeButton.setTitle("Change source (\(name))", for: .normal)
     }
     func setTitleButtonProfile() {
@@ -426,7 +425,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     func changeVideoUrlWithIndex(_ index: Int) {
         clearPlayer()
         if(index >= 0) {
-            let nextItem = Constants.urls[index]
+            let nextItem = URLManager.shared.urls[index]
             isLive = (nextItem["isLive"] as? Bool)!
             isDrm = (nextItem["isDrm"] as? Bool)!
             videoUrl = (nextItem["url"] as? String)!
@@ -447,6 +446,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     }
     func generateUrl() {
         if let url = URL(string: videoUrl) {
+            showToast(message: "VideoUrl=>\(videoUrl)", font: .systemFont(ofSize: 13.0))
             self.ssai?.generateUrl(videoUrl)
         }
     }

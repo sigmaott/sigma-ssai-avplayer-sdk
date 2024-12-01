@@ -36,8 +36,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         setupTapGesture()
         inputAdsEndpoint.translatesAutoresizingMaskIntoConstraints = false
+        inputVideoUrl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            inputAdsEndpoint.heightAnchor.constraint(equalToConstant: 50) // Thiết lập chiều cao
+            inputAdsEndpoint.heightAnchor.constraint(equalToConstant: 50), // Thiết lập chiều cao
+            inputVideoUrl.heightAnchor.constraint(equalToConstant: 50) // Thiết lập chiều cao
         ])
         tableView.contentInset = UIEdgeInsets.zero
         tableView.layoutMargins = UIEdgeInsets.zero
@@ -135,21 +137,29 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if(!videoUrl.isEmpty && !Helper.isValidURL(videoUrl)) {
             showToast(message: "Video url invalid!", font: .systemFont(ofSize: 18.0))
             return
+        } else {
+            if !videoUrl.isEmpty {
+                selectedIndexInt = Constants.urls.count
+                URLManager.shared.urls = Array(Constants.urls)
+                URLManager.shared.urls.append(["url": videoUrl, "isLive": true, "name": "Custom", "isDrm": false])
+            } else {
+                URLManager.shared.urls = Array(Constants.urls)
+            }
         }
         var autoRotateValue = false
         var isEnableResetSession = false
         self.view.endEditing(true);
         let story = UIStoryboard(name: "Main", bundle: nil);
         let controller = story.instantiateViewController(withIdentifier: "demoPlayer") as! PlayerViewController;
-        controller.title = isEnablePilot || true ? "Manipolution" : "Sigma-CSPM"
+        controller.title = "Manipolution"
         if let navigationBar = self.navigationController?.navigationBar {
             navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]  // Change UIColor.red to your desired color
         }
-        controller.isDrm = Constants.urls[selectedIndexInt]["isDrm"] as! Bool;
-        controller.videoUrl = !videoUrl.isEmpty && Helper.isValidURL(videoUrl) ? videoUrl : Constants.urls[selectedIndexInt]["url"] as! String;
-        controller.sessionUrl = Constants.urls[selectedIndexInt]["url"] as! String;
+        controller.isDrm = URLManager.shared.urls[selectedIndexInt]["isDrm"] as! Bool;
+        controller.videoUrl = URLManager.shared.urls[selectedIndexInt]["url"] as! String;
+        controller.sessionUrl = URLManager.shared.urls[selectedIndexInt]["url"] as! String;
         controller.adsEndpoint = adsEndpoint;
-        controller.isLive = Constants.urls[selectedIndexInt]["isLive"] as! Bool;
+        controller.isLive = URLManager.shared.urls[selectedIndexInt]["isLive"] as! Bool;
         controller.bottomSafeArea = bottomSafeArea;
         controller.topSafeArea = topSafeArea
         controller.itemIndex = selectedIndexInt
