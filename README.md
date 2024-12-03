@@ -1,6 +1,6 @@
 # SSAITracking SDK Integration Guide
 
- **Version**: 1.0.0
+ **Version**: 1.0.1
 
 **Organization**: Thủ Đô Multimedia
 
@@ -104,18 +104,21 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 * **Initialize the SDK with the required parameters**:
 
 ```swift
-self.ssai = SSAITracking.SigmaSSAI.init(adsEndpoint, self, playerView)
+self.ssai = SSAITracking.SigmaSSAI.init(self, playerView)
 ```
 
 ### Parameter Definitions
 
-* **`adsEndpoint`**: Your ads endpoint (it will be obtained from the detailed endpoint information page in the SSAI product).
 * **`self`**: A reference to the current instance of your class, which must conform to the `SigmaSSAIInterface` protocol to handle callbacks.
 * **`playerView`**: The view where the video player will be displayed.
 
 ### 5.2 Generating Video URL
 
 Once the SDK is initialized, generate the video URL by calling the `generateUrl` method with the `videoUrl` parameter:
+
+**Note**: `videoUrl` will include `adsEndpoint` (if provided) as a query parameter with the key `sigma.dai.adsEndpoint`. `adsEndpoint` will be obtained from the detailed endpoint information page in the SSAI product
+
+**Example**: https://example.com/master.m3u8?sigma.dai.adsEndpoint=abc123
 
 ```swift
 self.ssai?.generateUrl(videoUrl)

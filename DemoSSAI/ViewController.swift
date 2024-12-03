@@ -11,7 +11,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var btnPlay: UIButton!
-    @IBOutlet weak var inputAdsEndpoint: UITextField!
     @IBOutlet weak var inputVideoUrl: UITextField!
     @IBOutlet var clearPlayerSwitch: [UISwitch]!
     //    let urls = [Constants.masterUrl, Constants.playlist480Url, Constants.playlist360Url, Constants.sourceTestStreamMux]
@@ -35,10 +34,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         setupTapGesture()
-        inputAdsEndpoint.translatesAutoresizingMaskIntoConstraints = false
         inputVideoUrl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            inputAdsEndpoint.heightAnchor.constraint(equalToConstant: 50), // Thiết lập chiều cao
             inputVideoUrl.heightAnchor.constraint(equalToConstant: 50) // Thiết lập chiều cao
         ])
         tableView.contentInset = UIEdgeInsets.zero
@@ -71,7 +68,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         dismissKeyboard()
     }
     @objc func dismissKeyboard() {
-        inputAdsEndpoint.resignFirstResponder() // Ẩn bàn phím
         inputVideoUrl.resignFirstResponder() // Ẩn bàn phím
     }
     override func viewDidLayoutSubviews() {
@@ -123,7 +119,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     @IBAction func handlerPlay(_ sender: Any) {
-        let adsEndpoint = inputAdsEndpoint.text!;
         let videoUrl = inputVideoUrl.text!;
         var isEnablePilot = true
         var isEnableClearPlayerWhenChangeSource = false
@@ -158,7 +153,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         controller.isDrm = URLManager.shared.urls[selectedIndexInt]["isDrm"] as! Bool;
         controller.videoUrl = URLManager.shared.urls[selectedIndexInt]["url"] as! String;
         controller.sessionUrl = URLManager.shared.urls[selectedIndexInt]["url"] as! String;
-        controller.adsEndpoint = adsEndpoint;
         controller.isLive = URLManager.shared.urls[selectedIndexInt]["isLive"] as! Bool;
         controller.bottomSafeArea = bottomSafeArea;
         controller.topSafeArea = topSafeArea
