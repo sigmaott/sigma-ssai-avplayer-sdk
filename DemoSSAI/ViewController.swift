@@ -11,12 +11,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var btnPlay: UIButton!
-    @IBOutlet weak var inputAdsEndpoint: UITextField!
-    @IBOutlet var autoRotateLabel: [UILabel]!
-    @IBOutlet var autoRotate: [UISwitch]!
-    @IBOutlet var labelResetSession: [UILabel]!
-    @IBOutlet var pilotSwitch: [UISwitch]!
-    @IBOutlet var sessionSwitch: [UISwitch]!
+    @IBOutlet weak var inputVideoUrl: UITextField!
     @IBOutlet var clearPlayerSwitch: [UISwitch]!
     //    let urls = [Constants.masterUrl, Constants.playlist480Url, Constants.playlist360Url, Constants.sourceTestStreamMux]
     var selectedIndex: IndexPath?
@@ -30,33 +25,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         #if !targetEnvironment(simulator)
             SigmaDRM.getInstance()
         #endif
-        for (index, switchControl) in pilotSwitch.enumerated() {
-            switchControl.isOn = false // Initialize all switches to OFF
-            switchControl.tag = index // Assign a tag for identification
-            switchControl.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
-        }
         for (index, switchControl) in clearPlayerSwitch.enumerated() {
             switchControl.isOn = false // Initialize all switches to OFF
             switchControl.tag = index // Assign a tag for identification
             switchControl.addTarget(self, action: #selector(switchValueResetSourceChanged(_:)), for: .valueChanged)
         }
-        for (index, switchControl) in sessionSwitch.enumerated() {
-            switchControl.isOn = false // Initialize all switches to OFF
-            switchControl.tag = index // Assign a tag for identification
-            switchControl.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
-        }
-        for (index, switchControl) in autoRotate.enumerated() {
-            switchControl.isOn = false // Initialize all switches to OFF
-            switchControl.tag = index // Assign a tag for identification
-            switchControl.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
-        }
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         setupTapGesture()
-        inputAdsEndpoint.translatesAutoresizingMaskIntoConstraints = false
+        inputVideoUrl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            inputAdsEndpoint.heightAnchor.constraint(equalToConstant: 50) // Thiết lập chiều cao
+            inputVideoUrl.heightAnchor.constraint(equalToConstant: 50) // Thiết lập chiều cao
         ])
         tableView.contentInset = UIEdgeInsets.zero
         tableView.layoutMargins = UIEdgeInsets.zero
@@ -75,21 +55,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     @objc func switchValueResetSourceChanged(_ sender: UISwitch) {
             if sender.isOn {
-                print("Switch is ON")
-                for toggle in sessionSwitch {
-                    toggle.isHidden = true
-                }
-                for label in labelResetSession {
-                    label.isHidden = true
-                }
             } else {
-                print("Switch is OFF")
-                for toggle in sessionSwitch {
-                    toggle.isHidden = false
-                }
-                for label in labelResetSession {
-                    label.isHidden = false
-                }
             }
         }
     func setupTapGesture() {
@@ -102,7 +68,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         dismissKeyboard()
     }
     @objc func dismissKeyboard() {
-        inputAdsEndpoint.resignFirstResponder() // Ẩn bàn phím
+        inputVideoUrl.resignFirstResponder() // Ẩn bàn phím
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -153,15 +119,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     @IBAction func handlerPlay(_ sender: Any) {
-        let adsEndpoint = inputAdsEndpoint.text!;
-        var isEnablePilot = false
-        for (index, switchControl) in pilotSwitch.enumerated() {
-            if switchControl.isOn {
-                isEnablePilot = true
-            } else {
-                print("Switch \(index) is OFF")
-            }
-        }
+        let videoUrl = inputVideoUrl.text!;
+        var isEnablePilot = true
         var isEnableClearPlayerWhenChangeSource = false
         for (index, switchControl) in clearPlayerSwitch.enumerated() {
             if switchControl.isOn {
@@ -170,36 +129,31 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 print("Switch \(index) is OFF")
             }
         }
-        var autoRotateValue = false
-        for (index, switchControl) in autoRotate.enumerated() {
-            if switchControl.isOn {
-                autoRotateValue = true
+        if(!videoUrl.isEmpty && !Helper.isValidURL(videoUrl)) {
+            showToast(message: "Video url invalid!", font: .systemFont(ofSize: 18.0))
+            return
+        } else {
+            if !videoUrl.isEmpty {
+                selectedIndexInt = Constants.urls.count
+                URLManager.shared.urls = Array(Constants.urls)
+                URLManager.shared.urls.append(["url": videoUrl, "isLive": true, "name": "Custom", "isDrm": false])
             } else {
-                print("Switch \(index) is OFF")
+                URLManager.shared.urls = Array(Constants.urls)
             }
         }
+        var autoRotateValue = false
         var isEnableResetSession = false
-        if !isEnableClearPlayerWhenChangeSource {
-            for (index, switchControl) in sessionSwitch.enumerated() {
-                if switchControl.isOn {
-                    isEnableResetSession = true
-                } else {
-                    print("Switch \(index) is OFF")
-                }
-            }
-        }
         self.view.endEditing(true);
         let story = UIStoryboard(name: "Main", bundle: nil);
         let controller = story.instantiateViewController(withIdentifier: "demoPlayer") as! PlayerViewController;
-        controller.title = isEnablePilot || true ? "Manipolution" : "Sigma-CSPM"
+        controller.title = "Manipolution"
         if let navigationBar = self.navigationController?.navigationBar {
             navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]  // Change UIColor.red to your desired color
         }
-        controller.isDrm = Constants.urls[selectedIndexInt]["isDrm"] as! Bool;
-        controller.videoUrl = Constants.urls[selectedIndexInt]["url"] as! String;
-        controller.sessionUrl = Constants.urls[selectedIndexInt]["url"] as! String;
-        controller.adsEndpoint = adsEndpoint;
-        controller.isLive = Constants.urls[selectedIndexInt]["isLive"] as! Bool;
+        controller.isDrm = URLManager.shared.urls[selectedIndexInt]["isDrm"] as! Bool;
+        controller.videoUrl = URLManager.shared.urls[selectedIndexInt]["url"] as! String;
+        controller.sessionUrl = URLManager.shared.urls[selectedIndexInt]["url"] as! String;
+        controller.isLive = URLManager.shared.urls[selectedIndexInt]["isLive"] as! Bool;
         controller.bottomSafeArea = bottomSafeArea;
         controller.topSafeArea = topSafeArea
         controller.itemIndex = selectedIndexInt

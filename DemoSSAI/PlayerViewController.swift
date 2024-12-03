@@ -39,7 +39,6 @@ import AVKit
 import SSAITracking
 
 class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourceLoaderDelegate, AVPlayerItemMetadataCollectorPushDelegate, PickerModalDelegate {
-    
     var itemIndex: Int = -1;
     var profileIndex: Int = -1;
     var videoUrl: String = "";
@@ -115,10 +114,10 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         //
     }
     func setupSSAI() {
-        self.ssai = SSAITracking.SigmaSSAI.init(adsEndpoint, self, playerView)
+        self.ssai = SSAITracking.SigmaSSAI.init("", self, playerView)
         //show or hide ssai log
         self.ssai?.setShowLog(true)
-        self.ssai?.generateUrl(videoUrl)
+        generateUrl()
     }
     func onGenerateVideoUrlFail(_ message: String) {
         print("onGenerateVideoUrlFail=>\(message)")
@@ -150,11 +149,11 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     }
     
     func onTracking(_ message: String) {
-        self.showToast(message: message, font: .systemFont(ofSize: 12.0))
+        self.showToast(message: message, font: .systemFont(ofSize: 13.0))
     }
     
     override func viewDidLoad() {
-        
+        showToast(message: "listVideoUrl=>\(URLManager.shared.urls.count)", font: .systemFont(ofSize: 13.0))
         NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: []);
@@ -338,7 +337,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         }
         pickerSourceView.selectedIndexPure = itemIndex
         pickerSourceView.selectedIndex = itemIndex
-        pickerSourceView.selectedItem = Constants.urls[itemIndex]
+        pickerSourceView.selectedItem = URLManager.shared.urls[itemIndex]
         present(pickerSourceView, animated: true, completion: nil)
     }
     
@@ -410,14 +409,14 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         }
     }
     @objc func changeSessionUrl() {
-        let nextIndex = itemIndex == Constants.urls.count - 1 ? 0 : itemIndex + 1
+        let nextIndex = itemIndex == URLManager.shared.urls.count - 1 ? 0 : itemIndex + 1
         if(nextIndex != -1) {
             changeVideoUrlWithIndex(nextIndex)
         }
     }
     func setTitleButton() {
-        let nextItem = Constants.urls[itemIndex]
-        let name = (nextItem["name"] as? String)!
+        let item = URLManager.shared.urls[itemIndex]
+        let name = (item["name"] as? String)!
         changeButton.setTitle("Change source (\(name))", for: .normal)
     }
     func setTitleButtonProfile() {
@@ -426,7 +425,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     func changeVideoUrlWithIndex(_ index: Int) {
         clearPlayer()
         if(index >= 0) {
-            let nextItem = Constants.urls[index]
+            let nextItem = URLManager.shared.urls[index]
             isLive = (nextItem["isLive"] as? Bool)!
             isDrm = (nextItem["isDrm"] as? Bool)!
             videoUrl = (nextItem["url"] as? String)!
@@ -443,7 +442,11 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
     
     func changeCurrentItemPlayer(_ needReset: Bool) {
         print("changeCurrentItemPlayer=>", videoUrl)
+        generateUrl()
+    }
+    func generateUrl() {
         if let url = URL(string: videoUrl) {
+            showToast(message: "VideoUrl=>\(videoUrl)", font: .systemFont(ofSize: 13.0))
             self.ssai?.generateUrl(videoUrl)
         }
     }
@@ -525,20 +528,32 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
                 self.layer.frame = CGRect(x: 0, y: (self.heightDevice - heightVideo)/2, width: self.widthDevice, height: heightVideo)
                 self.layer.videoGravity = .resizeAspectFill;
             } else if player.status == .failed {
+                let playerItem = player.currentItem;
+                let error = playerItem?.error;
+                if(error != nil){
+                    print(error?.localizedDescription)
+                }
                 print("observeValue==>Failed")
                 destroyPlayer(UIButton())
             }
         }
         if keyPath == "timeControlStatus" {
             if videoPlayer?.timeControlStatus == .waitingToPlayAtSpecifiedRate {
-                    print("Player is waiting to play")
-                    activityIndicator.startAnimating() // Show loading indicator
-                    countLoadingShow += 1
-                } else {
-                    print("Player is playing or paused")
-                    activityIndicator.stopAnimating() // Hide loading indicator
-                }
+                print("Player is waiting to play")
+                activityIndicator.startAnimating() // Show loading indicator
+                countLoadingShow += 1
+            } else {
+                print("Player is playing or paused")
+                activityIndicator.stopAnimating() // Hide loading indicator
             }
+        }
+        if keyPath == "error" {
+            let playerItem = object as? AVPlayerItem
+            let error = playerItem?.error;
+            if(error != nil){
+                print(error?.localizedDescription ?? "")
+            }
+        }
     }
     func setPlaybackTimeText(_ time: Double) {
         playbackTimeLabel.text = "Reset player: \(changeSourceNeedReset)\nLoading: \(countLoadingShow)\n\(Helper.formatPlaybackTime(timeStartPlay > 0 ? Double(Int(Date().timeIntervalSince1970) - timeStartPlay) : 0))"
@@ -588,14 +603,17 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
             setPlaybackTimeText(self.playBackTime)
         }
     }
+    
     private func startPlayer() {
         print("startPlayer=>", self.ssai != nil ? "inited" : "nil")
         if let asset = getAssetWrapper() {
             playerItem = AVPlayerItem(asset: asset)
+            playerItem?.preferredForwardBufferDuration = 1
             videoPlayer = AVPlayer(playerItem: playerItem)
             self.ssai?.setPlayer(videoPlayer!)
             videoPlayer?.addObserver(self, forKeyPath: "status", options: [.new, .old], context: nil)
             videoPlayer?.addObserver(self, forKeyPath: "timeControlStatus", options: [.new, .old], context: nil)
+            playerItem?.addObserver(self, forKeyPath: "error", options: [.new, .old], context: nil)
             // Observe playback time
             addPeriodicTimeObserver()
             self.playBackTime = 0
@@ -611,6 +629,8 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
             playerView.layer.addSublayer(layer)
         }
     }
+
+    
 
     
     func clearPlayer() {

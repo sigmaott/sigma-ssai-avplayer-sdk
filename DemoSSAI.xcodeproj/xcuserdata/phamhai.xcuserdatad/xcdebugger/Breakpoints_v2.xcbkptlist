@@ -408,8 +408,8 @@
             filePath = "DemoSSAI/PlayerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "160"
-            endingLineNumber = "160"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -440,10 +440,10 @@
             filePath = "../sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "696"
-            endingLineNumber = "696"
-            landmarkName = "openUrl(_:)"
-            landmarkType = "7">
+            startingLineNumber = "818"
+            endingLineNumber = "818"
+            landmarkName = "SigmaSSAI"
+            landmarkType = "3">
             <Locations>
                <Location
                   uuid = "C4520E8A-1CCB-40EB-A157-E927566D145E - 246ac9fa8a8b0d1e"
