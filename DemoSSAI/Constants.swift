@@ -15,7 +15,7 @@ struct Constants {
     static let drmUrl = "\(baseDomain)/manifest/origin04/scte35-av4s-sigma-drm/master.m3u8?\(adsEndpointQuery)"
     static let hlsSCTE35 = "\(baseDomain)/manifest/origin04/scte35-video-audio-clear/master.m3u8?\(adsEndpointQuery)"
     static let hlsTs2s = "\(baseDomain)/manifest/origin04/scte35-av2s-clear/master.m3u8?\(adsEndpointQuery)"
-    static let hlsTs4s = "\(baseDomain)/manifest/origin04/scte35-av4s-clear/master.m3u8?\(adsEndpointQuery)&sigma.dai.userId=test_123"
+    static let hlsTs4s = "\(baseDomain)/manifest/origin04/scte35-av4s-clear/master.m3u8?\(adsEndpointQuery)&sigma.dai.userId=test_123&sigma.dai.userId=test_1234"
     static let hlsTs6s = "\(baseDomain)/manifest/origin04/scte35-av6s-clear/master.m3u8?\(adsEndpointQuery)"
     static let ANTV = "http://live-on-v2-akm.akamaized.net/manifest/test_live/master.m3u8?\(adsEndpointQuery)"
     static let sourceTestStreamMux = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8?\(adsEndpointQuery)"
