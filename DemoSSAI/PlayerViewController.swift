@@ -114,7 +114,7 @@ class PlayerViewController: UIViewController, SigmaSSAIInterface, AVAssetResourc
         //
     }
     func setupSSAI() {
-        self.ssai = SSAITracking.SigmaSSAI.init(self, playerView)
+        self.ssai = SSAITracking.SigmaSSAI.init("", self, playerView)
         //show or hide ssai log
         self.ssai?.setShowLog(true)
         generateUrl()

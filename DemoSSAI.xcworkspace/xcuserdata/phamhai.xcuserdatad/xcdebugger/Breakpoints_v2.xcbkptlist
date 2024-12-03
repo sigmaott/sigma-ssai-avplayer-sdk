@@ -79,7 +79,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "556"
             endingLineNumber = "556"
-            landmarkName = "getAsset()"
+            landmarkName = "playerDidFinishPlaying(note:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -174,7 +174,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "498"
             endingLineNumber = "498"
-            landmarkName = "metadataOutput(_:didOutputTimedMetadataGroups:from:)"
+            landmarkName = "showLogEventAds(_:_:_:_:_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1251,7 +1251,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "589"
             endingLineNumber = "589"
-            landmarkName = "setPlayer(_:)"
+            landmarkName = "addMetadataOutput()"
             landmarkType = "7">
             <Locations>
                <Location
