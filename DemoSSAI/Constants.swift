@@ -10,7 +10,7 @@ import Foundation
 struct Constants {
     // URL constants
     static let baseDomain = "https://cdn-lrm-test.sigma.video"
-    static let adsEndpoint = "6fe7279e-fb9e-4da4-8cef-97044194448d"
+    static let adsEndpoint = "34d92d3c-67e4-49c0-b0ee-ee4172b5f7ac"
     static let adsEndpointQuery = "sigma.dai.adsEndpoint=\(adsEndpoint)"
     static let drmUrl = "\(baseDomain)/manifest/origin04/scte35-av4s-sigma-drm/master.m3u8?\(adsEndpointQuery)"
     static let hlsSCTE35 = "\(baseDomain)/manifest/origin04/scte35-video-audio-clear/master.m3u8?\(adsEndpointQuery)"

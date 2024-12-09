@@ -440,8 +440,8 @@
             filePath = "../sigma-dai-avplayer-ssai-plugin/SSAITracking/SigmaSSAI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "818"
-            endingLineNumber = "818"
+            startingLineNumber = "847"
+            endingLineNumber = "847"
             landmarkName = "SigmaSSAI"
             landmarkType = "3">
             <Locations>
