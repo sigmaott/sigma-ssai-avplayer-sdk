@@ -1,22 +1,22 @@
 PODS:
-  - SSAITracking (1.0.1)
+  - SSAITracking (1.0.3)
 
 DEPENDENCIES:
-  - SSAITracking (from `https://github.com/sigmaott/sigma-ssai-ios.git`, tag `1.0.1`)
+  - SSAITracking (from `https://github.com/sigmaott/sigma-ssai-ios.git`, tag `1.0.3`)
 
 EXTERNAL SOURCES:
   SSAITracking:
     :git: https://github.com/sigmaott/sigma-ssai-ios.git
-    :tag: 1.0.1
+    :tag: 1.0.3
 
 CHECKOUT OPTIONS:
   SSAITracking:
     :git: https://github.com/sigmaott/sigma-ssai-ios.git
-    :tag: 1.0.1
+    :tag: 1.0.3
 
 SPEC CHECKSUMS:
-  SSAITracking: 4374099fda55e333b25c804a4754bd0ec548935f
+  SSAITracking: 5f6674e80c79b79ddb6271aa7bbf51c28463de92
 
-PODFILE CHECKSUM: 04bf1bf683f82bc850edf5971e22ab8c1af2cb7c
+PODFILE CHECKSUM: 7d170eea20883b4a4f2a3f72210af6fda6e31704
 
 COCOAPODS: 1.15.2
