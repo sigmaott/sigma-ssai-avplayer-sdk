@@ -148,7 +148,7 @@
 				9B7D8F6327F43D4000C683D4 /* Frameworks */,
 				9B7D8F6427F43D4000C683D4 /* Resources */,
 				9BBF1B83288FDC06003A6DF2 /* CopyFiles */,
-				E3A1A3A5B230D4CEF3E441F1 /* [CP] Embed Pods Frameworks */,
+				DB97DB9DA2D2E788E6985BFF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -228,7 +228,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E3A1A3A5B230D4CEF3E441F1 /* [CP] Embed Pods Frameworks */ = {
+		DB97DB9DA2D2E788E6985BFF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -428,7 +428,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DemoSSAI/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Demo SSAI";
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This identifier will be used to deliver personalized ads to you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -480,7 +479,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DemoSSAI/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Demo SSAI";
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This identifier will be used to deliver personalized ads to you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

@@ -1,6 +1,6 @@
 # SSAITracking SDK Integration Guide
 
- **Version**: 1.0.2
+ **Version**: 1.0.4
 
 **Organization**: Thủ Đô Multimedia
 
@@ -72,7 +72,7 @@ To install the SSAITracking SDK, follow these steps:
 2. **Declare the library in Podfile**:
 
 ```swift
-pod 'SSAITracking', :git => 'https://github.com/sigmaott/sigma-ssai-ios.git', :tag => '1.0.3'
+pod 'SSAITracking', :git => 'https://github.com/sigmaott/sigma-ssai-ios.git', :tag => '1.0.4'
 ```
 
 3. **Run the installation command**:
